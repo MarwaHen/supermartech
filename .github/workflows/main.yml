@@ -23,7 +23,6 @@ jobs:
           
       # Exécution des tests avec Maven
       - name: Test with Maven
-        working-directory: projetDevOps
         run: mvn clean test
 
   build-frontend:
