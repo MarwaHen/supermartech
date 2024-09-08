@@ -1,0 +1,17 @@
+<header class="category-menu">
+  <ul>
+    <li
+      *ngFor="let category of categories"
+      class="category-item"
+      (mouseenter)="showSubCategories(category.id)"
+      (mouseleave)="hideSubCategories()"
+    >
+      <a>{{ category?.cat_name }}</a>
+      <ul *ngIf="activeCategoryId === category.id">
+        <li *ngFor="let sub of category.subCategories">
+          <a>{{ sub?.catt_name }}</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</header>
