@@ -34,7 +34,7 @@
   "readOnly": true,
   "relationships": [
     {
-      "otherEntityField": "id",
+      "otherEntityField": "cat_name",
       "otherEntityName": "category",
       "otherEntityRelationshipName": "subCategory",
       "relationshipName": "category",

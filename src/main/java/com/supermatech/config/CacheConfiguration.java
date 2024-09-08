@@ -53,6 +53,7 @@ public class CacheConfiguration {
             createCache(cm, com.supermatech.domain.Category.class.getName());
             createCache(cm, com.supermatech.domain.Category.class.getName() + ".subCategories");
             createCache(cm, com.supermatech.domain.SubCategory.class.getName());
+            createCache(cm, com.supermatech.domain.Product.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

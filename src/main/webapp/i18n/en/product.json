@@ -1,0 +1,32 @@
+{
+  "supermatechApp": {
+    "product": {
+      "home": {
+        "title": "Products",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Product",
+        "createOrEditLabel": "Create or edit a Product",
+        "notFound": "No Products found"
+      },
+      "created": "A new Product is created with identifier {{ param }}",
+      "updated": "A Product is updated with identifier {{ param }}",
+      "deleted": "A Product is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Product {{ id }}?"
+      },
+      "detail": {
+        "title": "Product"
+      },
+      "id": "ID",
+      "pro_name": "Pro Name",
+      "pro_description": "Pro Description",
+      "pro_price": "Pro Price",
+      "pro_quantity": "Pro Quantity",
+      "catt_id": "Catt Id",
+      "pro_date": "Pro Date",
+      "pro_promotion": "Pro Promotion",
+      "pro_mark": "Pro Mark",
+      "subCategory": "Sub Category"
+    }
+  }
+}
