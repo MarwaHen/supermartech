@@ -11,7 +11,8 @@
       },
       "id": "ID",
       "cat_name": "Cat Name",
-      "cat_description": "Cat Description"
+      "cat_description": "Cat Description",
+      "subCategory": "Sub Category"
     }
   }
 }

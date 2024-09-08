@@ -1,8 +1,11 @@
 package com.supermatech.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -10,7 +13,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
  * A Category.
  */
 @Entity
-@Table(name = "category_cat")
+@Table(name = "category")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class Category implements Serializable {
@@ -31,6 +34,11 @@ public class Category implements Serializable {
     @Size(max = 255)
     @Column(name = "cat_description", length = 255)
     private String cat_description;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "category" }, allowSetters = true)
+    private Set<SubCategory> subCategories = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -71,6 +79,37 @@ public class Category implements Serializable {
 
     public void setCat_description(String cat_description) {
         this.cat_description = cat_description;
+    }
+
+    public Set<SubCategory> getSubCategories() {
+        return this.subCategories;
+    }
+
+    public void setSubCategories(Set<SubCategory> subCategories) {
+        if (this.subCategories != null) {
+            this.subCategories.forEach(i -> i.setCategory(null));
+        }
+        if (subCategories != null) {
+            subCategories.forEach(i -> i.setCategory(this));
+        }
+        this.subCategories = subCategories;
+    }
+
+    public Category subCategories(Set<SubCategory> subCategories) {
+        this.setSubCategories(subCategories);
+        return this;
+    }
+
+    public Category addSubCategory(SubCategory subCategory) {
+        this.subCategories.add(subCategory);
+        subCategory.setCategory(this);
+        return this;
+    }
+
+    public Category removeSubCategory(SubCategory subCategory) {
+        this.subCategories.remove(subCategory);
+        subCategory.setCategory(null);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
