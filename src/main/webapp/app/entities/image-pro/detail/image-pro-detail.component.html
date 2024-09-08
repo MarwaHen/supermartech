@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (imagePro(); as imageProRef) {
+      <div>
+        <h2 data-cy="imageProDetailsHeading"><span jhiTranslate="supermatechApp.imagePro.detail.title">Image Pro</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ imageProRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.imagePro.imgP_Path">Img P Path</span></dt>
+          <dd>
+            <span>{{ imageProRef.imgP_Path }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.imagePro.pro_id">Pro Id</span></dt>
+          <dd>
+            <span>{{ imageProRef.pro_id }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.imagePro.product">Product</span></dt>
+          <dd>
+            @if (imagePro()!.product) {
+              <div>
+                <a [routerLink]="['/product', imagePro()!.product?.id, 'view']">{{ imageProRef.product?.pro_name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/image-pro', imageProRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

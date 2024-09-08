@@ -1,25 +1,24 @@
 import { ISubCategory } from './sub-category.model';
 
 export const sampleWithRequiredData: ISubCategory = {
-  id: 19401,
-  catt_name: 'arrogantly infatuated majestically',
-  cat_id: 23747,
+  id: 21045,
+  catt_name: 'worthwhile',
+  cat_id: 26634,
 };
 
 export const sampleWithPartialData: ISubCategory = {
-  id: 22790,
-  catt_name: 'flame er',
-  catt_description: 'pessimistic',
-  cat_id: 16983,
-  catt_icon: 'psst vice',
+  id: 7813,
+  catt_name: 'utter ack',
+  catt_description: 'duh elver meh',
+  cat_id: 30211,
 };
 
 export const sampleWithFullData: ISubCategory = {
-  id: 19205,
-  catt_name: 'fooey frolic',
-  catt_description: 'circa spur yet',
-  cat_id: 19582,
-  catt_icon: 'pantology hospitable',
+  id: 7271,
+  catt_name: 'sunset',
+  catt_description: 'thoughtfully boo instead',
+  cat_id: 14190,
+  catt_icon: 'exactly semester delightfully',
 };
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);

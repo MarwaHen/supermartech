@@ -3,6 +3,7 @@ package com.supermatech.web.rest;
 import static com.supermatech.domain.SubCategoryAsserts.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -11,12 +12,19 @@ import com.supermatech.IntegrationTest;
 import com.supermatech.domain.Category;
 import com.supermatech.domain.SubCategory;
 import com.supermatech.repository.SubCategoryRepository;
+import com.supermatech.service.SubCategoryService;
 import jakarta.persistence.EntityManager;
+import java.util.ArrayList;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link SubCategoryResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class SubCategoryResourceIT {
@@ -50,6 +59,12 @@ class SubCategoryResourceIT {
 
     @Autowired
     private SubCategoryRepository subCategoryRepository;
+
+    @Mock
+    private SubCategoryRepository subCategoryRepositoryMock;
+
+    @Mock
+    private SubCategoryService subCategoryServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -140,6 +155,23 @@ class SubCategoryResourceIT {
             .andExpect(jsonPath("$.[*].catt_description").value(hasItem(DEFAULT_CATT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].cat_id").value(hasItem(DEFAULT_CAT_ID)))
             .andExpect(jsonPath("$.[*].catt_icon").value(hasItem(DEFAULT_CATT_ICON)));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllSubCategoriesWithEagerRelationshipsIsEnabled() throws Exception {
+        when(subCategoryServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restSubCategoryMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(subCategoryServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllSubCategoriesWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(subCategoryServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restSubCategoryMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(subCategoryRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test

@@ -1,0 +1,107 @@
+<div>
+  <h2 id="page-heading" data-cy="ImageProHeading">
+    <span jhiTranslate="supermatechApp.imagePro.home.title">Image Pros</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="supermatechApp.imagePro.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-image-pro"
+        [routerLink]="['/image-pro/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="supermatechApp.imagePro.home.createLabel">Create a new Image Pro</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (imagePros?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="supermatechApp.imagePro.home.notFound">No Image Pros found</span>
+    </div>
+  }
+
+  @if (imagePros && imagePros.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="imgP_Path">
+              <div class="d-flex">
+                <span jhiTranslate="supermatechApp.imagePro.imgP_Path">Img P Path</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="pro_id">
+              <div class="d-flex">
+                <span jhiTranslate="supermatechApp.imagePro.pro_id">Pro Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="product.pro_name">
+              <div class="d-flex">
+                <span jhiTranslate="supermatechApp.imagePro.product">Product</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (imagePro of imagePros; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/image-pro', imagePro.id, 'view']">{{ imagePro.id }}</a>
+              </td>
+              <td>{{ imagePro.imgP_Path }}</td>
+              <td>{{ imagePro.pro_id }}</td>
+              <td>
+                @if (imagePro.product) {
+                  <div>
+                    <a [routerLink]="['/product', imagePro.product.id, 'view']">{{ imagePro.product.pro_name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/image-pro', imagePro.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/image-pro', imagePro.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(imagePro)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

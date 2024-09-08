@@ -21,6 +21,11 @@ const routes: Routes = [
     data: { pageTitle: 'supermatechApp.product.home.title' },
     loadChildren: () => import('./product/product.routes'),
   },
+  {
+    path: 'image-pro',
+    data: { pageTitle: 'supermatechApp.imagePro.home.title' },
+    loadChildren: () => import('./image-pro/image-pro.routes'),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

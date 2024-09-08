@@ -1,0 +1,26 @@
+{
+  "supermatechApp": {
+    "imagePro": {
+      "home": {
+        "title": "Image Pros",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Image Pro",
+        "createOrEditLabel": "Create or edit a Image Pro",
+        "notFound": "No Image Pros found"
+      },
+      "created": "A new Image Pro is created with identifier {{ param }}",
+      "updated": "A Image Pro is updated with identifier {{ param }}",
+      "deleted": "A Image Pro is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Image Pro {{ id }}?"
+      },
+      "detail": {
+        "title": "Image Pro"
+      },
+      "id": "ID",
+      "imgP_Path": "Img P Path",
+      "pro_id": "Pro Id",
+      "product": "Product"
+    }
+  }
+}

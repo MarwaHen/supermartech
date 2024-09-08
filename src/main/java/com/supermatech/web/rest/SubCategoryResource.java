@@ -28,10 +28,13 @@ public class SubCategoryResource {
     /**
      * {@code GET  /sub-categories} : get all the subCategories.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of subCategories in body.
      */
     @GetMapping("")
-    public List<SubCategory> getAllSubCategories() {
+    public List<SubCategory> getAllSubCategories(
+        @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload
+    ) {
         LOG.debug("REST request to get all SubCategories");
         return subCategoryService.findAll();
     }

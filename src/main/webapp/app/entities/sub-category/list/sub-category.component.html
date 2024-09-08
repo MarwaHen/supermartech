@@ -60,7 +60,7 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="category.id">
+            <th scope="col" jhiSortBy="category.cat_name">
               <div class="d-flex">
                 <span jhiTranslate="supermatechApp.subCategory.category">Category</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -82,7 +82,7 @@
               <td>
                 @if (subCategory.category) {
                   <div>
-                    <a [routerLink]="['/category', subCategory.category.id, 'view']">{{ subCategory.category.id }}</a>
+                    <a [routerLink]="['/category', subCategory.category.id, 'view']">{{ subCategory.category.cat_name }}</a>
                   </div>
                 }
               </td>

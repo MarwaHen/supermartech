@@ -35,7 +35,7 @@
           <dd>
             @if (subCategory()!.category) {
               <div>
-                <a [routerLink]="['/category', subCategory()!.category?.id, 'view']">{{ subCategoryRef.category?.id }}</a>
+                <a [routerLink]="['/category', subCategory()!.category?.id, 'view']">{{ subCategoryRef.category?.cat_name }}</a>
               </div>
             }
           </dd>
