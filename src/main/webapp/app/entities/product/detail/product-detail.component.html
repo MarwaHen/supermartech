@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (product; as productRef) {
+      <div>
+        <h2 data-cy="productDetailsHeading"><span jhiTranslate="supermatechApp.product.detail.title">Product</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.product.pro_name">Pro Name</span></dt>
+          <dd>
+            <span>{{ productRef.pro_name }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.product.pro_description">Pro Description</span></dt>
+          <dd>
+            <span>{{ productRef.pro_description }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.product.pro_price">Pro Price</span></dt>
+          <dd>
+            <span>{{ productRef.pro_price }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.product.pro_quantity">Pro Quantity</span></dt>
+          <dd>
+            <span>{{ productRef.pro_quantity }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.product.catt_id">Catt Id</span></dt>
+          <dd>
+            <span>{{ productRef.catt_id }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.product.pro_date">Pro Date</span></dt>
+          <dd>
+            <span>{{ productRef.pro_date | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.product.pro_promotion">Pro Promotion</span></dt>
+          <dd>
+            <span>{{ productRef.pro_promotion }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.product.pro_mark">Pro Mark</span></dt>
+          <dd>
+            <span>{{ productRef.pro_mark }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.product.subCategory">Sub Category</span></dt>
+          <dd>
+            @if (product!.subCategory) {
+              <div>
+                <a [routerLink]="['/sub-category', product!.subCategory?.id, 'view']">{{ productRef.subCategory?.catt_name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product', productRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

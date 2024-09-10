@@ -44,7 +44,7 @@ const routes: Routes = [
     loadChildren: () => import(`./entities/entity.routes`),
   },
   {
-    path: 'product/:id/view',
+    path: 'product/:id/:pro_name',
     loadComponent: () => import('./views/page-detail/page-detail.component').then(m => m.PageDetailComponent),
   },
   ...errorRoute,

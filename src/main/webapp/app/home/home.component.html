@@ -79,6 +79,6 @@
   </div>
 
   <div *ngFor="let product of products">
-    <a [routerLink]="['/product', product.id, 'view']">{{ product.pro_name }}</a>
+    <a [routerLink]="['/product', product.id, product.pro_name]">{{ product.pro_name }}</a>
   </div>
 </div>
