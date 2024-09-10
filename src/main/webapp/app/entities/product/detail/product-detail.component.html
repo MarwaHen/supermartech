@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
-    @if (product(); as productRef) {
+    @if (product; as productRef) {
       <div>
         <h2 data-cy="productDetailsHeading"><span jhiTranslate="supermatechApp.product.detail.title">Product</span></h2>
 
@@ -49,9 +49,9 @@
           </dd>
           <dt><span jhiTranslate="supermatechApp.product.subCategory">Sub Category</span></dt>
           <dd>
-            @if (product()!.subCategory) {
+            @if (product!.subCategory) {
               <div>
-                <a [routerLink]="['/sub-category', product()!.subCategory?.id, 'view']">{{ productRef.subCategory?.catt_name }}</a>
+                <a [routerLink]="['/sub-category', product!.subCategory?.id, 'view']">{{ productRef.subCategory?.catt_name }}</a>
               </div>
             }
           </dd>

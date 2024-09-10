@@ -40,7 +40,7 @@ describe('Product Management Detail Component', () => {
       const instance = await harness.navigateByUrl('/', ProductDetailComponent);
 
       // THEN
-      expect(instance.product()).toEqual(expect.objectContaining({ id: 123 }));
+      expect(instance.product).toEqual(expect.objectContaining({ id: 123 }));
     });
   });
 

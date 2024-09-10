@@ -52,10 +52,13 @@ export class ProductService {
       .pipe(map(res => this.convertResponseFromServer(res)));
   }
 
-  find(id: number): Observable<EntityResponseType> {
+  /*find(id: number): Observable<EntityResponseType> {
     return this.http
       .get<RestProduct>(`${this.resourceUrl}/${id}`, { observe: 'response' })
       .pipe(map(res => this.convertResponseFromServer(res)));
+  }*/
+  find(id: number): Observable<EntityResponseType> {
+    return this.http.get<IProduct>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
