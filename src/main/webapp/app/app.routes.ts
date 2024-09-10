@@ -4,6 +4,7 @@ import { Authority } from 'app/config/authority.constants';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { errorRoute } from './layouts/error/error.route';
+import { CartComponent } from './views/cart/cart.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,10 @@ const routes: Routes = [
   {
     path: 'view',
     loadChildren: () => import(`./view/product/product.routes`),
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
   },
   ...errorRoute,
 ];
