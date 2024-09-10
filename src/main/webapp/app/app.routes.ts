@@ -42,6 +42,14 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import(`./entities/entity.routes`),
   },
+  {
+    path: '',
+    loadComponent: () => import('./home/home.component'),
+  },
+  {
+    path: 'page/:id/view',
+    loadComponent: () => import('./views/page-detail/page-detail.component').then(m => m.PageDetailComponent),
+  },
   ...errorRoute,
 ];
 

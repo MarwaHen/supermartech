@@ -6,6 +6,8 @@ import { takeUntil } from 'rxjs/operators';
 import SharedModule from 'app/shared/shared.module';
 import { AccountService } from 'app/core/auth/account.service';
 import { Account } from 'app/core/auth/account.model';
+import { IProduct } from 'app/entities/product/product.model';
+import { ProductService } from 'app/entities/product/service/product.service'; // Import du ProductService
 
 @Component({
   standalone: true,
@@ -16,10 +18,11 @@ import { Account } from 'app/core/auth/account.model';
 })
 export default class HomeComponent implements OnInit, OnDestroy {
   account = signal<Account | null>(null);
+  selectedProduct: IProduct | null = null; // Ajout de la variable selectedProduct
 
   private readonly destroy$ = new Subject<void>();
-
   private accountService = inject(AccountService);
+  private productService = inject(ProductService); // Injecte le ProductService
   private router = inject(Router);
 
   ngOnInit(): void {
@@ -27,6 +30,14 @@ export default class HomeComponent implements OnInit, OnDestroy {
       .getAuthenticationState()
       .pipe(takeUntil(this.destroy$))
       .subscribe(account => this.account.set(account));
+
+    this.loadProduct(123); // Charge un produit avec un ID spécifique (123)
+  }
+
+  loadProduct(productId: number): void {
+    this.productService.find(productId).subscribe(response => {
+      this.selectedProduct = response.body; // Stocke le produit récupéré
+    });
   }
 
   login(): void {
