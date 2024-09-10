@@ -1,0 +1,137 @@
+<div>
+  <h2 id="page-heading" data-cy="ProductHeading">
+    <span jhiTranslate="supermatechApp.product.home.title">Products</span>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <jhi-filter [filters]="filters"></jhi-filter>
+
+  @if (products?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="supermatechApp.product.home.notFound">No Products found</span>
+    </div>
+  }
+
+  @if (products && products.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="pro_name">
+              <div class="d-flex">
+                <span jhiTranslate="supermatechApp.product.pro_name">Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="pro_description">
+              <div class="d-flex">
+                <span jhiTranslate="supermatechApp.product.pro_description">Description</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="pro_price">
+              <div class="d-flex">
+                <span jhiTranslate="supermatechApp.product.prix_de_base">Pro Price</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="pro_price">
+              <div class="d-flex">
+                <span jhiTranslate="supermatechApp.product.pro_price">Pro Quantity</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="pro_mark">
+              <div class="d-flex">
+                <span jhiTranslate="supermatechApp.product.pro_mark">Pro Mark</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="subCategory.catt_name">
+              <div class="d-flex">
+                <span jhiTranslate="supermatechApp.product.subCategory">Sub Category</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (product of products; track trackId) {
+            <tr data-cy="entityTable">
+              <td>{{ product.pro_name }}</td>
+              <td>{{ product.pro_description }}</td>
+              <td>
+                @if (product.pro_promotion && product.pro_promotion > 0) {
+                  <s> {{ product.pro_price }} </s>
+                } @else {
+                  {{ product.pro_price }}
+                }
+              </td>
+              <td>
+                @if (product.pro_price) {
+                  @if (product.pro_promotion && product.pro_promotion > 0) {
+                    <div>
+                      <a>{{ product.pro_price - product.pro_price * (product.pro_promotion / 100) }}</a>
+                    </div>
+                  } @else {
+                    <div>
+                      <a>No Promo</a>
+                    </div>
+                  }
+                } @else {
+                  <div>
+                    <a>No Promo</a>
+                  </div>
+                }
+              </td>
+              <td>{{ product.pro_mark }}</td>
+              <td>
+                @if (product.subCategory) {
+                  <div>
+                    <a [routerLink]="['/sub-category', product.subCategory.id, 'view']">{{ product.subCategory.catt_name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/product', product.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (products && products.length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

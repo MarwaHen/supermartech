@@ -9,7 +9,7 @@
       <a>{{ category?.cat_name }}</a>
       <ul *ngIf="activeCategoryId === category.id">
         <li *ngFor="let sub of category.subCategories">
-          <a>{{ sub?.catt_name }}</a>
+          <a [href]="'http://localhost:9000/view/' + sub?.id">{{ sub?.catt_name }}</a>
         </li>
       </ul>
     </li>

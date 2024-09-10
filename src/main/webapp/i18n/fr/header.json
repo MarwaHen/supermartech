@@ -1,0 +1,21 @@
+{
+  "supermatechApp": {
+    "header": {
+      "Ordinateurs": {
+        "title": "Ordinateur",
+        "Ordinateurs_Fixe": "Ordinateur Fixe",
+        "Ordinateurs_Portable": "Ordinateur Portable"
+      },
+      "Périphériques": {
+        "title": "Pheripherique",
+        "Headset": "Casque",
+        "Keyboard": "Clavier"
+      },
+      "Composants": {
+        "title": "Composant",
+        "RAM": "RAM",
+        "GPU": "Carte Graphique"
+      }
+    }
+  }
+}

@@ -49,7 +49,7 @@ public class Product implements Serializable {
     @Column(name = "pro_date")
     private Instant pro_date;
 
-    @Column(name = "pro_promotion")
+    @Column(name = "pro_promotion", nullable = false)
     private Integer pro_promotion;
 
     @Size(max = 255)
