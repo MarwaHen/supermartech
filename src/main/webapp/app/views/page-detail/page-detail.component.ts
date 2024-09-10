@@ -1,8 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ProductService } from 'app/entities/product/service/product.service'; // Ajuste ou remplace cela par le service de page, si nécessaire
-import { IProduct } from 'app/entities/product/product.model'; // Ajuste ou remplace cela par le modèle de page, si nécessaire
+import { ProductService } from 'app/entities/product/service/product.service';
+import { IProduct } from 'app/entities/product/product.model';
 import SharedModule from 'app/shared/shared.module';
 import { DurationPipe, FormatMediumDatePipe, FormatMediumDatetimePipe } from 'app/shared/date';
 
@@ -13,15 +13,15 @@ import { DurationPipe, FormatMediumDatePipe, FormatMediumDatetimePipe } from 'ap
   imports: [SharedModule, RouterModule, CommonModule, DurationPipe, FormatMediumDatetimePipe, FormatMediumDatePipe],
 })
 export class PageDetailComponent implements OnInit {
-  product: IProduct | null = null; // Remplace cela par l'objet de "page" si nécessaire
+  product: IProduct | null = null;
 
   private route = inject(ActivatedRoute);
-  private productService = inject(ProductService); // Assure-toi d'utiliser le bon service
+  private productService = inject(ProductService);
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = params['id'];
-      this.loadProduct(id); // Si tu utilises un autre type que "Product", ajuste cela
+      this.loadProduct(id);
     });
   }
 

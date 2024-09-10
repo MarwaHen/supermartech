@@ -9,6 +9,7 @@ import locale from '@angular/common/locales/en';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { fontAwesomeIcons } from './config/font-awesome-icons';
 import MainComponent from './layouts/main/main.component';
+import { PageDetailComponent } from './views/page-detail/page-detail.component';
 
 @Component({
   standalone: true,
@@ -16,6 +17,7 @@ import MainComponent from './layouts/main/main.component';
   template: '<jhi-main></jhi-main>',
   imports: [
     MainComponent,
+    PageDetailComponent,
     // jhipster-needle-angular-add-module JHipster will add new module here
   ],
 })
