@@ -21,14 +21,31 @@
 
         <dt><strong>Prix</strong></dt>
         <dd>
-          <span>{{ product.pro_price | currency: 'EUR' : 'symbol' : '1.0-0' }}</span>
-          <!-- Format monétaire -->
+          <!-- Gestion de la promotion et du prix -->
+          <span *ngIf="product.pro_price">
+            <span *ngIf="product.pro_promotion && product.pro_promotion > 0">
+              <!-- Affichage du prix avec promotion -->
+              <div>
+                <s>{{ product.pro_price | currency: 'EUR' : 'symbol' : '1.0-0' }}</s>
+                <span>{{
+                  product.pro_price - (product.pro_price * product.pro_promotion) / 100 | currency: 'EUR' : 'symbol' : '1.0-0'
+                }}</span>
+              </div>
+            </span>
+            <span *ngIf="!product.pro_promotion || product.pro_promotion === 0">
+              <!-- Affichage sans promotion -->
+              <div>{{ product.pro_price | currency: 'EUR' : 'symbol' : '1.0-0' }}</div>
+            </span>
+          </span>
+          <span *ngIf="!product.pro_price">
+            <!-- Si pas de prix disponible -->
+            <div>No Promo</div>
+          </span>
         </dd>
 
         <dt><strong>Promotion</strong></dt>
         <dd>
           <span>{{ product.pro_promotion }}%</span>
-          <!-- Ajout du pourcentage -->
         </dd>
 
         <dt><strong>Marque</strong></dt>
@@ -53,4 +70,4 @@
   </div>
 </div>
 
-<button class="btn btn-success mt-3">Ajouter au panier</button>
+<button class="btn btn-success mt-3" (click)="addToCart()">Ajouter au panier</button>

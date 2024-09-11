@@ -1,5 +1,6 @@
 <div>
-  <h3>Total amount of your items</h3>
-  <span>{{ totalPrice }}</span>
-  <button (click)="validateCart()">Validate cart</button>
+  <h3>Prix total du panier</h3>
+
+  <span>{{ totalPrice | currency: 'EUR' : 'symbol' : '1.0-0' }}</span>
+  <button (click)="validateCart()">Valider le panier</button>
 </div>

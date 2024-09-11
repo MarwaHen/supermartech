@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { CartItem } from '../../models/cart-item.model';
+import { IProduct } from 'app/view/product/product.model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,6 @@ export class CartService {
     const cart = this.getCart();
 
     const existingItem = cart.find((item: any) => item.productId === newItem.productId);
-
     if (existingItem) {
       existingItem.quantity += newItem.quantity;
     } else {

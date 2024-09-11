@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CartItem } from 'app/models/cart-item.model';
 import { CartService } from 'app/views/cart/cart.service';
 import { CommonModule } from '@angular/common';
@@ -10,10 +10,14 @@ import { CommonModule } from '@angular/common';
   templateUrl: './cart-list.component.html',
   styleUrl: './cart-list.component.scss',
 })
-export class CartListComponent {
+export class CartListComponent implements OnInit {
   @Input()
   cartItems: CartItem[] = [];
   constructor(private cartService: CartService) {}
+
+  ngOnInit(): void {
+    this.cartItems = this.cartService.getCart(); // Charger le panier lors de l'initialisation
+  }
 
   removeItem(productId: number): void {
     this.cartService.removeItem(productId);
