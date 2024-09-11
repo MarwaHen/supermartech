@@ -348,7 +348,7 @@ class ImageProResourceIT {
         ImagePro partialUpdatedImagePro = new ImagePro();
         partialUpdatedImagePro.setId(imagePro.getId());
 
-        partialUpdatedImagePro.pro_id(UPDATED_PRO_ID);
+        partialUpdatedImagePro.imgP_Path(UPDATED_IMG_P_PATH).pro_id(UPDATED_PRO_ID);
 
         restImageProMockMvc
             .perform(

@@ -1012,7 +1012,7 @@ class ProductResourceIT {
         Product partialUpdatedProduct = new Product();
         partialUpdatedProduct.setId(product.getId());
 
-        partialUpdatedProduct.pro_name(UPDATED_PRO_NAME).catt_id(UPDATED_CATT_ID).pro_mark(UPDATED_PRO_MARK);
+        partialUpdatedProduct.pro_description(UPDATED_PRO_DESCRIPTION).pro_price(UPDATED_PRO_PRICE);
 
         restProductMockMvc
             .perform(

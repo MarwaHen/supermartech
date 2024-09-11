@@ -22,7 +22,8 @@
       "odr_phonenumber": "Odr Phonenumber",
       "odr_price": "Odr Price",
       "odr_date": "Odr Date",
-      "user": "User"
+      "user": "User",
+      "orderLine": "Order Line"
     }
   }
 }

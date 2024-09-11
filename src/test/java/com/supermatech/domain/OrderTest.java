@@ -1,9 +1,12 @@
 package com.supermatech.domain;
 
+import static com.supermatech.domain.OrderLineTestSamples.*;
 import static com.supermatech.domain.OrderTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.supermatech.web.rest.TestUtil;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 class OrderTest {

@@ -49,10 +49,10 @@ describe('ImagePro Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Product query and add missing value', () => {
       const imagePro: IImagePro = { id: 456 };
-      const product: IProduct = { id: 19081 };
+      const product: IProduct = { id: 17055 };
       imagePro.product = product;
 
-      const productCollection: IProduct[] = [{ id: 21212 }];
+      const productCollection: IProduct[] = [{ id: 12525 }];
       jest.spyOn(productService, 'query').mockReturnValue(of(new HttpResponse({ body: productCollection })));
       const additionalProducts = [product];
       const expectedCollection: IProduct[] = [...additionalProducts, ...productCollection];
@@ -71,7 +71,7 @@ describe('ImagePro Management Update Component', () => {
 
     it('Should update editForm', () => {
       const imagePro: IImagePro = { id: 456 };
-      const product: IProduct = { id: 13033 };
+      const product: IProduct = { id: 16099 };
       imagePro.product = product;
 
       activatedRoute.data = of({ imagePro });

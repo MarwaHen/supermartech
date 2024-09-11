@@ -396,7 +396,7 @@ class OrderResourceIT {
         Order partialUpdatedOrder = new Order();
         partialUpdatedOrder.setId(order.getId());
 
-        partialUpdatedOrder.odr_adresse(UPDATED_ODR_ADRESSE);
+        partialUpdatedOrder.odr_phonenumber(UPDATED_ODR_PHONENUMBER).odr_price(UPDATED_ODR_PRICE);
 
         restOrderMockMvc
             .perform(

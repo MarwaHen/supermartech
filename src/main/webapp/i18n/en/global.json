@@ -12,7 +12,8 @@
         "subCategory": "Sub Category",
         "product": "Product",
         "imagePro": "Image Pro",
-        "order": "Order"
+        "order": "Order",
+        "orderLine": "Order Line"
       },
       "account": {
         "main": "Account",

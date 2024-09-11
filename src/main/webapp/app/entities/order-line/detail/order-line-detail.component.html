@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (orderLine(); as orderLineRef) {
+      <div>
+        <h2 data-cy="orderLineDetailsHeading"><span jhiTranslate="supermatechApp.orderLine.detail.title">Order Line</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ orderLineRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.orderLine.odl_itemquantity">Odl Itemquantity</span></dt>
+          <dd>
+            <span>{{ orderLineRef.odl_itemquantity }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.orderLine.odl_soldprice">Odl Soldprice</span></dt>
+          <dd>
+            <span>{{ orderLineRef.odl_soldprice }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.orderLine.product">Product</span></dt>
+          <dd>
+            @if (orderLine()!.product) {
+              <div>
+                <a [routerLink]="['/product', orderLine()!.product?.id, 'view']">{{ orderLineRef.product?.pro_name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.orderLine.order">Order</span></dt>
+          <dd>
+            @if (orderLine()!.order) {
+              <div>
+                <a [routerLink]="['/order', orderLine()!.order?.id, 'view']">{{ orderLineRef.order?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/order-line', orderLineRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>
