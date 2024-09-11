@@ -49,10 +49,10 @@ describe('Product Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call SubCategory query and add missing value', () => {
       const product: IProduct = { id: 456 };
-      const subCategory: ISubCategory = { id: 1188 };
+      const subCategory: ISubCategory = { id: 11682 };
       product.subCategory = subCategory;
 
-      const subCategoryCollection: ISubCategory[] = [{ id: 68 }];
+      const subCategoryCollection: ISubCategory[] = [{ id: 2759 }];
       jest.spyOn(subCategoryService, 'query').mockReturnValue(of(new HttpResponse({ body: subCategoryCollection })));
       const additionalSubCategories = [subCategory];
       const expectedCollection: ISubCategory[] = [...additionalSubCategories, ...subCategoryCollection];
@@ -71,7 +71,7 @@ describe('Product Management Update Component', () => {
 
     it('Should update editForm', () => {
       const product: IProduct = { id: 456 };
-      const subCategory: ISubCategory = { id: 20476 };
+      const subCategory: ISubCategory = { id: 26705 };
       product.subCategory = subCategory;
 
       activatedRoute.data = of({ product });

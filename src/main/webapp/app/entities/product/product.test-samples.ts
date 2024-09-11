@@ -3,40 +3,40 @@ import dayjs from 'dayjs/esm';
 import { IProduct, NewProduct } from './product.model';
 
 export const sampleWithRequiredData: IProduct = {
-  id: 10520,
-  pro_name: 'yet',
-  pro_price: 13333.57,
-  pro_quantity: 20476,
-  catt_id: 20487,
+  id: 28993,
+  pro_name: 'iron',
+  pro_price: 15410.4,
+  pro_quantity: 23091,
+  catt_id: 20255,
 };
 
 export const sampleWithPartialData: IProduct = {
-  id: 23890,
-  pro_name: 'queasy numb',
-  pro_description: 'professionalize tremendously',
-  pro_price: 16671.11,
-  pro_quantity: 16387,
-  catt_id: 32358,
-  pro_date: dayjs('2024-09-08T04:28'),
+  id: 14119,
+  pro_name: 'although who thrive',
+  pro_price: 23022.86,
+  pro_quantity: 28775,
+  catt_id: 8283,
+  pro_date: dayjs('2024-09-07T17:22'),
+  pro_promotion: 11813,
 };
 
 export const sampleWithFullData: IProduct = {
-  id: 29997,
-  pro_name: 'supposing',
-  pro_description: 'within whose hmph',
-  pro_price: 10028.07,
-  pro_quantity: 1924,
-  catt_id: 12687,
-  pro_date: dayjs('2024-09-07T15:58'),
-  pro_promotion: 10158,
-  pro_mark: 'whoa briefly',
+  id: 26134,
+  pro_name: 'jaguar',
+  pro_description: 'mouse ack',
+  pro_price: 8757.02,
+  pro_quantity: 17366,
+  catt_id: 15981,
+  pro_date: dayjs('2024-09-07T13:52'),
+  pro_promotion: 4983,
+  pro_mark: 'forfend why tune',
 };
 
 export const sampleWithNewData: NewProduct = {
-  pro_name: 'up',
-  pro_price: 12691.09,
-  pro_quantity: 22427,
-  catt_id: 31988,
+  pro_name: 'for',
+  pro_price: 20472.47,
+  pro_quantity: 17422,
+  catt_id: 19775,
   id: null,
 };
 

@@ -1,20 +1,20 @@
 import { ICategory } from './category.model';
 
 export const sampleWithRequiredData: ICategory = {
-  id: 21141,
-  cat_name: 'till maternity scarcely',
+  id: 19119,
+  cat_name: 'blah amongst',
 };
 
 export const sampleWithPartialData: ICategory = {
-  id: 21341,
-  cat_name: 'staid',
-  cat_description: 'detailed as what',
+  id: 26010,
+  cat_name: 'naturally often',
+  cat_description: 'what',
 };
 
 export const sampleWithFullData: ICategory = {
-  id: 2568,
-  cat_name: 'mama forenenst',
-  cat_description: 'that armor often',
+  id: 31366,
+  cat_name: 'till',
+  cat_description: 'ha vulture blindly',
 };
 Object.freeze(sampleWithRequiredData);
 Object.freeze(sampleWithPartialData);

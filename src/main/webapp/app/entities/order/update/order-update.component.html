@@ -1,0 +1,153 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-order-heading" data-cy="OrderCreateUpdateHeading" jhiTranslate="supermatechApp.order.home.createOrEditLabel">
+        Create or edit a Order
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="supermatechApp.order.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let odr_adresseRef = editForm.get('odr_adresse')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_odr_adresse" jhiTranslate="supermatechApp.order.odr_adresse">Odr Adresse</label>
+          <input
+            type="text"
+            class="form-control"
+            name="odr_adresse"
+            id="field_odr_adresse"
+            data-cy="odr_adresse"
+            formControlName="odr_adresse"
+          />
+          @if (odr_adresseRef.invalid && (odr_adresseRef.dirty || odr_adresseRef.touched)) {
+            <div>
+              @if (editForm.get('odr_adresse')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('odr_adresse')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '600' }"
+                  >This field cannot be longer than 600 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let odr_phonenumberRef = editForm.get('odr_phonenumber')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_odr_phonenumber" jhiTranslate="supermatechApp.order.odr_phonenumber">Odr Phonenumber</label>
+          <input
+            type="text"
+            class="form-control"
+            name="odr_phonenumber"
+            id="field_odr_phonenumber"
+            data-cy="odr_phonenumber"
+            formControlName="odr_phonenumber"
+          />
+          @if (odr_phonenumberRef.invalid && (odr_phonenumberRef.dirty || odr_phonenumberRef.touched)) {
+            <div>
+              @if (editForm.get('odr_phonenumber')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('odr_phonenumber')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '45' }"
+                  >This field cannot be longer than 45 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let odr_priceRef = editForm.get('odr_price')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_odr_price" jhiTranslate="supermatechApp.order.odr_price">Odr Price</label>
+          <input type="number" class="form-control" name="odr_price" id="field_odr_price" data-cy="odr_price" formControlName="odr_price" />
+          @if (odr_priceRef.invalid && (odr_priceRef.dirty || odr_priceRef.touched)) {
+            <div>
+              @if (editForm.get('odr_price')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('odr_price')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let odr_dateRef = editForm.get('odr_date')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_odr_date" jhiTranslate="supermatechApp.order.odr_date">Odr Date</label>
+          <div class="d-flex">
+            <input
+              id="field_odr_date"
+              data-cy="odr_date"
+              type="datetime-local"
+              class="form-control"
+              name="odr_date"
+              formControlName="odr_date"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (odr_dateRef.invalid && (odr_dateRef.dirty || odr_dateRef.touched)) {
+            <div>
+              @if (editForm.get('odr_date')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('odr_date')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_user" jhiTranslate="supermatechApp.order.user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUser">
+            @if (!editForm.get('user')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (userOption of usersSharedCollection; track $index) {
+              <option [ngValue]="userOption">{{ userOption.login }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['user'])!.invalid && (editForm.get(['user'])!.dirty || editForm.get(['user'])!.touched)) {
+          <div>
+            @if (editForm.get(['user'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

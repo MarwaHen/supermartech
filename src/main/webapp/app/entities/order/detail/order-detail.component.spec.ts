@@ -3,44 +3,44 @@ import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { of } from 'rxjs';
 
-import { ProductDetailComponent } from './product-detail.component';
+import { OrderDetailComponent } from './order-detail.component';
 
-describe('Product Management Detail Component', () => {
-  let comp: ProductDetailComponent;
-  let fixture: ComponentFixture<ProductDetailComponent>;
+describe('Order Management Detail Component', () => {
+  let comp: OrderDetailComponent;
+  let fixture: ComponentFixture<OrderDetailComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductDetailComponent],
+      imports: [OrderDetailComponent],
       providers: [
         provideRouter(
           [
             {
               path: '**',
-              loadComponent: () => import('./product-detail.component').then(m => m.ProductDetailComponent),
-              resolve: { product: () => of({ id: 123 }) },
+              loadComponent: () => import('./order-detail.component').then(m => m.OrderDetailComponent),
+              resolve: { order: () => of({ id: 123 }) },
             },
           ],
           withComponentInputBinding(),
         ),
       ],
     })
-      .overrideTemplate(ProductDetailComponent, '')
+      .overrideTemplate(OrderDetailComponent, '')
       .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProductDetailComponent);
+    fixture = TestBed.createComponent(OrderDetailComponent);
     comp = fixture.componentInstance;
   });
 
   describe('OnInit', () => {
-    it('Should load product on init', async () => {
+    it('Should load order on init', async () => {
       const harness = await RouterTestingHarness.create();
-      const instance = await harness.navigateByUrl('/', ProductDetailComponent);
+      const instance = await harness.navigateByUrl('/', OrderDetailComponent);
 
       // THEN
-      expect(instance.product()).toEqual(expect.objectContaining({ id: 123 }));
+      expect(instance.order()).toEqual(expect.objectContaining({ id: 123 }));
     });
   });
 
