@@ -97,7 +97,7 @@
               <td>
                 @if (product.subCategory) {
                   <div>
-                    <a [routerLink]="['/sub-category', product.subCategory.id, 'view']">{{ product.subCategory.catt_name }}</a>
+                    <a [routerLink]="['/product', product.id, product.pro_name]">{{ product.subCategory.catt_name }}</a>
                   </div>
                 }
               </td>

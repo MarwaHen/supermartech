@@ -56,6 +56,12 @@ const routes: Routes = [
     path: 'product/:id/:pro_name',
     loadComponent: () => import('./views/page-detail/page-detail.component').then(m => m.PageDetailComponent),
   },
+
+  {
+    path: 'product/:id/view',
+    loadComponent: () => import('./views/page-detail/page-detail.component').then(m => m.PageDetailComponent),
+  },
+
   ...errorRoute,
 ];
 
