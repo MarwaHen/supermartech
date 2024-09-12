@@ -1,5 +1,9 @@
 package com.supermatech.web.rest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nimbusds.jose.shaded.gson.JsonArray;
 import com.supermatech.domain.Order;
 import com.supermatech.domain.Product;
 import io.swagger.v3.core.util.Json;
@@ -7,6 +11,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
 import java.util.*;
+import org.h2.command.Command;
 import org.hibernate.PessimisticLockException;
 import org.hibernate.exception.LockTimeoutException;
 import org.springframework.web.bind.annotation.*;
@@ -22,17 +27,6 @@ class PaymentProduct {
     }
 }
 
-class Quantity {
-
-    PaymentProduct paymentProduct;
-    Product product;
-
-    public Quantity(PaymentProduct pp, Product p) {
-        paymentProduct = pp;
-        product = p;
-    }
-}
-
 @RestController
 @RequestMapping("/api/payment")
 public class PaymentController {
@@ -41,48 +35,16 @@ public class PaymentController {
     private EntityManager em;
 
     @PostMapping
-    public Map<String, Object> processPayment(@RequestBody Map<String, Object> post) {
+    public Map<String, Object> processPayment(@RequestBody String post) {
         HashMap<String, Object> res = new HashMap<>();
-        // Récupérer les informations du JSON
-        int id_client = (int) post.get("id_client");
-        String adresse = (String) post.get("address");
-        String phone_number = (String) post.get("phone_number");
-        String jsonArray = (String) post.get("cart_list");
-        res.put("return", jsonArray);
 
-        ArrayList<PaymentProduct> paymentProducts = new ArrayList<>();
-        ArrayList<Quantity> products = new ArrayList<Quantity>();
-        boolean isValid = true;
-        ArrayList<PaymentProduct> quantityError = new ArrayList<>();
-
-        for (PaymentProduct paymentProduct : paymentProducts) {
-            // Locking
-            try {
-                // Récupération du produit avec un accès en écriture
-                products.add(new Quantity(paymentProduct, em.find(Product.class, paymentProduct.id, LockModeType.PESSIMISTIC_WRITE)));
-                if (products.get(-1).product.getPro_quantity() < products.get(-1).paymentProduct.quantity) {
-                    isValid = false;
-                    quantityError.add(
-                        new PaymentProduct(
-                            products.get(-1).paymentProduct.id,
-                            products.get(-1).paymentProduct.quantity - products.get(-1).product.getPro_quantity()
-                        )
-                    );
-                }
-            } catch (PessimisticLockException | LockTimeoutException e) {
-                res.put("Error", true);
-                return res;
-            }
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            Command command = objectMapper.readValue(post, Command.class);
+            res.put("test", command.toString());
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
         }
-        if (!isValid) {
-            return res;
-        }
-
-        //creer order
-        //em.createQuery()
-        //for (Quantity quantity : products) {
-        //creer orderlines et update products
-        //}
 
         return res;
     }
