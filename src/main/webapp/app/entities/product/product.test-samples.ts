@@ -3,40 +3,39 @@ import dayjs from 'dayjs/esm';
 import { IProduct, NewProduct } from './product.model';
 
 export const sampleWithRequiredData: IProduct = {
-  id: 10520,
-  pro_name: 'yet',
-  pro_price: 13333.57,
-  pro_quantity: 20476,
-  catt_id: 20487,
+  id: 14338,
+  pro_name: 'while',
+  pro_price: 12325.13,
+  pro_quantity: 22823,
+  catt_id: 1089,
 };
 
 export const sampleWithPartialData: IProduct = {
-  id: 23890,
-  pro_name: 'queasy numb',
-  pro_description: 'professionalize tremendously',
-  pro_price: 16671.11,
-  pro_quantity: 16387,
-  catt_id: 32358,
-  pro_date: dayjs('2024-09-08T04:28'),
+  id: 7328,
+  pro_name: 'jealously whirring',
+  pro_price: 7116.85,
+  pro_quantity: 13935,
+  catt_id: 10411,
+  pro_promotion: 3632,
 };
 
 export const sampleWithFullData: IProduct = {
-  id: 29997,
-  pro_name: 'supposing',
-  pro_description: 'within whose hmph',
-  pro_price: 10028.07,
-  pro_quantity: 1924,
-  catt_id: 12687,
-  pro_date: dayjs('2024-09-07T15:58'),
-  pro_promotion: 10158,
-  pro_mark: 'whoa briefly',
+  id: 2797,
+  pro_name: 'longingly um',
+  pro_description: 'yippee',
+  pro_price: 28222.26,
+  pro_quantity: 12659,
+  catt_id: 4173,
+  pro_date: dayjs('2024-09-07T10:44'),
+  pro_promotion: 29200,
+  pro_mark: 'practice bah suburban',
 };
 
 export const sampleWithNewData: NewProduct = {
-  pro_name: 'up',
-  pro_price: 12691.09,
-  pro_quantity: 22427,
-  catt_id: 31988,
+  pro_name: 'clank',
+  pro_price: 27405.63,
+  pro_quantity: 18524,
+  catt_id: 21829,
   id: null,
 };
 

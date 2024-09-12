@@ -1,9 +1,10 @@
 import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'jhi-cart-summary',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './cart-summary.component.html',
   styleUrl: './cart-summary.component.scss',
 })
@@ -12,6 +13,6 @@ export class CartSummaryComponent {
   totalPrice!: number;
 
   validateCart(): void {
-    alert('Payment');
+    alert('Panier validé');
   }
 }

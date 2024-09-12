@@ -10,6 +10,7 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { fontAwesomeIcons } from './config/font-awesome-icons';
 import MainComponent from './layouts/main/main.component';
 import { CartComponent } from './views/cart/cart.component';
+import { PageDetailComponent } from './views/page-detail/page-detail.component';
 
 @Component({
   standalone: true,
@@ -18,6 +19,7 @@ import { CartComponent } from './views/cart/cart.component';
   imports: [
     MainComponent,
     CartComponent,
+    PageDetailComponent,
     // jhipster-needle-angular-add-module JHipster will add new module here
   ],
 })

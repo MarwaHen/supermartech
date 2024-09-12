@@ -1,26 +1,26 @@
 import { IImagePro, NewImagePro } from './image-pro.model';
 
 export const sampleWithRequiredData: IImagePro = {
-  id: 22696,
-  imgP_Path: 'hence serious',
-  pro_id: 18754,
+  id: 10602,
+  imgP_Path: 'blah only',
+  pro_id: 26906,
 };
 
 export const sampleWithPartialData: IImagePro = {
-  id: 478,
-  imgP_Path: 'wildlife',
-  pro_id: 13331,
+  id: 21525,
+  imgP_Path: 'rate gigantic',
+  pro_id: 3327,
 };
 
 export const sampleWithFullData: IImagePro = {
-  id: 337,
-  imgP_Path: 'barbecue search up',
-  pro_id: 19699,
+  id: 20326,
+  imgP_Path: 'blah hm but',
+  pro_id: 11027,
 };
 
 export const sampleWithNewData: NewImagePro = {
-  imgP_Path: 'teapot whether',
-  pro_id: 1474,
+  imgP_Path: 'charbroil pale before',
+  pro_id: 28167,
   id: null,
 };
 

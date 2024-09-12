@@ -2,32 +2,31 @@
   "supermatechApp": {
     "product": {
       "home": {
-        "title": "Produit",
+        "title": "Products",
         "refreshListLabel": "Actualiser la liste",
         "createLabel": "Créer un nouveau Product",
         "createOrEditLabel": "Créer ou éditer un Product",
-        "notFound": "Aucun produit trouvé"
+        "notFound": "Aucun Product trouvé"
       },
-      "created": "Un nouveau produit a été créé avec l'identifiant {{ param }}",
-      "updated": "Le produit avec l'identifiant {{ param }} a été mis à jour",
-      "deleted": "Le produit avec l'identifiant {{ param }} a été supprimé",
+      "created": "Un nouveau Product a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Product avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Product avec l'identifiant {{ param }} a été supprimé",
       "delete": {
-        "question": "Êtes-vous certain de vouloir supprimer le produit {{ id }} ?"
+        "question": "Êtes-vous certain de vouloir supprimer le Product {{ id }} ?"
       },
       "detail": {
-        "title": "Produit"
+        "title": "Product"
       },
       "id": "ID",
-      "pro_name": "Nom",
-      "pro_description": "Description",
-      "pro_price": "Prix",
-      "pro_quantity": "Quantité",
-      "catt_id": "Id de catégorie",
-      "pro_date": "Date d'ajout",
-      "pro_promotion": "Promotion",
-      "pro_mark": "Marque",
-      "subCategory": "Sous-catégorie",
-      "prix_de_base": "Prix de Base"
+      "pro_name": "Pro Name",
+      "pro_description": "Pro Description",
+      "pro_price": "Pro Price",
+      "pro_quantity": "Pro Quantity",
+      "catt_id": "Catt Id",
+      "pro_date": "Pro Date",
+      "pro_promotion": "Pro Promotion",
+      "pro_mark": "Pro Mark",
+      "subCategory": "Sub Category"
     }
   }
 }

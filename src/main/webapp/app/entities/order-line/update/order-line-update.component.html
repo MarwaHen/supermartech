@@ -1,0 +1,135 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-order-line-heading" data-cy="OrderLineCreateUpdateHeading" jhiTranslate="supermatechApp.orderLine.home.createOrEditLabel">
+        Create or edit a Order Line
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="supermatechApp.orderLine.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let odl_itemquantityRef = editForm.get('odl_itemquantity')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_odl_itemquantity" jhiTranslate="supermatechApp.orderLine.odl_itemquantity"
+            >Odl Itemquantity</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="odl_itemquantity"
+            id="field_odl_itemquantity"
+            data-cy="odl_itemquantity"
+            formControlName="odl_itemquantity"
+          />
+          @if (odl_itemquantityRef.invalid && (odl_itemquantityRef.dirty || odl_itemquantityRef.touched)) {
+            <div>
+              @if (editForm.get('odl_itemquantity')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('odl_itemquantity')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let odl_soldpriceRef = editForm.get('odl_soldprice')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_odl_soldprice" jhiTranslate="supermatechApp.orderLine.odl_soldprice">Odl Soldprice</label>
+          <input
+            type="number"
+            class="form-control"
+            name="odl_soldprice"
+            id="field_odl_soldprice"
+            data-cy="odl_soldprice"
+            formControlName="odl_soldprice"
+          />
+          @if (odl_soldpriceRef.invalid && (odl_soldpriceRef.dirty || odl_soldpriceRef.touched)) {
+            <div>
+              @if (editForm.get('odl_soldprice')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('odl_soldprice')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_product" jhiTranslate="supermatechApp.orderLine.product">Product</label>
+          <select
+            class="form-control"
+            id="field_product"
+            data-cy="product"
+            name="product"
+            formControlName="product"
+            [compareWith]="compareProduct"
+          >
+            @if (!editForm.get('product')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (productOption of productsSharedCollection; track $index) {
+              <option [ngValue]="productOption">{{ productOption.pro_name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['product'])!.invalid && (editForm.get(['product'])!.dirty || editForm.get(['product'])!.touched)) {
+          <div>
+            @if (editForm.get(['product'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_order" jhiTranslate="supermatechApp.orderLine.order">Order</label>
+          <select class="form-control" id="field_order" data-cy="order" name="order" formControlName="order" [compareWith]="compareOrder">
+            @if (editForm.get(['order'])!.value == null) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (orderOption of ordersSharedCollection; track $index) {
+              <option [ngValue]="orderOption">{{ orderOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['order'])!.invalid && (editForm.get(['order'])!.dirty || editForm.get(['order'])!.touched)) {
+          <div>
+            @if (editForm.get(['order'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

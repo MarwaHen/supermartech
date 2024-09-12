@@ -3,6 +3,7 @@ export interface CartItem {
   productName: string;
   price: number;
   quantity: number;
+  promotion?: number;
 }
 
 export const mockCartItems: CartItem[] = [
