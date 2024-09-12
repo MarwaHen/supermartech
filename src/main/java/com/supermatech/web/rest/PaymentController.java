@@ -16,15 +16,18 @@ import org.hibernate.PessimisticLockException;
 import org.hibernate.exception.LockTimeoutException;
 import org.springframework.web.bind.annotation.*;
 
-class PaymentProduct {
+class CartProduct {
 
     int id;
     int quantity;
+}
 
-    public PaymentProduct(int id, int quantity) {
-        this.id = id;
-        this.quantity = quantity;
-    }
+class Cart {
+
+    int id_client;
+    int address;
+    String phone_number;
+    CartProduct cart_list;
 }
 
 @RestController
@@ -40,8 +43,8 @@ public class PaymentController {
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            Command command = objectMapper.readValue(post, Command.class);
-            res.put("test", command.toString());
+            Cart command = objectMapper.readValue(post, Cart.class);
+            res.put("test", 0);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
