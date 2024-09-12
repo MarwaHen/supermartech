@@ -2,13 +2,11 @@ package com.supermatech.web.rest;
 
 import com.supermatech.domain.Product;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.PersistenceContext;
 import java.util.*;
-import org.apache.commons.lang3.ObjectUtils;
 import org.hibernate.PessimisticLockException;
 import org.hibernate.exception.LockTimeoutException;
-import org.hibernate.processor.xml.jaxb.LockModeType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 class PaymentProduct {
