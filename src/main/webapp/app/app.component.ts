@@ -11,6 +11,7 @@ import { fontAwesomeIcons } from './config/font-awesome-icons';
 import MainComponent from './layouts/main/main.component';
 import { CartComponent } from './views/cart/cart.component';
 import { PageDetailComponent } from './views/page-detail/page-detail.component';
+import { PaymentComponent } from './views/payment/payment.component';
 
 @Component({
   standalone: true,
@@ -20,6 +21,7 @@ import { PageDetailComponent } from './views/page-detail/page-detail.component';
     MainComponent,
     CartComponent,
     PageDetailComponent,
+    PaymentComponent,
     // jhipster-needle-angular-add-module JHipster will add new module here
   ],
 })

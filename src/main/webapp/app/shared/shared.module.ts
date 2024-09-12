@@ -8,13 +8,14 @@ import FindLanguageFromKeyPipe from './language/find-language-from-key.pipe';
 import TranslateDirective from './language/translate.directive';
 import { AlertComponent } from './alert/alert.component';
 import { AlertErrorComponent } from './alert/alert-error.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 /**
  * Application wide Module
  */
 @NgModule({
   providers: [CookieService],
-  imports: [AlertComponent, AlertErrorComponent, FindLanguageFromKeyPipe, TranslateDirective],
+  imports: [AlertComponent, AlertErrorComponent, FindLanguageFromKeyPipe, TranslateDirective, ReactiveFormsModule],
   exports: [
     CommonModule,
     NgbModule,
