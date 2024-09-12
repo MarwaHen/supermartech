@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
   selector: 'jhi-header',
   templateUrl: './header.component.html',
   styleUrls: [
+    './header.component.scss',
     '../../../content/hope/css/animate.css',
     '../../../content/hope/css/bootstrap.min.css',
     '../../../content/hope/css/font-awesome.min.css',
