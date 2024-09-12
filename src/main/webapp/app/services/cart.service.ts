@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { CartItem } from '../../models/cart-item.model';
+import { CartItem } from '../models/cart-item.model';
 import { IProduct } from 'app/view/product/product.model';
 
 @Injectable({
@@ -35,7 +35,7 @@ export class CartService {
 
   saveCart(cart: CartItem[]): void {
     const cartJson = JSON.stringify(cart);
-    this.cookieService.set(this.cartCookieName, cartJson);
+    this.cookieService.set(this.cartCookieName, cartJson, 7, '/');
   }
 
   removeItem(productId: number): void {
@@ -61,5 +61,25 @@ export class CartService {
   getTotalPrice(): number {
     const cartItems = this.getCart();
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  }
+
+  updateCartAfterStockCheck(missingItems: { productId: number; quantity: number }[]): void {
+    const cart = this.getCart();
+
+    missingItems.forEach(missingItem => {
+      const cartItem = cart.find(item => item.productId === missingItem.productId);
+      if (cartItem) {
+        if (cartItem.quantity > missingItem.quantity) {
+          cartItem.quantity -= missingItem.quantity;
+        } else {
+          const index = cart.indexOf(cartItem);
+          if (index !== -1) {
+            cart.splice(index, 1);
+          }
+        }
+      }
+    });
+
+    this.saveCart(cart);
   }
 }
