@@ -14,11 +14,17 @@ export class PaymentService {
   protected http = inject(HttpClient);
   protected applicationConfigService = inject(ApplicationConfigService);
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/payment');
-  private cartCookieName = 'cartItems';
-
-  constructor(private cookieService: CookieService) {}
+  private paymentCompleted = true;
 
   paymentProcess(payment: Payment): Observable<any> {
     return this.http.post<any>(this.resourceUrl, payment);
+  }
+
+  completePayment(): void {
+    this.paymentCompleted = true;
+  }
+
+  isPaymentCompleted(): boolean {
+    return this.paymentCompleted;
   }
 }

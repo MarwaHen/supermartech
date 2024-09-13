@@ -83,44 +83,46 @@ public class PaymentController {
                 cartProduct.product = em.find(Product.class, cartProduct.product_id, LockModeType.PESSIMISTIC_WRITE);
                 if (cartProduct.product.getPro_quantity() < cartProduct.quantity) {
                     productMissing.add(new HashMap<>());
-                    productMissing.get(-1).put("product_id", cartProduct.product_id);
-                    productMissing.get(-1).put("quantity", cartProduct.quantity - cartProduct.product.getPro_quantity());
+                    productMissing.get(productMissing.size() - 1).put("product_id", cartProduct.product_id);
+                    productMissing.get(productMissing.size() - 1).put("product_name", cartProduct.product.getPro_name());
+                    productMissing
+                        .get(productMissing.size() - 1)
+                        .put("quantity", cartProduct.quantity - cartProduct.product.getPro_quantity());
                     isValid = false;
                 }
             }
 
             if (!isValid) {
                 res.put("cart_list", productMissing);
-                return res;
+            } else {
+                Order order = new Order();
+                order.setUser(em.find(User.class, cart.id_client));
+                order.setOdr_adresse(cart.address);
+                order.setOdr_price(0.0);
+                order.setOdr_date(new Date().toInstant());
+                order.setOdr_phonenumber(cart.phone_number);
+                orderService.save(order);
+
+                for (CartProduct cartProduct : cart.cart_list) {
+                    cartProduct.product.setPro_quantity(cartProduct.product.getPro_quantity() - cartProduct.quantity);
+                    OrderLine orderLine = new OrderLine();
+                    orderLine.setOrder(order);
+                    orderLine.setProduct(cartProduct.product);
+                    orderLine.setOdl_itemquantity(cartProduct.quantity);
+
+                    Double soldprice = cartProduct.product.getPro_price();
+                    Double minus = ((double) cartProduct.product.getPro_promotion() / 100.0);
+                    minus = soldprice * minus;
+                    soldprice = soldprice - minus;
+
+                    orderLine.setOdl_soldprice(soldprice);
+                    order.setOdr_price(order.getOdr_price() + orderLine.getOdl_soldprice() * cartProduct.quantity);
+                    orderLineService.save(orderLine);
+                }
+
+                orderService.update(order);
+                res.put("id", order.getId());
             }
-
-            Order order = new Order();
-            order.setUser(em.find(User.class, cart.id_client));
-            order.setOdr_adresse(cart.address);
-            order.setOdr_price(0.0);
-            order.setOdr_date(new Date().toInstant());
-            order.setOdr_phonenumber(cart.phone_number);
-            orderService.save(order);
-
-            for (CartProduct cartProduct : cart.cart_list) {
-                cartProduct.product.setPro_quantity(cartProduct.product.getPro_quantity() - cartProduct.quantity);
-                OrderLine orderLine = new OrderLine();
-                orderLine.setOrder(order);
-                orderLine.setProduct(cartProduct.product);
-                orderLine.setOdl_itemquantity(cartProduct.quantity);
-
-                Double soldprice = cartProduct.product.getPro_price();
-                Double minus = ((double) cartProduct.product.getPro_promotion() / 100.0);
-                minus = soldprice * minus;
-                soldprice = soldprice - minus;
-
-                orderLine.setOdl_soldprice(soldprice);
-                order.setOdr_price(order.getOdr_price() + orderLine.getOdl_soldprice() * cartProduct.quantity);
-                orderLineService.save(orderLine);
-            }
-
-            orderService.update(order);
-            res.put("id", order.getId());
         } catch (JsonProcessingException | PessimisticLockException | LockTimeoutException e) {
             res.put("error", e);
         }

@@ -63,11 +63,11 @@ export class CartService {
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   }
 
-  updateCartAfterStockCheck(missingItems: { productId: number; quantity: number }[]): void {
+  updateCartAfterStockCheck(missingItems: { product_id: number; product_name: string; quantity: number }[]): void {
     const cart = this.getCart();
 
     missingItems.forEach(missingItem => {
-      const cartItem = cart.find(item => item.productId === missingItem.productId);
+      const cartItem = cart.find(item => item.productId === missingItem.product_id);
       if (cartItem) {
         if (cartItem.quantity > missingItem.quantity) {
           cartItem.quantity -= missingItem.quantity;

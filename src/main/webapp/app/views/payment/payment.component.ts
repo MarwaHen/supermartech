@@ -7,6 +7,7 @@ import { CartService } from 'app/services/cart.service';
 import { PaymentService } from 'app/services/payment.service';
 import { Payment, PaymentProduct } from 'app/models/payment.model';
 import { AccountService } from 'app/core/auth/account.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-payment',
@@ -18,6 +19,7 @@ import { AccountService } from 'app/core/auth/account.service';
 export class PaymentComponent implements OnInit {
   account = inject(AccountService).trackCurrentAccount();
   cartItems: CartItem[] = [];
+  private readonly router = inject(Router);
 
   constructor(
     private cartService: CartService,
@@ -26,6 +28,9 @@ export class PaymentComponent implements OnInit {
 
   ngOnInit(): void {
     this.cartItems = this.cartService.getCart();
+    if (!(this.account()?.id && this.cartItems.length > 0)) {
+      this.router.navigate(['/']);
+    }
   }
 
   paymentProcess(paymentForms: any): void {
@@ -45,16 +50,29 @@ export class PaymentComponent implements OnInit {
 
     this.paymentService.paymentProcess(paymentJson).subscribe({
       next: response => {
-        if (response?.cartList) {
-          alert('There is no product in stock');
-          this.cartService.updateCartAfterStockCheck(response.cartList);
+        if (response?.cart_list) {
+          this.cartService.updateCartAfterStockCheck(response.cart_list);
+          const namesList = this.getProductNames(response.cart_list);
+          alert(`Some product are missing in stock Products: ${namesList.join(', ')}`);
+          this.router.navigate(['/']);
         } else {
-          alert('Payment done!');
+          this.paymentService.completePayment();
+          this.cartService.clearCart();
+          this.cartItems = this.cartService.getCart();
+          this.router.navigate(['/payment/paymentConfirmation', response?.id]);
         }
       },
       error(error) {
-        alert('Error to process');
+        alert('Error to process payment. Try again!');
       },
     });
+  }
+
+  getProductNames(items: any): string[] {
+    const namesList: string[] = [];
+    items.forEach((item: { product_name: string }) => {
+      namesList.push(item.product_name);
+    });
+    return namesList;
   }
 }
