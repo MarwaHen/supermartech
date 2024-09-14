@@ -3,13 +3,13 @@
     <h1 data-cy="paymentTitle" jhiTranslate="payment.title">Payment</h1>
     <form class="form" (ngSubmit)="sendForms()" [formGroup]="paymentForm">
       <div class="mb-3">
-        <label class="adress-label" for="address" jhiTranslate="global.form.address.label">Address</label>
+        <label class="adress-label" for="address" jhiTranslate="global.form.address.label">Delivery address</label>
         <input
           type="text"
           class="form-control"
           name="address"
           id="address"
-          placeholder="Address"
+          placeholder="Delivery address"
           formControlName="address"
           #address
           data-cy="address"
@@ -26,7 +26,7 @@
           class="form-control"
           name="phoneNumber"
           id="phoneNumber"
-          placeholder="Phone number"
+          placeholder="Phone number (7XXXXXXXXX)"
           formControlName="phoneNumber"
           #phoneNumber
           data-cy="phoneNumber"
@@ -38,13 +38,13 @@
       </div>
       <div class="payment-fields">
         <div class="mb-3">
-          <label class="cartNumber-label" for="cartNumber" jhiTranslate="global.form.cartNumber.label">Numéro de carte</label>
+          <label class="cartNumber-label" for="cartNumber" jhiTranslate="global.form.cartNumber.label">Cart Number</label>
           <input
             type="text"
             class="form-control"
             name="cartNumber"
             id="cartNumber"
-            placeholder="Numéro de carte"
+            placeholder="Cart Number"
             formControlName="cartNumber"
             #cartNumber
             data-cy="cartNumber"
@@ -55,13 +55,13 @@
           </div>
         </div>
         <div class="mb-3">
-          <label class="dateExpiration-label" for="dateExpiration" jhiTranslate="global.form.dateExpiration.label">Date d'expiration</label>
+          <label class="dateExpiration-label" for="dateExpiration" jhiTranslate="global.form.dateExpiration.label">Expiration date</label>
           <input
             type="text"
             class="form-control"
             name="dateExpiration"
             id="dateExpiration"
-            placeholder="Date d'expiration"
+            placeholder="Expiration date (MM/YY)"
             formControlName="dateExpiration"
             #dateExpiration
             data-cy="dateExpiration"
@@ -72,26 +72,26 @@
           </div>
         </div>
         <div class="mb-3">
-          <label class="nameCarte-label" for="nameCarte" jhiTranslate="global.form.nameCarte.label">Titulaire de la carte</label>
+          <label class="nameCarte-label" for="nameCarte" jhiTranslate="global.form.nameCarte.label">Cardholder</label>
           <input
             type="text"
             class="form-control"
             name="nameCarte"
             id="nameCarte"
-            placeholder="Titulaire de la carte"
+            placeholder="Cardholder"
             formControlName="nameCarte"
             #nameCarte
             data-cy="nameCarte"
           />
         </div>
         <div class="mb-3">
-          <label class="codeCart-label" for="codeCart" jhiTranslate="global.form.codeCart.label">Code de sécurité</label>
+          <label class="codeCart-label" for="codeCart" jhiTranslate="global.form.codeCart.label">Cart code</label>
           <input
             type="text"
             class="form-control"
             name="codeCart"
             id="codeCart"
-            placeholder="Titulaire de la carte"
+            placeholder="Cart code"
             formControlName="codeCart"
             #codeCart
             data-cy="codeCart"
@@ -102,7 +102,7 @@
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary" data-cy="submit" jhiTranslate="login.form.button">Payer</button>
+      <button type="submit" class="btn btn-primary payment-forms-button" data-cy="submit" jhiTranslate="login.form.button">Pay</button>
     </form>
   </div>
 </div>

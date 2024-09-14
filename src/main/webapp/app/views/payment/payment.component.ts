@@ -57,9 +57,10 @@ export class PaymentComponent implements OnInit {
           this.router.navigate(['/']);
         } else {
           this.paymentService.completePayment();
-          this.cartService.clearCart();
-          this.cartItems = this.cartService.getCart();
-          this.router.navigate(['/payment/paymentConfirmation', response?.id]);
+          this.router.navigate(['/payment/paymentConfirmation', response?.id]).then(() => {
+            this.cartService.clearCart();
+            this.cartItems = this.cartService.getCart();
+          });
         }
       },
       error(error) {
