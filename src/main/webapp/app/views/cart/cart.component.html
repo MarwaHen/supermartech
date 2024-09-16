@@ -1,8 +1,73 @@
-<div class="wrapper">
-  <div class="cart-list">
-    <jhi-cart-list [cartItems]="cartItems"></jhi-cart-list>
-  </div>
-  <div class="cart-summary">
-    <jhi-cart-summary [totalPrice]="updateTotalPrice()"></jhi-cart-summary>
+<div class="shopping_cart_area">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="cart_title">
+          <h2>Votre panier</h2>
+        </div>
+        <div class="shopping-cart-table">
+          <table class="cart_items">
+            <thead>
+              <tr>
+                <th style="padding-right: 20px">Retirer l'article</th>
+                <th style="padding-right: 20px">Article</th>
+                <th style="padding-right: 20px">Prix unité</th>
+                <th style="padding-right: 20px">Quantité</th>
+                <th style="padding-right: 20px">Sous-total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of cartItems">
+                <td>
+                  <button (click)="removeItem(item.productId)">
+                    <img src="../../../content/hope/img/arrow/btn_trash.gif" alt="Remove" />
+                  </button>
+                </td>
+                <td>{{ item.productName }}</td>
+                <td>{{ item.price | number: '1.2-2' }} €</td>
+                <!-- Affiche le prix avec 2 décimales en EUR -->
+                <td>
+                  <button (click)="decreaseQuantity(item)">-</button>
+                  <input type="text" [value]="item.quantity" class="input-text qty" readonly />
+                  <button (click)="increaseQuantity(item)">+</button>
+                </td>
+                <td>{{ item.price * item.quantity | currency: 'EUR' }}</td>
+                <!-- Sous-total avec 2 décimales en EUR -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12">
+        <div class="total_price">
+          <table class="total_rate">
+            <tr>
+              <th>Total :</th>
+              <th>{{ totalPrice | currency: 'EUR' }}</th>
+              <!-- Affichage du total avec 2 décimales en EUR -->
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="shopping_cart_main">
+          <div class="shopping_button">
+            <button (click)="clearCart()" class="continue_shopping">Vider le panier</button>
+          </div>
+          <div class="shopping_button">
+            <button (click)="continueShopping()" class="continue_shopping">Continuer le shopping</button>
+          </div>
+          <div class="shopping_button">
+            <button (click)="validateCart()" class="button">Valider le panier</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
