@@ -14,7 +14,7 @@ export class PaymentService {
   protected http = inject(HttpClient);
   protected applicationConfigService = inject(ApplicationConfigService);
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/payment');
-  private paymentCompleted = true;
+  private paymentCompleted = false;
 
   paymentProcess(payment: Payment): Observable<any> {
     return this.http.post<any>(this.resourceUrl, payment);
