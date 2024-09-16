@@ -19,7 +19,7 @@ import { ProductService } from 'app/entities/product/service/product.service';
 export default class HomeComponent implements OnInit, OnDestroy {
   account: Account | null = null; // Remplace signal par une propriété classique
   products: IProduct[] = []; // Liste des produits
-
+  images: any;
   private readonly destroy$ = new Subject<void>();
   private accountService = inject(AccountService);
   private productService = inject(ProductService); // Injecte le ProductService
@@ -39,6 +39,14 @@ export default class HomeComponent implements OnInit, OnDestroy {
   loadProducts(): void {
     this.productService.query().subscribe(response => {
       this.products = response.body ?? []; // Utilise l'opérateur de coalescence nulle ici
+    });
+  }
+
+  loadImages(prod_id: number): void {
+    this.productService.loadImages(prod_id).subscribe(response => {
+      // eslint-disable-next-line no-console
+      console.log(response);
+      this.images = response ?? [];
     });
   }
 
