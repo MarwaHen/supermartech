@@ -13,11 +13,19 @@ import { CartService } from 'app/services/cart.service';
   styleUrl: './cart.component.scss',
 })
 export class CartComponent implements OnInit {
-  cartItems: CartItem[] = [];
   constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
-    this.cartItems = this.cartService.getCart();
+    this.loadCart();
+  }
+
+  loadCart(): CartItem[] {
+    const cart = this.cartService.getCart();
+    if (cart.length > 0) {
+      return cart;
+    } else {
+      return [];
+    }
   }
 
   updateTotalPrice(): number {
