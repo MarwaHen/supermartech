@@ -46,8 +46,8 @@ public class ImageProResource {
      * @param pro_id the id of the product to retrieve all images.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the list of all link.
      */
-    @GetMapping("get_all/")
-    public List<HashMap<String, Object>> getAllImagePro(@RequestBody Integer pro_id) {
+    @GetMapping("get_all/{id}")
+    public List<HashMap<String, Object>> getAllImagePro(@PathVariable(value = "id", required = true) final Integer pro_id) {
         List<ImagePro> imagePro = imageProService.findAll();
         List<HashMap<String, Object>> res = new ArrayList<>();
         for (ImagePro image : imagePro) {
