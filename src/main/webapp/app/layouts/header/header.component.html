@@ -1,80 +1,23 @@
-<!--Start Header Top area -->
-<div class="header_area_top">
+<div class="header_botttom_area">
   <div class="container">
     <div class="row">
-      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <!--Start Search area -->
-        <form action="#" name="myForm">
-          <div class="search_box">
-            <input name="Name" id="itp" class="input_text" type="text" value="Search" />
-            <button type="submit" class="btn-search">
-              <span><i class="fa fa-search"></i></span>
-            </button>
-          </div>
-        </form>
-        <!--End Search area -->
-      </div>
-      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <!--Start Logo area -->
-        <div class="logo">
-          <a href="../../../content/hope/index.html">
-            <img src="../../../content/hope/img/logo/logo.png" alt="" />
-          </a>
-        </div>
-        <!--End Logo area -->
-      </div>
-      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-        <!--Start Header Right Cart area -->
-        <div class="account_card_area">
-          <ul id="account_nav" class="account_nav">
-            <li
-              *ngFor="let category of categories"
-              class="category-item"
-              (mouseenter)="showSubCategories(category.id)"
-              (mouseleave)="hideSubCategories()"
-            >
-              <a>{{ category?.cat_name }}</a>
-              <div class="account_menu_list">
-                <div class="account_single_item">
-                  <ul *ngIf="activeCategoryId === category.id" id="account_single_nav_1">
-                    <li *ngFor="let sub of category.subCategories">
-                      <a [href]="'http://localhost:9000/view/' + sub?.id"><i class="fa fa-key"></i>{{ sub?.catt_name }}</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </li>
-            <li>
-              <a href="../../../content/hope/cart.html"><i class="fa fa-shopping-cart"></i>Cart <span class="cart_zero">2</span></a>
-              <div class="cart_down_area">
-                <div class="cart_single">
-                  <a href="#"><img src="../../../content/hope/img/cart/cart-1.jpg" alt="" /></a>
-                  <h2>
-                    <a href="#">Pellentesque hendrerit</a>
-                    <a href="#"
-                      ><span><i class="fa fa-trash"></i></span
-                    ></a>
-                  </h2>
-                  <p>1 x $222.00</p>
-                </div>
-                <div class="cart_single">
-                  <a href="#"><img src="../../../content/hope/img/cart/cart-2.jpg" alt="" /></a>
-                  <h2>
-                    <a href="#">Pellentesque hendrerit</a>
-                    <a href="#"
-                      ><span><i class="fa fa-trash"></i></span
-                    ></a>
-                  </h2>
-                  <p>1 x $222.00</p>
-                </div>
-                <div class="cart_shoptings">
-                  <a href="../../../content/hope/checkout.html">Checkout</a>
-                </div>
+      <div class="col-md-12">
+        <div class="main_menu">
+          <ul id="nav_menu" class="active_cl">
+            <li *ngFor="let category of categories" (mouseenter)="showSubCategories(category.id)" (mouseleave)="hideSubCategories()">
+              <a
+                ><span class="Home">{{ category?.cat_name }}</span></a
+              >
+              <div class="home_mega_menu">
+                <ul *ngIf="activeCategoryId === category.id" id="account_single_nav_1">
+                  <li *ngFor="let sub of category.subCategories">
+                    <a [href]="'http://localhost:9000/view/' + sub?.id">{{ sub?.catt_name }}</a>
+                  </li>
+                </ul>
               </div>
             </li>
           </ul>
         </div>
-        <!--End Header Right Cart area -->
       </div>
     </div>
   </div>

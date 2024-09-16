@@ -20,6 +20,23 @@ import { EntityArrayResponseType, ProductService } from '../service/product.serv
   standalone: true,
   selector: 'jhi-product',
   templateUrl: './product.component.html',
+  styleUrls: [
+    '../../../../content/hope/css/animate.css',
+    '../../../../content/hope/css/bootstrap.min.css',
+    '../../../../content/hope/css/font-awesome.min.css',
+    '../../../../content/hope/css/jquery-ui.css',
+    '../../../../content/hope/css/main.css',
+    '../../../../content/hope/css/meanmenu.min.css',
+    '../../../../content/hope/css/nivo-slider.css',
+    '../../../../content/hope/css/normalize.css',
+    '../../../../content/hope/css/owl.carousel.css',
+    '../../../../content/hope/css/owl.my_theme.css',
+    '../../../../content/hope/css/owl.theme.css',
+    '../../../../content/hope/css/owl.transitions.css',
+    '../../../../content/hope/css/responsive.css',
+    '../../../../content/hope/fancy-box/jquery.fancybox.css',
+    '../../../../content/hope/style.css',
+  ],
   imports: [
     RouterModule,
     FormsModule,
@@ -73,6 +90,16 @@ export class ProductComponent implements OnInit {
     });
   }
 
+  // Helper function to get full stars (rounded down)
+  getFullStars(pro_mark: string | number | null | undefined): number {
+    return Math.floor(Number(pro_mark) || 0);
+  }
+
+  // Helper function to check for fractional part
+  hasHalfStar(pro_mark: string | number | null | undefined): boolean {
+    const mark = Number(pro_mark) || 0;
+    return mark % 1 > 0;
+  }
   navigateToWithComponentValues(event: SortState): void {
     this.handleNavigation(this.page, event, this.filters.filterOptions);
   }
