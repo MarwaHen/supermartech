@@ -71,7 +71,7 @@
               <td>
                 <a [routerLink]="['/image-pro', imagePro.id, 'view']">{{ imagePro.id }}</a>
               </td>
-              <td>{{ imagePro.imgP_Path }}</td>
+              <td><img src="{{ imagePro.imgP_Path }}" style="width: 128px; height: 128px" /></td>
               <td>{{ imagePro.pro_id }}</td>
               <td>
                 @if (imagePro.product) {

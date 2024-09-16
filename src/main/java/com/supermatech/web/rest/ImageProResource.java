@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -40,6 +41,24 @@ public class ImageProResource {
     public ImageProResource(ImageProService imageProService, ImageProRepository imageProRepository) {
         this.imageProService = imageProService;
         this.imageProRepository = imageProRepository;
+    }
+
+    /**
+     * {@code GET  /image-pros/get_all/:id} : get the "id" imagePro.
+     *
+     * @param pro_id the id of the product to retrieve all images.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the list of all link.
+     */
+    @GetMapping("get_all/{id}")
+    public ArrayList<String> getAllImagePro(@PathVariable("pro_id") Integer pro_id) {
+        List<ImagePro> imagePro = imageProService.findAll();
+        ArrayList<String> res = new ArrayList<>();
+        for (ImagePro image : imagePro) {
+            if (image.getPro_id().equals(pro_id)) {
+                res.add(image.getImgP_Path());
+            }
+        }
+        return res;
     }
 
     /**
