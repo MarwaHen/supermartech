@@ -3,6 +3,7 @@
     "title": "Supermatech",
     "browsehappy": "You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/?locale=en\">upgrade your browser</a> to improve your experience.",
     "menu": {
+      "cart": "Cart",
       "home": "Home",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
@@ -48,7 +49,11 @@
       "confirmpassword.label": "New password confirmation",
       "confirmpassword.placeholder": "Confirm the new password",
       "email.label": "Email",
-      "email.placeholder": "Your email"
+      "email.placeholder": "Your email",
+      "firstName.label": "First name",
+      "firstName.placeholder": "Your first name",
+      "lastName.label": "Last name",
+      "lastName.placeholder": "Your last name"
     },
     "messages": {
       "info": {
@@ -82,6 +87,14 @@
           "invalid": "Your email is invalid.",
           "minlength": "Your email is required to be at least 5 characters.",
           "maxlength": "Your email cannot be longer than 50 characters."
+        },
+        "firstName": {
+          "required": "Your First name is required.",
+          "maxlength": "Your First name cannot be longer than 50 characters."
+        },
+        "lastName": {
+          "required": "Your Last name is required.",
+          "maxlength": "Your Last name cannot be longer than 50 characters."
         }
       }
     },

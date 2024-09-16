@@ -18,7 +18,6 @@ const productRoute: Routes = [
     data: {
       defaultSort: `id,${ASC}`,
     },
-    canActivate: [UserRouteAccessService],
   },
   {
     path: '4',
@@ -26,7 +25,6 @@ const productRoute: Routes = [
     data: {
       defaultSort: `id,${ASC}`,
     },
-    canActivate: [UserRouteAccessService],
   },
   {
     path: '8',
@@ -34,7 +32,6 @@ const productRoute: Routes = [
     data: {
       defaultSort: `id,${ASC}`,
     },
-    canActivate: [UserRouteAccessService],
   },
   {
     path: '5',
@@ -42,7 +39,6 @@ const productRoute: Routes = [
     data: {
       defaultSort: `id,${ASC}`,
     },
-    canActivate: [UserRouteAccessService],
   },
   {
     path: '6',
@@ -50,7 +46,6 @@ const productRoute: Routes = [
     data: {
       defaultSort: `id,${ASC}`,
     },
-    canActivate: [UserRouteAccessService],
   },
   {
     path: '7',
@@ -58,7 +53,6 @@ const productRoute: Routes = [
     data: {
       defaultSort: `id,${ASC}`,
     },
-    canActivate: [UserRouteAccessService],
   },
 ];
 

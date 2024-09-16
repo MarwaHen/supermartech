@@ -30,6 +30,7 @@ export class ProductService {
   protected applicationConfigService = inject(ApplicationConfigService);
 
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/products');
+  protected resourceUrlImg = this.applicationConfigService.getEndpointFor('api/image-pros/get_all');
 
   create(product: NewProduct): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(product);
@@ -67,6 +68,13 @@ export class ProductService {
 
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
+  }
+
+  loadImages(prod_id: number): Observable<any> {
+    const imgs = this.http.get<any>(`${this.resourceUrlImg}/${prod_id}`);
+    // eslint-disable-next-line no-console
+    console.log(imgs);
+    return imgs;
   }
 
   getProductIdentifier(product: Pick<IProduct, 'id'>): number {

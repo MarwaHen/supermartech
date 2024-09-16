@@ -5,7 +5,6 @@ import { Authority } from 'app/config/authority.constants';
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { errorRoute } from './layouts/error/error.route';
 import { CartComponent } from './views/cart/cart.component';
-import { PageDetailComponent } from './views/page-detail/page-detail.component';
 
 const routes: Routes = [
   {
@@ -58,8 +57,8 @@ const routes: Routes = [
   },
 
   {
-    path: 'product/:id/view',
-    loadComponent: () => import('./views/page-detail/page-detail.component').then(m => m.PageDetailComponent),
+    path: 'payment',
+    loadChildren: () => import('./views/payment/payment-routing.module').then(m => m.PaymentRoutingModule),
   },
 
   ...errorRoute,

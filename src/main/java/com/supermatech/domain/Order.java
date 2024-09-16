@@ -44,6 +44,7 @@ public class Order implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
+    @JoinColumn(name = "clt_id", referencedColumnName = "id")
     private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

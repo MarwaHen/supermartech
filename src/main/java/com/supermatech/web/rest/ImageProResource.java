@@ -8,9 +8,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +38,25 @@ public class ImageProResource {
     public ImageProResource(ImageProService imageProService, ImageProRepository imageProRepository) {
         this.imageProService = imageProService;
         this.imageProRepository = imageProRepository;
+    }
+
+    /**
+     * {@code GET  /image-pros/get_all/} : get the "id" imagePro.
+     *
+     * @param pro_id the id of the product to retrieve all images.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the list of all link.
+     */
+    @GetMapping("get_all/{id}")
+    public List<HashMap<String, Object>> getAllImagePro(@PathVariable(value = "id", required = true) final Integer pro_id) {
+        List<ImagePro> imagePro = imageProService.findAll();
+        List<HashMap<String, Object>> res = new ArrayList<>();
+        for (ImagePro image : imagePro) {
+            if (image.getPro_id().equals(pro_id)) {
+                res.add(new HashMap<String, Object>());
+                res.get(res.size() - 1).put("image_path", image.getImgP_Path());
+            }
+        }
+        return res;
     }
 
     /**

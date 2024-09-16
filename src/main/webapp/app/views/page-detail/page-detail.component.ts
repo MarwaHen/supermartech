@@ -6,8 +6,8 @@ import { IProduct } from 'app/entities/product/product.model';
 import SharedModule from 'app/shared/shared.module';
 import { DurationPipe, FormatMediumDatePipe, FormatMediumDatetimePipe } from 'app/shared/date';
 import { CartItem } from 'app/models/cart-item.model';
-import { CartService } from 'app/views/cart/cart.service';
 import { FormsModule } from '@angular/forms'; // Import FormsModule for ngModel binding
+import { CartService } from 'app/services/cart.service';
 
 @Component({
   standalone: true,

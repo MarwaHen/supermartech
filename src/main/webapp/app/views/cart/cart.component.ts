@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CartItem, mockCartItems } from 'app/models/cart-item.model';
-import { CartService } from 'app/views/cart/cart.service';
 import { Router } from '@angular/router';
+import { CartService } from 'app/services/cart.service';
+import { AccountService } from 'app/core/auth/account.service';
 
 @Component({
   selector: 'jhi-cart',
@@ -30,6 +31,7 @@ import { Router } from '@angular/router';
 export class CartComponent implements OnInit {
   cartItems: CartItem[] = []; // Explicitement défini comme CartItem[]
   totalPrice = 0; // Suppression de l'annotation explicite ": number"
+  account = inject(AccountService).trackCurrentAccount();
 
   constructor(
     private cartService: CartService,
@@ -40,26 +42,25 @@ export class CartComponent implements OnInit {
     this.loadCart();
   }
 
-  // Charger le panier et mettre à jour le prix total
-  loadCart(): void {
-    this.cartItems = this.cartService.getCart();
-    this.totalPrice = this.updateTotalPrice();
+  loadCart(): CartItem[] {
+    const cart = this.cartService.getCart();
+    if (cart.length > 0) {
+      return cart;
+    } else {
+      return [];
+    }
   }
 
-  // Ajouter des articles fictifs dans le panier pour le test
-  addMockCartToCookies(): void {
-    this.cartService.saveCart(mockCartItems);
-    this.loadCart(); // Recharger le panier après ajout
-  }
-
-  // Mettre à jour le prix total
   updateTotalPrice(): number {
-    return this.cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    return this.cartService.getTotalPrice();
   }
 
-  // Valider le panier
   validateCart(): void {
-    alert('Panier validé');
+    if (!this.account()) {
+      this.router.navigate(['/login']);
+    } else {
+      this.router.navigate(['/payment']);
+    }
   }
 
   // Vider le panier

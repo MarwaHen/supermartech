@@ -30,6 +30,7 @@ export class ProductService {
   protected applicationConfigService = inject(ApplicationConfigService);
 
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/products');
+  protected resourceUrlImg = this.applicationConfigService.getEndpointFor('api/image-pros/get_all');
 
   create(product: NewProduct): Observable<EntityResponseType> {
     const copy = this.convertDateFromClient(product);
@@ -43,6 +44,13 @@ export class ProductService {
     return this.http
       .put<RestProduct>(`${this.resourceUrl}/${this.getProductIdentifier(product)}`, copy, { observe: 'response' })
       .pipe(map(res => this.convertResponseFromServer(res)));
+  }
+
+  loadImages(prod_id: number): Observable<any> {
+    const imgs = this.http.get<any>(`${this.resourceUrlImg}/${prod_id}`);
+    // eslint-disable-next-line no-console
+    console.log(imgs);
+    return imgs;
   }
 
   partialUpdate(product: PartialUpdateProduct): Observable<EntityResponseType> {

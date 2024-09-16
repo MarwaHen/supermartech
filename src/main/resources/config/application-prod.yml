@@ -18,10 +18,10 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql:// 90.112.48.6:5432/supermartech
-    name: supermartech
-    username: admin15
-    password: admin2024
+    url: ${SMT_URL}
+    name: ${SMT_NAME}
+    username: ${SMT_USERNAME}
+    password: ${SMT_PW}
     hikari:
       poolName: Hikari
       auto-commit: false

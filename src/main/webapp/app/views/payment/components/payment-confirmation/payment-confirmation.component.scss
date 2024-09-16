@@ -1,0 +1,39 @@
+.wrapper-payment-confirmation {
+  display: flex;
+  justify-content: space-around;
+}
+.container-payment-confirmation-button {
+  text-decoration: none;
+  border-radius: 7px;
+  padding: 10px 50px;
+  color: white;
+  background-color: black;
+}
+.container-image-payment-confirmation {
+  align-items: center;
+  img {
+    height: 90%;
+  }
+}
+
+.container-payment-confirmation-title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 35px;
+  img {
+    height: 60px;
+    margin-top: -7px;
+  }
+}
+
+.container-payment-confirmation-order {
+  margin-bottom: 30px;
+  font-size: 20px;
+}
+
+.container-payment-confirmation-info {
+  margin-bottom: 50px;
+  p {
+    margin-bottom: 15px;
+  }
+}
