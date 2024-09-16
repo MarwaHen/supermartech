@@ -42,12 +42,12 @@ export class CartComponent implements OnInit {
     this.loadCart();
   }
 
-  loadCart(): CartItem[] {
+  loadCart(): void {
     const cart = this.cartService.getCart();
     if (cart.length > 0) {
-      return cart;
+      this.cartItems = cart;
     } else {
-      return [];
+      this.cartItems = [];
     }
   }
 
@@ -63,26 +63,22 @@ export class CartComponent implements OnInit {
     }
   }
 
-  // Vider le panier
-  clearCart(): void {
-    this.cartService.clearCart();
-    this.loadCart(); // Recharger le panier après suppression
+  async clearCart(): Promise<void> {
+    await this.cartService.clearCart();
+    this.loadCart();
+    this.updateTotalPrice();
   }
-
-  // Supprimer un article du panier
   removeItem(productId: number): void {
     this.cartService.removeItem(productId);
-    this.loadCart(); // Recharger le panier après suppression
+    this.loadCart();
   }
 
-  // Augmenter la quantité d'un produit
   increaseQuantity(item: CartItem): void {
     item.quantity++;
     this.cartService.updateItem(item);
-    this.loadCart(); // Recharger le panier après modification
+    this.loadCart();
   }
 
-  // Diminuer la quantité d'un produit
   decreaseQuantity(item: CartItem): void {
     if (item.quantity > 1) {
       item.quantity--;

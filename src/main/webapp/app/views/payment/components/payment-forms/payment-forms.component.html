@@ -1,108 +1,122 @@
 <div class="d-flex justify-content-center">
   <div class="col-lg-6 col-md-8 col-sm-10">
-    <h1 data-cy="paymentTitle" jhiTranslate="payment.title">Payment</h1>
-    <form class="form" (ngSubmit)="sendForms()" [formGroup]="paymentForm">
+    <h1 style="margin-bottom: 20px" data-cy="paymentTitle" jhiTranslate="payment.title">Paiement</h1>
+    <form class="form form-payment" (ngSubmit)="sendForms()" [formGroup]="paymentForm">
       <div class="mb-3">
-        <label class="adress-label" for="address" jhiTranslate="global.form.address.label">Delivery address</label>
+        <label class="adress-label" for="address" jhiTranslate="global.form.address.label">Adresse de livraison</label>
         <input
           type="text"
           class="form-control"
           name="address"
           id="address"
-          placeholder="Delivery address"
+          placeholder="Adresse de livraison"
           formControlName="address"
           #address
           data-cy="address"
         />
         <div *ngIf="paymentForm.get('address')?.invalid && paymentForm.get('address')?.touched" class="text-danger">
-          <small *ngIf="paymentForm.get('address')?.errors?.['required']">Address is required.</small>
-          <small *ngIf="paymentForm.get('address')?.errors?.['maxlength']">Address cannot be longer than 600 characters.</small>
+          <small *ngIf="paymentForm.get('address')?.errors?.['required']">L'adresse est obligatoire.</small>
+          <small *ngIf="paymentForm.get('address')?.errors?.['maxlength']">L'adresse ne peut pas dépasser 600 caractères.</small>
         </div>
       </div>
       <div class="mb-3">
-        <label class="phoneNumber-label" for="phoneNumber" jhiTranslate="global.form.phoneNumber.label">Phone number</label>
+        <label class="phoneNumber-label" for="phoneNumber" jhiTranslate="global.form.phoneNumber.label">Numéro de téléphone</label>
         <input
           type="text"
           class="form-control"
           name="phoneNumber"
           id="phoneNumber"
-          placeholder="Phone number (7XXXXXXXXX)"
+          placeholder="Numéro de téléphone (7XXXXXXXXX)"
           formControlName="phoneNumber"
           #phoneNumber
           data-cy="phoneNumber"
         />
         <div *ngIf="paymentForm.get('phoneNumber')?.invalid && paymentForm.get('phoneNumber')?.touched" class="text-danger">
-          <small *ngIf="paymentForm.get('phoneNumber')?.errors?.['required']">Phone number is required.</small>
-          <small *ngIf="paymentForm.get('phoneNumber')?.errors?.['pattern']">Phone number must be 10 digits.</small>
+          <small *ngIf="paymentForm.get('phoneNumber')?.errors?.['required']">Le numéro de téléphone est obligatoire.</small>
+          <small *ngIf="paymentForm.get('phoneNumber')?.errors?.['pattern']">Le numéro de téléphone doit comporter 10 chiffres.</small>
         </div>
       </div>
       <div class="payment-fields">
         <div class="mb-3">
-          <label class="cartNumber-label" for="cartNumber" jhiTranslate="global.form.cartNumber.label">Cart Number</label>
+          <label class="cartNumber-label" for="cartNumber" jhiTranslate="global.form.cartNumber.label">Numéro de carte</label>
           <input
             type="text"
             class="form-control"
             name="cartNumber"
             id="cartNumber"
-            placeholder="Cart Number"
+            placeholder="Numéro de carte"
             formControlName="cartNumber"
             #cartNumber
             data-cy="cartNumber"
           />
           <div *ngIf="paymentForm.get('cartNumber')?.invalid && paymentForm.get('cartNumber')?.touched" class="text-danger">
-            <small *ngIf="paymentForm.get('cartNumber')?.errors?.['required']">Card number is required.</small>
-            <small *ngIf="paymentForm.get('cartNumber')?.errors?.['pattern']">Card number must be 16 digits.</small>
+            <small *ngIf="paymentForm.get('cartNumber')?.errors?.['required']">Le numéro de carte est obligatoire.</small>
+            <small *ngIf="paymentForm.get('cartNumber')?.errors?.['pattern']">Le numéro de carte doit comporter 16 chiffres.</small>
           </div>
         </div>
         <div class="mb-3">
-          <label class="dateExpiration-label" for="dateExpiration" jhiTranslate="global.form.dateExpiration.label">Expiration date</label>
+          <label class="dateExpiration-label" for="dateExpiration" jhiTranslate="global.form.dateExpiration.label">Date d'expiration</label>
           <input
             type="text"
             class="form-control"
             name="dateExpiration"
             id="dateExpiration"
-            placeholder="Expiration date (MM/YY)"
+            placeholder="Date d'expiration (MM/AA)"
             formControlName="dateExpiration"
             #dateExpiration
             data-cy="dateExpiration"
           />
           <div *ngIf="paymentForm.get('dateExpiration')?.invalid && paymentForm.get('dateExpiration')?.touched" class="text-danger">
-            <small *ngIf="paymentForm.get('dateExpiration')?.errors?.['required']">Expiration date is required.</small>
-            <small *ngIf="paymentForm.get('dateExpiration')?.errors?.['pattern']">Expiration date format should be MM/AA.</small>
+            <small *ngIf="paymentForm.get('dateExpiration')?.errors?.['required']">La date d'expiration est obligatoire.</small>
+            <small *ngIf="paymentForm.get('dateExpiration')?.errors?.['pattern']">Le format de la date d'expiration doit être MM/AA.</small>
           </div>
         </div>
         <div class="mb-3">
-          <label class="nameCarte-label" for="nameCarte" jhiTranslate="global.form.nameCarte.label">Cardholder</label>
+          <label class="nameCarte-label" for="nameCarte" jhiTranslate="global.form.nameCarte.label">Titulaire de la carte</label>
           <input
             type="text"
             class="form-control"
             name="nameCarte"
             id="nameCarte"
-            placeholder="Cardholder"
+            placeholder="Titulaire de la carte"
             formControlName="nameCarte"
             #nameCarte
             data-cy="nameCarte"
           />
+          <div *ngIf="paymentForm.get('nameCarte')?.invalid && paymentForm.get('nameCarte')?.touched" class="text-danger">
+            <small *ngIf="paymentForm.get('nameCarte')?.errors?.['required']">Le titulaire de la carte est obligatoire.</small>
+          </div>
         </div>
         <div class="mb-3">
-          <label class="codeCart-label" for="codeCart" jhiTranslate="global.form.codeCart.label">Cart code</label>
+          <label class="codeCart-label" for="codeCart" jhiTranslate="global.form.codeCart.label">Code de sécurité</label>
           <input
             type="text"
             class="form-control"
             name="codeCart"
             id="codeCart"
-            placeholder="Cart code"
+            placeholder="Code de sécurité"
             formControlName="codeCart"
             #codeCart
             data-cy="codeCart"
           />
           <div *ngIf="paymentForm.get('codeCart')?.invalid && paymentForm.get('codeCart')?.touched" class="text-danger">
-            <small *ngIf="paymentForm.get('codeCart')?.errors?.['required']">Security code is required.</small>
-            <small *ngIf="paymentForm.get('codeCart')?.errors?.['pattern']">Security code must be 3 digits.</small>
+            <small *ngIf="paymentForm.get('codeCart')?.errors?.['required']">Le code de sécurité est obligatoire.</small>
+            <small *ngIf="paymentForm.get('codeCart')?.errors?.['pattern']">Le code de sécurité doit comporter 3 chiffres.</small>
           </div>
         </div>
       </div>
-      <button type="submit" class="btn btn-primary payment-forms-button" data-cy="submit" jhiTranslate="login.form.button">Pay</button>
+      <div class="payment-actions">
+        <button
+          type="button"
+          (click)="backToCart()"
+          class="btn btn-primary payment-forms-button"
+          data-cy="submit"
+          jhiTranslate="login.form.button"
+        >
+          ANNULER
+        </button>
+        <button type="submit" class="btn btn-primary payment-forms-button" data-cy="submit" jhiTranslate="login.form.button">PAYER</button>
+      </div>
     </form>
   </div>
 </div>

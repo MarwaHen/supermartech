@@ -44,8 +44,6 @@ export default class HomeComponent implements OnInit, OnDestroy {
 
   loadImages(prod_id: number): void {
     this.productService.loadImages(prod_id).subscribe(response => {
-      // eslint-disable-next-line no-console
-      console.log(response);
       this.images = response ?? [];
     });
   }

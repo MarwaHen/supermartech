@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { CartItem } from '../models/cart-item.model';
-import { IProduct } from 'app/view/product/product.model';
 import { AccountService } from 'app/core/auth/account.service';
 
 @Injectable({
@@ -10,7 +9,6 @@ import { AccountService } from 'app/core/auth/account.service';
 export class CartService {
   account = inject(AccountService).trackCurrentAccount();
   private cartCookieName = 'cartItems';
-
   constructor(private cookieService: CookieService) {}
 
   getCartCookieName(): string {
@@ -44,7 +42,6 @@ export class CartService {
     } else {
       cart.push(newItem);
     }
-
     this.saveCart(cart);
   }
 
@@ -60,10 +57,12 @@ export class CartService {
     this.saveCart(cart);
   }
 
-  clearCart(): void {
-    const cookieName = this.getCartCookieName();
-
-    this.cookieService.delete(cookieName);
+  clearCart(): Promise<void> {
+    return new Promise(resolve => {
+      const cookieName = this.getCartCookieName();
+      this.cookieService.delete(cookieName, '/');
+      resolve();
+    });
   }
 
   updateItem(updatedItem: CartItem): void {

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-payment-forms',
@@ -11,6 +12,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 })
 export class PaymentFormsComponent {
   @Output() paymentForms = new EventEmitter<any>();
+  router = inject(Router);
 
   paymentForm = new FormGroup({
     address: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(600)] }),
@@ -30,5 +32,9 @@ export class PaymentFormsComponent {
     } else {
       this.paymentForm.markAllAsTouched();
     }
+  }
+
+  backToCart(): void {
+    this.router.navigate(['/cart']);
   }
 }

@@ -46,7 +46,7 @@
           <table class="total_rate">
             <tr>
               <th>Total :</th>
-              <th>{{ totalPrice | currency: 'EUR' }}</th>
+              <th>{{ updateTotalPrice() | currency: 'EUR' }}</th>
               <!-- Affichage du total avec 2 décimales en EUR -->
             </tr>
           </table>

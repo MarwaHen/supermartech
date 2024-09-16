@@ -48,8 +48,6 @@ export class ProductService {
 
   loadImages(prod_id: number): Observable<any> {
     const imgs = this.http.get<any>(`${this.resourceUrlImg}/${prod_id}`);
-    // eslint-disable-next-line no-console
-    console.log(imgs);
     return imgs;
   }
 

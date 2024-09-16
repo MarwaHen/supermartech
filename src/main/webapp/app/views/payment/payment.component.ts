@@ -53,18 +53,20 @@ export class PaymentComponent implements OnInit {
         if (response?.cart_list) {
           this.cartService.updateCartAfterStockCheck(response.cart_list);
           const namesList = this.getProductNames(response.cart_list);
-          alert(`Some product are missing in stock Products: ${namesList.join(', ')}`);
+          alert(`Some products are missing in stock: ${namesList.join(', ')}`);
           this.router.navigate(['/']);
         } else {
           this.paymentService.completePayment();
+
           this.router.navigate(['/payment/paymentConfirmation', response?.id]).then(() => {
-            this.cartService.clearCart();
-            this.cartItems = this.cartService.getCart();
+            this.cartService.clearCart().then(() => {
+              this.cartItems = this.cartService.getCart();
+            });
           });
         }
       },
       error(error) {
-        alert('Error to process payment. Try again!');
+        alert('Error processing payment. Please try again!');
       },
     });
   }
