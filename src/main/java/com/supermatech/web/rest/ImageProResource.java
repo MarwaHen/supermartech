@@ -44,13 +44,13 @@ public class ImageProResource {
     }
 
     /**
-     * {@code GET  /image-pros/get_all/:id} : get the "id" imagePro.
+     * {@code POST  /image-pros/get_all/} : get the "id" imagePro.
      *
      * @param pro_id the id of the product to retrieve all images.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the list of all link.
      */
-    @GetMapping("get_all/{id}")
-    public ArrayList<String> getAllImagePro(@PathVariable("pro_id") Integer pro_id) {
+    @PostMapping("get_all/{id}")
+    public ArrayList<String> getAllImagePro(@RequestBody Integer pro_id) {
         List<ImagePro> imagePro = imageProService.findAll();
         ArrayList<String> res = new ArrayList<>();
         for (ImagePro image : imagePro) {
