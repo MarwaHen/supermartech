@@ -189,7 +189,7 @@
                             <!-- Action Buttons -->
                             <div class="product_button">
                               <div class="cart_details">
-                                <a href="#" target="blank">Add to cart</a>
+                                <a [routerLink]="['/product', product.id, product.pro_name]" target="blank">Add to cart</a>
                               </div>
                               <div class="cart_details">
                                 <a href="#" target="expand"><i class="fa fa-expand"></i></a>

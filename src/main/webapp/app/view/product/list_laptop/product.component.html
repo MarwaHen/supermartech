@@ -1,137 +1,721 @@
-<div>
-  <h2 id="page-heading" data-cy="ProductHeading">
-    <span jhiTranslate="supermatechApp.product.home.title">Products</span>
-  </h2>
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <!-- Basic page needs
+        ============================================ -->
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Supermartech</title>
+    <meta name="description" content="" />
+    <!-- Mobile specific metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- FONTS  -->
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:400,600italic,300italic,700" rel="stylesheet" type="text/css" />
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <!-- modernizr JS  -->
+    <script src="../../../../content/hope/js/vendor/modernizr-2.8.3.min.js"></script>
+    <style>
+      .filter_box {
+        border: 1px solid #ccc;
+        padding: 20px;
+        text-align: center;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        width: 300px;
+        margin-bottom: 20px;
+      }
 
-  <jhi-alert-error></jhi-alert-error>
+      .price_range,
+      .brand_filter {
+        margin-bottom: 15px;
+      }
 
-  <jhi-alert></jhi-alert>
+      input[type='number'] {
+        width: 100px;
+        padding: 5px;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
 
-  <jhi-filter [filters]="filters"></jhi-filter>
+      select {
+        width: 220px;
+        padding: 5px;
+        font-size: 16px;
+      }
 
-  @if (products?.length === 0) {
-    <div class="alert alert-warning" id="no-result">
-      <span jhiTranslate="supermatechApp.product.home.notFound">No Products found</span>
+      .search_button {
+        padding: 10px 20px;
+        background-color: #000;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <!--[if lt IE 8]>
+      <p class="browserupgrade">
+        You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve
+        your experience.
+      </p>
+    <![endif]-->
+
+    <!--Start breadcrumbs area -->
+    <div class="breadcrumbs_area">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="breadcrumb-single">
+              <ul id="breadcrumbs">
+                <li>
+                  <a href="#"><i class="fa fa-home"></i>Home</a>
+                </li>
+                <li><span>Ι</span></li>
+                <li>Clothings</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  }
-
-  @if (products && products.length > 0) {
-    <div class="table-responsive table-entities" id="entities">
-      <table class="table table-striped" aria-describedby="page-heading">
-        <thead>
-          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
-            <th scope="col" jhiSortBy="pro_name">
-              <div class="d-flex">
-                <span jhiTranslate="supermatechApp.product.pro_name">Name</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="pro_description">
-              <div class="d-flex">
-                <span jhiTranslate="supermatechApp.product.pro_description">Description</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="pro_price">
-              <div class="d-flex">
-                <span jhiTranslate="supermatechApp.product.prix_de_base">Pro Price</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="pro_price">
-              <div class="d-flex">
-                <span jhiTranslate="supermatechApp.product.pro_price">Pro Quantity</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="pro_mark">
-              <div class="d-flex">
-                <span jhiTranslate="supermatechApp.product.pro_mark">Pro Mark</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="subCategory.catt_name">
-              <div class="d-flex">
-                <span jhiTranslate="supermatechApp.product.subCategory">Sub Category</span>
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (product of products; track trackId) {
-            <tr data-cy="entityTable">
-              <td>{{ product.pro_name }}</td>
-              <td>{{ product.pro_description }}</td>
-              <td>
-                @if (product.pro_promotion && product.pro_promotion > 0) {
-                  <s> {{ product.pro_price }} </s>
-                } @else {
-                  {{ product.pro_price }}
-                }
-              </td>
-              <td>
-                @if (product.pro_price) {
-                  @if (product.pro_promotion && product.pro_promotion > 0) {
-                    <div>
-                      <a>{{ product.pro_price - product.pro_price * (product.pro_promotion / 100) }}</a>
-                    </div>
-                  } @else {
-                    <div>
-                      <a>No Promo</a>
-                    </div>
-                  }
-                } @else {
-                  <div>
-                    <a>No Promo</a>
+    <!--End breadcrumbs area -->
+    <!--Start clothing product area -->
+    <div class="container">
+      <div class="row row-cols-2">
+        <div class="col" style="width: 30%">
+          <div class="catagory_price_color">
+            <div class="priceing_area">
+              <div class="info_widget">
+                <div class="filter_box">
+                  <h2>PRICE</h2>
+                  <div class="price_range">
+                    <input type="number" id="min_price" placeholder="Min Price" value="156" />
+                    <input type="number" id="max_price" placeholder="Max Price" value="433" />
                   </div>
-                }
-              </td>
-              <td>{{ product.pro_mark }}</td>
-              <td>
-                @if (product.subCategory) {
-                  <div>
-                    <a [routerLink]="['/sub-category', product.subCategory.id, 'view']">{{ product.subCategory.catt_name }}</a>
+
+                  <h2>BRAND</h2>
+                  <div class="brand_filter">
+                    <select id="brand">
+                      <option value="all">All Brands</option>
+                      <option value="brand1">Brand 1</option>
+                      <option value="brand2">Brand 2</option>
+                      <option value="brand3">Brand 3</option>
+                      <option value="brand4">Brand 4</option>
+                    </select>
                   </div>
-                }
-              </td>
-              <td class="text-end">
-                <div class="btn-group">
-                  <a [routerLink]="['/product', product.id, product.pro_name]" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-                    <fa-icon icon="eye"></fa-icon>
-                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
-                  </a>
+
+                  <button class="search_button" onclick="searchFilters()">Search</button>
                 </div>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  }
-  @if (products && products.length > 0) {
-    <div>
-      <div class="d-flex justify-content-center">
-        <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-      </div>
+              </div>
+            </div>
+          </div>
 
-      <div class="d-flex justify-content-center">
-        <ngb-pagination
-          [collectionSize]="totalItems"
-          [page]="page"
-          [pageSize]="itemsPerPage"
-          [maxSize]="5"
-          [rotate]="true"
-          [boundaryLinks]="true"
-          (pageChange)="navigateToPage($event)"
-        ></ngb-pagination>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+          </div>
+        </div>
+        <div class="col" style="width: 70%">
+          <div class="catagory_banner">
+            <div class="my_tabs">
+              <ul class="tab_style nav-tabs nav border-0">
+                <li>
+                  <a class="active" data-bs-toggle="tab" href="#tab1"
+                    ><span><i class="fa fa-th"></i></span
+                  ></a>
+                </li>
+                <li>
+                  <a data-bs-toggle="tab" href="#tab2"
+                    ><span><i class="fa fa-th-list"></i></span
+                  ></a>
+                </li>
+              </ul>
+              <div class="tab-content tab_content_style">
+                <div id="tab1" class="tab-pane fade show active">
+                  <div>
+                    <h2 id="page-heading" data-cy="ProductHeading">
+                      <span jhiTranslate="supermatechApp.product.home.title">Products</span>
+                    </h2>
+
+                    @if (products?.length === 0) {
+                      <div class="alert alert-warning" id="no-result">
+                        <span jhiTranslate="supermatechApp.product.home.notFound">No Products found</span>
+                      </div>
+                    }
+                  </div>
+                  <div class="row row-col-3" *ngIf="products && products.length > 0">
+                    <div class="col" *ngFor="let product of products; trackBy: trackId">
+                      <div class="product_list">
+                        <div class="single_product">
+                          <!-- Product Image -->
+                          <a [routerLink]="['/product', product.id, product.pro_name]" target="main"> </a>
+
+                          <!-- Product Details -->
+                          <div class="product_details">
+                            <h2>{{ product.pro_name }}</h2>
+                            <p>
+                              <!-- Regular Price -->
+                              <span class="regular_price" *ngIf="product.pro_promotion && product.pro_promotion > 0">
+                                <s>{{ product.pro_price | currency }}</s>
+                              </span>
+                              <span class="regular_price" *ngIf="!(product.pro_promotion && product.pro_promotion > 0)">
+                                {{ product.pro_price | currency }}
+                              </span>
+
+                              <!-- Discounted Price -->
+                              <span class="popular_price">
+                                <ng-container *ngIf="product.pro_promotion && product.pro_promotion > 0; else noPromotion">
+                                  {{
+                                    (product.pro_price || 0) - ((product.pro_price || 0) * (product.pro_promotion || 0)) / 100 | currency
+                                  }}
+                                </ng-container>
+                                <ng-template #noPromotion>
+                                  {{ product.pro_price | currency }}
+                                </ng-template>
+                              </span>
+                            </p>
+                          </div>
+
+                          <!-- Product Rating -->
+                          <div class="product_detail">
+                            <div class="star_icon">
+                              <i class="fa fa-star" *ngFor="let star of [].constructor(getFullStars(product.pro_mark))"></i>
+                              <i class="fa fa-star-half-o" *ngIf="hasHalfStar(product.pro_mark)"></i>
+                            </div>
+
+                            <!-- Action Buttons -->
+                            <div class="product_button">
+                              <div class="cart_details">
+                                <a [routerLink]="['/product', product.id, product.pro_name]" target="blank">Add to cart</a>
+                              </div>
+                              <div class="cart_details">
+                                <a href="#" target="expand"><i class="fa fa-expand"></i></a>
+                              </div>
+                              <div class="cart_details">
+                                <a href="#" target="heart"><i class="fa fa-heart-o"></i></a>
+                              </div>
+                            </div>
+                          </div>
+
+                          <!-- Sale Label -->
+                          <div class="sale_product" *ngIf="product.pro_promotion && product.pro_promotion > 0">
+                            <h5>Sale</h5>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="tab2" class="tab-pane fade">
+                  <div class="row mb-50px">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="product_blog_image">
+                        <div class="product_blog_image">
+                          <a href="product.html"><img src="img/product/1.jpg" alt="" /></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                      <div class="blog_product_details">
+                        <h2 class="blog_heading"><a href="">Lorem ipsum dolor</a></h2>
+                        <div class="product_rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product_rating">
+                          <a href="#">1 Review(s) <span>I</span></a>
+                          <a href="#"> Add Your Review</a>
+                        </div>
+                        <div class="pricing_rate">
+                          <p class="rating_dollor">
+                            <span class="rating_value_one">$170.00</span> <span class="rating_value_two">$150.00</span>
+                          </p>
+                          <p class="blog_texts">
+                            Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed
+                            et lorem nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean
+                            eleifend laoreet congue. Vivamus adipiscing nisl ut dolor dignissim semper. Nulla luctus malesuada tincidunt.
+                            Class aptent taciti sociosqu ad litora torquent per conubia nostra, p
+                            <a class="learn_more" href="#">Learn More</a>
+                          </p>
+                        </div>
+                        <div class="product_blog_button">
+                          <div class="cart_blog_details">
+                            <a href="#" target="blank">Add to cart</a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="expand"><i class="fa fa-expand"></i></a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="heart"><i class="fa fa-heart-o"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-50px">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="product_blog_image">
+                        <div class="product_blog_image">
+                          <a href="product.html"><img src="img/product/4.jpg" alt="" /></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                      <div class="blog_product_details">
+                        <h2 class="blog_heading"><a href="">Lorem ipsum dolor</a></h2>
+                        <div class="product_rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product_rating">
+                          <a href="#">1 Review(s) <span>I</span></a>
+                          <a href="#"> Add Your Review</a>
+                        </div>
+                        <div class="pricing_rate">
+                          <p class="rating_dollor">
+                            <span class="rating_value_one">$170.00</span> <span class="rating_value_two">$150.00</span>
+                          </p>
+                          <p class="blog_texts">
+                            Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed
+                            et lorem nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean
+                            eleifend laoreet congue. Vivamus adipiscing nisl ut dolor dignissim semper. Nulla luctus malesuada tincidunt.
+                            Class aptent taciti sociosqu ad litora torquent per conubia nostra, p
+                            <a class="learn_more" href="#">Learn More</a>
+                          </p>
+                        </div>
+                        <div class="product_blog_button">
+                          <div class="cart_blog_details">
+                            <a href="#" target="blank">Add to cart</a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="expand"><i class="fa fa-expand"></i></a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="heart"><i class="fa fa-heart-o"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-50px">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="product_blog_image">
+                        <div class="product_blog_image">
+                          <a href="product.html"><img src="img/product/6_1.jpg" alt="" /></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                      <div class="blog_product_details">
+                        <h2 class="blog_heading"><a href="">Lorem ipsum dolor</a></h2>
+                        <div class="product_rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product_rating">
+                          <a href="#">1 Review(s) <span>I</span></a>
+                          <a href="#"> Add Your Review</a>
+                        </div>
+                        <div class="pricing_rate">
+                          <p class="rating_dollor">
+                            <span class="rating_value_one">$170.00</span> <span class="rating_value_two">$150.00</span>
+                          </p>
+                          <p class="blog_texts">
+                            Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed
+                            et lorem nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean
+                            eleifend laoreet congue. Vivamus adipiscing nisl ut dolor dignissim semper. Nulla luctus malesuada tincidunt.
+                            Class aptent taciti sociosqu ad litora torquent per conubia nostra, p
+                            <a class="learn_more" href="#">Learn More</a>
+                          </p>
+                        </div>
+                        <div class="product_blog_button">
+                          <div class="cart_blog_details">
+                            <a href="#" target="blank">Add to cart</a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="expand"><i class="fa fa-expand"></i></a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="heart"><i class="fa fa-heart-o"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-50px">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="product_blog_image">
+                        <div class="product_blog_image">
+                          <a href="product.html"><img src="img/product/12_1.jpg" alt="" /></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                      <div class="blog_product_details">
+                        <h2 class="blog_heading"><a href="">Lorem ipsum dolor</a></h2>
+                        <div class="product_rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product_rating">
+                          <a href="#">1 Review(s) <span>I</span></a>
+                          <a href="#"> Add Your Review</a>
+                        </div>
+                        <div class="pricing_rate">
+                          <p class="rating_dollor">
+                            <span class="rating_value_one">$170.00</span> <span class="rating_value_two">$150.00</span>
+                          </p>
+                          <p class="blog_texts">
+                            Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed
+                            et lorem nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean
+                            eleifend laoreet congue. Vivamus adipiscing nisl ut dolor dignissim semper. Nulla luctus malesuada tincidunt.
+                            Class aptent taciti sociosqu ad litora torquent per conubia nostra, p
+                            <a class="learn_more" href="#">Learn More</a>
+                          </p>
+                        </div>
+                        <div class="product_blog_button">
+                          <div class="cart_blog_details">
+                            <a href="#" target="blank">Add to cart</a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="expand"><i class="fa fa-expand"></i></a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="heart"><i class="fa fa-heart-o"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-50px">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="product_blog_image">
+                        <div class="product_blog_image">
+                          <a href="product.html"><img src="img/product/18_1.jpg" alt="" /></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                      <div class="blog_product_details">
+                        <h2 class="blog_heading"><a href="">Lorem ipsum dolor</a></h2>
+                        <div class="product_rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product_rating">
+                          <a href="#">1 Review(s) <span>I</span></a>
+                          <a href="#"> Add Your Review</a>
+                        </div>
+                        <div class="pricing_rate">
+                          <p class="rating_dollor">
+                            <span class="rating_value_one">$170.00</span> <span class="rating_value_two">$150.00</span>
+                          </p>
+                          <p class="blog_texts">
+                            Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed
+                            et lorem nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean
+                            eleifend laoreet congue. Vivamus adipiscing nisl ut dolor dignissim semper. Nulla luctus malesuada tincidunt.
+                            Class aptent taciti sociosqu ad litora torquent per conubia nostra, p
+                            <a class="learn_more" href="#">Learn More</a>
+                          </p>
+                        </div>
+                        <div class="product_blog_button">
+                          <div class="cart_blog_details">
+                            <a href="#" target="blank">Add to cart</a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="expand"><i class="fa fa-expand"></i></a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="heart"><i class="fa fa-heart-o"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-50px">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="product_blog_image">
+                        <div class="product_blog_image">
+                          <a href="product.html"><img src="img/product/13_4.jpg" alt="" /></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                      <div class="blog_product_details">
+                        <h2 class="blog_heading"><a href="">Lorem ipsum dolor</a></h2>
+                        <div class="product_rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product_rating">
+                          <a href="#">1 Review(s) <span>I</span></a>
+                          <a href="#"> Add Your Review</a>
+                        </div>
+                        <div class="pricing_rate">
+                          <p class="rating_dollor">
+                            <span class="rating_value_one">$170.00</span> <span class="rating_value_two">$150.00</span>
+                          </p>
+                          <p class="blog_texts">
+                            Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed
+                            et lorem nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean
+                            eleifend laoreet congue. Vivamus adipiscing nisl ut dolor dignissim semper. Nulla luctus malesuada tincidunt.
+                            Class aptent taciti sociosqu ad litora torquent per conubia nostra, p
+                            <a class="learn_more" href="#">Learn More</a>
+                          </p>
+                        </div>
+                        <div class="product_blog_button">
+                          <div class="cart_blog_details">
+                            <a href="#" target="blank">Add to cart</a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="expand"><i class="fa fa-expand"></i></a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="heart"><i class="fa fa-heart-o"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-50px">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="product_blog_image">
+                        <div class="product_blog_image">
+                          <a href="product.html"><img src="img/product/14_3.jpg" alt="" /></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                      <div class="blog_product_details">
+                        <h2 class="blog_heading"><a href="">Lorem ipsum dolor</a></h2>
+                        <div class="product_rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product_rating">
+                          <a href="#">1 Review(s) <span>I</span></a>
+                          <a href="#"> Add Your Review</a>
+                        </div>
+                        <div class="pricing_rate">
+                          <p class="rating_dollor">
+                            <span class="rating_value_one">$170.00</span> <span class="rating_value_two">$150.00</span>
+                          </p>
+                          <p class="blog_texts">
+                            Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed
+                            et lorem nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean
+                            eleifend laoreet congue. Vivamus adipiscing nisl ut dolor dignissim semper. Nulla luctus malesuada tincidunt.
+                            Class aptent taciti sociosqu ad litora torquent per conubia nostra, p
+                            <a class="learn_more" href="#">Learn More</a>
+                          </p>
+                        </div>
+                        <div class="product_blog_button">
+                          <div class="cart_blog_details">
+                            <a href="#" target="blank">Add to cart</a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="expand"><i class="fa fa-expand"></i></a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="heart"><i class="fa fa-heart-o"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mb-50px">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="product_blog_image">
+                        <div class="product_blog_image">
+                          <a href="product.html"><img src="img/product/16.jpg" alt="" /></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                      <div class="blog_product_details">
+                        <h2 class="blog_heading"><a href="">Lorem ipsum dolor</a></h2>
+                        <div class="product_rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product_rating">
+                          <a href="#">1 Review(s) <span>I</span></a>
+                          <a href="#"> Add Your Review</a>
+                        </div>
+                        <div class="pricing_rate">
+                          <p class="rating_dollor">
+                            <span class="rating_value_one">$170.00</span> <span class="rating_value_two">$150.00</span>
+                          </p>
+                          <p class="blog_texts">
+                            Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed
+                            et lorem nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean
+                            eleifend laoreet congue. Vivamus adipiscing nisl ut dolor dignissim semper. Nulla luctus malesuada tincidunt.
+                            Class aptent taciti sociosqu ad litora torquent per conubia nostra, p
+                            <a class="learn_more" href="#">Learn More</a>
+                          </p>
+                        </div>
+                        <div class="product_blog_button">
+                          <div class="cart_blog_details">
+                            <a href="#" target="blank">Add to cart</a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="expand"><i class="fa fa-expand"></i></a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="heart"><i class="fa fa-heart-o"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                      <div class="product_blog_image">
+                        <div class="product_blog_image">
+                          <a href="product.html"><img src="img/product/17_2_1_1.jpg" alt="" /></a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                      <div class="blog_product_details">
+                        <h2 class="blog_heading"><a href="">Lorem ipsum dolor</a></h2>
+                        <div class="product_rating">
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                          <i class="fa fa-star"></i>
+                        </div>
+                        <div class="product_rating">
+                          <a href="#">1 Review(s) <span>I</span></a>
+                          <a href="#"> Add Your Review</a>
+                        </div>
+                        <div class="pricing_rate">
+                          <p class="rating_dollor">
+                            <span class="rating_value_one">$170.00</span> <span class="rating_value_two">$150.00</span>
+                          </p>
+                          <p class="blog_texts">
+                            Nunc facilisis sagittis ullamcorper. Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus. Sed
+                            et lorem nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aenean
+                            eleifend laoreet congue. Vivamus adipiscing nisl ut dolor dignissim semper. Nulla luctus malesuada tincidunt.
+                            Class aptent taciti sociosqu ad litora torquent per conubia nostra, p
+                            <a class="learn_more" href="#">Learn More</a>
+                          </p>
+                        </div>
+                        <div class="product_blog_button">
+                          <div class="cart_blog_details">
+                            <a href="#" target="blank">Add to cart</a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="expand"><i class="fa fa-expand"></i></a>
+                          </div>
+                          <div class="cart_blog_details">
+                            <a href="#" target="heart"><i class="fa fa-heart-o"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="blog_pagination">
+                        <h2>Page:</h2>
+                        <ul class="pagination_list">
+                          <li class="active">1</li>
+                          <li><a href="#">2</a></li>
+                          <li><a href="#">3</a></li>
+                          <li>
+                            <a href="#"><img src="img/arrow/pager_arrow_right.gif" alt="" /></a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  }
-</div>
+
+    <!-- Pagination and Item Count -->
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+
+    <!--End clothing product area -->
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- jQuery UI JS -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="../../../../content/hope/js/vendor/jquery-1.12.4.min.js"></script>
+    <!-- bootstrap JS -->
+    <script src="../../../../content/hope/js/bootstrap.min.js"></script>
+    <!-- Mobile menu JS -->
+    <script src="../../../../content/hope/js/jquery.meanmenu.js"></script>
+    <!-- jquery.easing js -->
+    <script src="../../../../content/hope/js/jquery.easing.1.3.min.js"></script>
+    <!-- knob circle js -->
+    <script src="../../../../content/hope/js/jquery.knob.js"></script>
+    <!-- fancybox JS -->
+    <script src="../../../../content/hope/fancy-box/jquery.fancybox.pack.js"></script>
+    <!-- price slider JS  -->
+    <script src="../../../../content/hope/js/price-slider.js"></script>
+    <!-- nivo slider JS -->
+    <script src="../../../../content/hope/js/jquery.nivo.slider.pack.js"></script>
+    <!-- wow JS -->
+    <script src="../../../../content/hope/js/wow.js"></script>
+    <!-- nivo-plugin JS -->
+    <script src="../../../../content/hope/js/nivo-plugin.js"></script>
+    <!-- scrollUp JS -->
+    <script src="../../../../content/hope/js/jquery.scrollUp.js"></script>
+    <!-- carousel JS  -->
+    <script src="../../../../content/hope/js/owl.carousel.min.js"></script>
+    <!-- plugins JS  -->
+    <script src="../../../../content/hope/js/plugins.js"></script>
+    <!-- main JS  -->
+    <script src="../../../../content/hope/js/main.js"></script>
+  </body>
+</html>
