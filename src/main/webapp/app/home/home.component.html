@@ -162,6 +162,7 @@
                           <!-- Product Details -->
                           <div class="product_details">
                             <h2>{{ product.pro_name }}</h2>
+                            <img src="{{ getImageByProductId(product.id) }}" style="width: 128px; height: 128px" />
                             <p>
                               <!-- Regular Price -->
                               <span class="regular_price" *ngIf="product.pro_promotion && product.pro_promotion > 0">

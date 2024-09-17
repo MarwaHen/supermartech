@@ -72,6 +72,8 @@ export default class HomeComponent implements OnInit {
   minPrice = 0;
   maxPrice = -1;
   promoFilter = false;
+  imagesByProduct: Record<number, string> = {};
+
   public router = inject(Router);
   protected productService = inject(ProductService);
   protected activatedRoute = inject(ActivatedRoute);
@@ -128,7 +130,6 @@ export default class HomeComponent implements OnInit {
     const finalPrice: number = product.pro_promotion
       ? parseFloat((product.pro_price! - product.pro_price! * (product.pro_promotion / 100)).toFixed(2))
       : parseFloat(product.pro_price!.toFixed(2));
-    // Créer un objet CartItem avec les informations du produit et la quantité sélectionnée
     const cartItem: CartItem = {
       productId: product.id,
       productName: product.pro_name!,
@@ -154,8 +155,6 @@ export default class HomeComponent implements OnInit {
     } else {
       this.selectedBrands = this.selectedBrands.filter(selectedBrand => selectedBrand !== brand);
     }
-
-    // this.filterService.updateFilter({ brand: this.selectedBrands });
   }
 
   updateMinPrice(event: Event): void {
@@ -201,6 +200,26 @@ export default class HomeComponent implements OnInit {
 
     this.applyFilters();
   }
+
+  getImageByProductId(productId: number): string {
+    return this.imagesByProduct[productId] || '';
+  }
+
+  loadAllProductImages(): void {
+    if (this.products) {
+      this.products.forEach(product => {
+        this.productService.loadImages(product.id).subscribe({
+          next: response => {
+            if (response.length > 0) {
+              this.imagesByProduct[product.id] = response[0].image_path;
+            }
+          },
+          error: () => console.error(`Erro ao carregar a imagem do produto ${product.id}`),
+        });
+      });
+    }
+  }
+
   protected fillComponentAttributeFromRoute(params: ParamMap, data: Data): void {
     const page = params.get(PAGE_HEADER);
     this.page = +(page ?? 1);
@@ -213,6 +232,7 @@ export default class HomeComponent implements OnInit {
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
     this.products = dataFromBody;
     this.filteredProducts = dataFromBody;
+    this.loadAllProductImages();
     this.getAllBrands();
   }
 

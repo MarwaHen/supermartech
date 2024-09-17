@@ -13,11 +13,13 @@ import { CartService } from 'app/services/cart.service';
   standalone: true,
   selector: 'jhi-page-detail',
   templateUrl: './page-detail.component.html',
+  styleUrl: './page-detail.component.scss',
   imports: [SharedModule, RouterModule, CommonModule, DurationPipe, FormatMediumDatetimePipe, FormatMediumDatePipe, FormsModule], // Add FormsModule to imports
 })
 export class PageDetailComponent implements OnInit {
   product: IProduct | null = null;
   quantity = 1;
+  productImages: string[] = [];
 
   private route = inject(ActivatedRoute);
   private productService = inject(ProductService);
@@ -33,6 +35,7 @@ export class PageDetailComponent implements OnInit {
   loadProduct(id: number): void {
     this.productService.find(id).subscribe(response => {
       this.product = response.body;
+      this.loadAllProductImages();
     });
   }
 
@@ -43,7 +46,6 @@ export class PageDetailComponent implements OnInit {
         ? parseFloat((this.product.pro_price! - this.product.pro_price! * (this.product.pro_promotion / 100)).toFixed(2))
         : parseFloat(this.product.pro_price!.toFixed(2));
 
-      // Créer un objet CartItem avec les informations du produit et la quantité sélectionnée
       const cartItem: CartItem = {
         productId: this.product.id,
         productName: this.product.pro_name!,
@@ -55,6 +57,20 @@ export class PageDetailComponent implements OnInit {
       alert(`${cartItem.productName} (x${this.quantity}) a été ajouté au panier`);
     } else {
       alert('Quantité invalide ou produit en rupture de stock');
+    }
+  }
+
+  loadAllProductImages(): void {
+    if (this.product) {
+      this.productService.loadImages(this.product.id).subscribe({
+        next: response => {
+          if (response.length > 0) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            this.productImages = response.map((img: any) => img.image_path);
+          }
+        },
+        error: () => console.error(`Erro ao carregar a imagem do produto ${this.product?.id}`),
+      });
     }
   }
 }

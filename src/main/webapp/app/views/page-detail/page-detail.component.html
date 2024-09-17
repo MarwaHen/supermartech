@@ -11,9 +11,11 @@
               <div class="tab-content tab_content_style">
                 <div id="tab1" class="tab-pane fade show active">
                   <div class="blog_tabs">
-                    <a class="fancybox" href="img/product/blog-big-1.jpg" data-fancybox-group="gallery" title="Product Image">
-                      <img src="../../../content/images/atlantis.png" alt="Product Image" />
-                    </a>
+                    <div class="product-images">
+                      <div *ngFor="let image of productImages" class="product-image">
+                        <img [src]="image" alt="{{ product?.pro_name }}" style="width: 200px; height: 200px" />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
