@@ -4,6 +4,7 @@ import { CategoryService } from 'app/entities/category/service/category.service'
 import { SubCategoryService } from 'app/entities/sub-category/service/sub-category.service';
 import { ISubCategory } from 'app/entities/sub-category/sub-category.model';
 import { CommonModule } from '@angular/common';
+import { FilterService } from 'app/services/filter.service';
 
 @Component({
   standalone: true,
@@ -36,6 +37,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private categoryService: CategoryService,
     private subCategoryService: SubCategoryService,
+    private filterService: FilterService,
   ) {}
 
   ngOnInit(): void {
@@ -68,5 +70,9 @@ export class HeaderComponent implements OnInit {
 
   hideSubCategories(): void {
     this.activeCategoryId = null;
+  }
+
+  filterBySubCategory(subCatId?: number): void {
+    this.filterService.updateFilter({ sub_cat: subCatId });
   }
 }

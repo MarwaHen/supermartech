@@ -93,19 +93,33 @@
                 <div class="filter_box">
                   <h2>PRICE</h2>
                   <div class="price_range">
-                    <input type="number" id="min_price" placeholder="Min Price" value="156" />
-                    <input type="number" id="max_price" placeholder="Max Price" value="433" />
+                    <input (change)="updateMinPrice($event)" type="number" id="min_price" placeholder="Min Price" />
+                    <input (change)="updateMaxPrice($event)" type="number" id="max_price" placeholder="Max Price" />
                   </div>
 
                   <h2>MARQUE</h2>
                   <div class="brand_filter">
-                    <select [(ngModel)]="selectedMark" (change)="filterProductsByMark()">
-                      <option value="">Toutes les marques</option>
-                      <option *ngFor="let mark of distinctProMarks" [value]="mark">{{ mark }}</option>
-                    </select>
+                    <ul class="brand-filter-list">
+                      <li *ngFor="let brand of distinctBrands">
+                        <label>
+                          <input
+                            type="checkbox"
+                            [value]="brand"
+                            (change)="updateBrandFilter($event, brand)"
+                            [checked]="selectedBrands.includes(brand)"
+                          />
+                          {{ brand }}
+                        </label>
+                      </li>
+                    </ul>
                   </div>
-
-                  <button class="search_button" onclick="searchFilters()">Search</button>
+                  <label>
+                    <input type="checkbox" (change)="updatePromoFilter($event)" [checked]="promoFilter" /> Promotion uniquement
+                  </label>
+                  <div style="display: flex; gap: 20px">
+                    <button class="search_button" (click)="clearFilters()">Effacer les filtres</button>
+                    <button class="search_button" (click)="onSearchFiltersClicked()">Recherche</button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -132,7 +146,7 @@
                       <span jhiTranslate="supermatechApp.product.home.title">Products</span>
                     </h2>
 
-                    @if (products?.length === 0) {
+                    @if (filteredProducts?.length === 0) {
                       <div class="alert alert-warning" id="no-result">
                         <span jhiTranslate="supermatechApp.product.home.notFound">No Products found</span>
                       </div>
@@ -184,7 +198,9 @@
                                 <a href="#" target="blank" (click)="addToCart(product)">Add to cart</a>
                               </div>
                               <div class="cart_details">
-                                <a [routerLink]="['/product', product.id, product.pro_name]"><i class="fa fa-expand"></i></a>
+                                <a [routerLink]="['/product', product.id, product.pro_name]"
+                                  ><i class="fa fa-expand"></i> Détail du produit</a
+                                >
                               </div>
                             </div>
                           </div>

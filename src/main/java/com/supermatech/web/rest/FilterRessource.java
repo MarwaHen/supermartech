@@ -4,13 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.supermatech.domain.Product;
-import com.supermatech.service.impl.OrderLineServiceImpl;
-import com.supermatech.service.impl.OrderServiceImpl;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
-import java.time.LocalDate;
 import java.util.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +19,9 @@ class Filter {
     @JsonProperty("sub_cat")
     int sub_cat;
 
+    @JsonProperty("brand")
+    List<String> brand;
+
     @JsonProperty("max_price")
     int max_price;
 
@@ -31,7 +31,7 @@ class Filter {
     @JsonProperty("promo")
     boolean promo;
 
-    @JsonProperty("new")
+    @JsonProperty("added_after")
     Date added_after;
 }
 
@@ -47,63 +47,77 @@ public class FilterRessource {
     public Map<String, Object> processPayment(@RequestBody String post) throws JsonProcessingException {
         HashMap<String, Object> res = new HashMap<>();
         ObjectMapper objectMapper = new ObjectMapper();
-        ArrayList<HashMap<String, Object>> productMissing = new ArrayList<>();
 
+        // Parse the incoming filter JSON
         Filter filter = objectMapper.readValue(post, Filter.class);
 
+        // Initialize JPQL query builder
         StringBuilder jpql = new StringBuilder();
-        jpql.append("SELECT * FROM product p");
+        jpql.append("SELECT p FROM Product p");
+
         boolean first = true;
 
+        // Filter by subcategory
         if (filter.sub_cat != -1) {
-            jpql.append(" WHERE ");
+            jpql.append(first ? " WHERE " : " AND ");
             first = false;
-            jpql.append("p.catt_id == ");
-            jpql.append(filter.sub_cat);
-        }
-        if (filter.min_price > 0) {
-            if (first) {
-                jpql.append(" WHERE ");
-                first = false;
-            } else {
-                jpql.append(" AND ");
-            }
-            jpql.append("p.pro_price >= ");
-            jpql.append(filter.min_price);
-        }
-        if (filter.max_price != -1) {
-            if (first) {
-                jpql.append(" WHERE ");
-                first = false;
-            } else {
-                jpql.append(" AND ");
-            }
-            jpql.append("p.pro_price <= ");
-            jpql.append(filter.max_price);
-        }
-        if (filter.promo) {
-            if (first) {
-                jpql.append(" WHERE ");
-                first = false;
-            } else {
-                jpql.append(" AND ");
-            }
-            jpql.append("p.pro_promotion > 0");
-        }
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2000, Calendar.JANUARY, 1);
-        if (filter.added_after.before(calendar.getTime())) {
-            if (first) {
-                jpql.append(" WHERE ");
-                first = false;
-            } else {
-                jpql.append(" AND ");
-            }
-            jpql.append("p.pro_date >= ");
-            jpql.append(filter.added_after);
+            jpql.append("p.catt_id = ").append(filter.sub_cat);
         }
 
+        // Filter by minimum price
+        if (filter.min_price > 0) {
+            jpql.append(first ? " WHERE " : " AND ");
+            first = false;
+            jpql
+                .append("(CAST(p.pro_price AS NUMERIC(100,2))-(CAST(p.pro_price AS NUMERIC(100,2))*pro_promotion/100)) >= ")
+                .append((double) filter.min_price);
+        }
+
+        // Filter by maximum price
+        if (filter.max_price != -1) {
+            jpql.append(first ? " WHERE " : " AND ");
+            first = false;
+            jpql
+                .append("(CAST(p.pro_price AS NUMERIC(100,2))-(CAST(p.pro_price AS NUMERIC(100,2))*pro_promotion/100)) <= ")
+                .append((double) filter.max_price);
+        }
+
+        // Filter by promotion
+        if (filter.promo) {
+            jpql.append(first ? " WHERE " : " AND ");
+            first = false;
+            jpql.append("p.pro_promotion > 0");
+        }
+
+        System.out.println("JPQL Query: " + jpql.toString());
+        // Filter by date added (after 01/01/2000)
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2000, Calendar.JANUARY, 1);
+        if (filter.added_after != null && filter.added_after.after(calendar.getTime())) {
+            jpql.append(first ? " WHERE " : " AND ");
+            first = false;
+            jpql.append("p.pro_date >= :added_after");
+        }
+
+        // Filter by brand (multiple options with IN clause)
+        if (filter.brand != null && !filter.brand.isEmpty()) {
+            jpql.append(first ? " WHERE " : " AND ");
+            jpql.append("p.pro_mark IN :brands");
+        }
+
+        // Create the JPQL query
         TypedQuery<Product> query = em.createQuery(jpql.toString(), Product.class);
+
+        // Set parameters dynamically
+        if (filter.added_after != null && filter.added_after.after(calendar.getTime())) {
+            query.setParameter("added_after", filter.added_after);
+        }
+
+        if (filter.brand != null && !filter.brand.isEmpty()) {
+            query.setParameter("brands", filter.brand);
+        }
+
+        // Execute the query and return the results
         res.put("res_list", query.getResultList());
         return res;
     }

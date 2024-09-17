@@ -11,7 +11,9 @@
               <div class="home_mega_menu">
                 <ul *ngIf="activeCategoryId === category.id" id="account_single_nav_1">
                   <li *ngFor="let sub of category.subCategories">
-                    <a [href]="'http://localhost:9000/view/' + sub?.id">{{ sub?.catt_name }}</a>
+                    <a (click)="filterBySubCategory(sub?.id)">
+                      {{ sub?.catt_name }}
+                    </a>
                   </li>
                 </ul>
               </div>

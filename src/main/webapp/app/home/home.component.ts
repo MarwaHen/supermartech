@@ -17,6 +17,7 @@ import { ProductService } from 'app/entities/product/service/product.service';
 import { EntityArrayResponseType } from 'app/entities/category/service/category.service';
 import { CartItem } from 'app/models/cart-item.model';
 import { CartService } from 'app/services/cart.service';
+import { Filter, FilterService } from 'app/services/filter.service';
 
 @Component({
   standalone: true,
@@ -65,13 +66,17 @@ export default class HomeComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
-  distinctProMarks: string[] = [];
-  selectedMark = '';
-
+  distinctBrands: string[] = [];
+  selectedBrands: string[] = [];
+  currentFilter!: Filter;
+  minPrice = 0;
+  maxPrice = -1;
+  promoFilter = false;
   public router = inject(Router);
   protected productService = inject(ProductService);
   protected activatedRoute = inject(ActivatedRoute);
   protected sortService = inject(SortService);
+  protected filterService = inject(FilterService);
   protected modalService = inject(NgbModal);
   protected ngZone = inject(NgZone);
   private cartService = inject(CartService);
@@ -87,6 +92,10 @@ export default class HomeComponent implements OnInit {
       .subscribe();
 
     this.filters.filterChanges.subscribe(filterOptions => this.handleNavigation(1, this.sortState(), filterOptions));
+    this.currentFilter = this.filterService.getFilter();
+    this.filterService.filter$.subscribe(() => {
+      this.applyFilters();
+    });
   }
 
   load(): void {
@@ -132,18 +141,65 @@ export default class HomeComponent implements OnInit {
   }
 
   getAllBrands(): void {
-    this.distinctProMarks = Array.from(new Set(this.products?.map(product => product.pro_mark))).filter(
+    this.distinctBrands = Array.from(new Set(this.products?.map(product => product.pro_mark))).filter(
       (mark): mark is string => mark != null,
     );
   }
 
-  filterProductsByMark(): void {
-    if (this.selectedMark) {
-      this.filteredProducts = this.products?.filter(product => product.pro_mark === this.selectedMark) ?? [];
+  updateBrandFilter(event: Event, brand: string): void {
+    const checkbox = event.target as HTMLInputElement;
+
+    if (checkbox.checked) {
+      this.selectedBrands.push(brand);
     } else {
-      // Se nenhuma marca for selecionada, mostrar todos os produtos
-      this.filteredProducts = this.products ?? [];
+      this.selectedBrands = this.selectedBrands.filter(selectedBrand => selectedBrand !== brand);
     }
+
+    // this.filterService.updateFilter({ brand: this.selectedBrands });
+  }
+
+  updateMinPrice(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.minPrice = Number(input.value);
+  }
+
+  updateMaxPrice(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.maxPrice = Number(input.value);
+  }
+
+  applyFilters(): void {
+    this.filterService.filterProducts().subscribe(products => {
+      this.filteredProducts = products?.res_list;
+    });
+  }
+
+  onSearchFiltersClicked(): void {
+    this.filterService.updateFilter({
+      min_price: this.minPrice,
+      max_price: this.maxPrice,
+      brand: this.selectedBrands,
+      promo: this.promoFilter,
+    });
+    this.applyFilters();
+  }
+
+  updatePromoFilter(event: Event): void {
+    const checkbox = event.target as HTMLInputElement;
+    this.promoFilter = checkbox.checked;
+  }
+
+  clearFilters(): void {
+    this.minPrice = 0;
+    this.maxPrice = -1;
+    this.selectedBrands = [];
+    this.promoFilter = false;
+    (document.getElementById('min_price') as HTMLInputElement).value = '';
+    (document.getElementById('max_price') as HTMLInputElement).value = '';
+
+    this.filterService.resetFilter();
+
+    this.applyFilters();
   }
   protected fillComponentAttributeFromRoute(params: ParamMap, data: Data): void {
     const page = params.get(PAGE_HEADER);
@@ -156,8 +212,8 @@ export default class HomeComponent implements OnInit {
     this.fillComponentAttributesFromResponseHeader(response.headers);
     const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
     this.products = dataFromBody;
+    this.filteredProducts = dataFromBody;
     this.getAllBrands();
-    this.filterProductsByMark();
   }
 
   protected fillComponentAttributesFromResponseBody(data: IProduct[] | null): IProduct[] {
