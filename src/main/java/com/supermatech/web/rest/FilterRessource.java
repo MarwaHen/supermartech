@@ -22,9 +22,6 @@ class Filter {
     @JsonProperty("sub_cat")
     int sub_cat;
 
-    @JsonProperty("brand")
-    List<String> brand;
-
     @JsonProperty("max_price")
     int max_price;
 
@@ -104,20 +101,6 @@ public class FilterRessource {
             }
             jpql.append("p.pro_date >= ");
             jpql.append(filter.added_after);
-        }
-        if (!filter.brand.isEmpty()) {
-            if (first) {
-                jpql.append(" WHERE ");
-                first = false;
-            } else {
-                jpql.append(" AND ");
-            }
-            for (String brand : filter.brand) {
-                jpql.append("p.pro_mark == ");
-                jpql.append(brand);
-                jpql.append(" OR ");
-            }
-            jpql.delete(jpql.toString().length() - 4, jpql.toString().length() - 1);
         }
 
         TypedQuery<Product> query = em.createQuery(jpql.toString(), Product.class);
