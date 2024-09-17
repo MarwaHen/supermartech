@@ -17,7 +17,7 @@
         "orderLine": "Order Line"
       },
       "account": {
-        "main": "Compte",
+        "main": "Votre compte",
         "settings": "Profil",
         "password": "Mot de passe",
         "sessions": "Sessions",
