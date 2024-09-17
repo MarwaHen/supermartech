@@ -5,6 +5,7 @@ import { SubCategoryService } from 'app/entities/sub-category/service/sub-catego
 import { ISubCategory } from 'app/entities/sub-category/sub-category.model';
 import { CommonModule } from '@angular/common';
 import { FilterService } from 'app/services/filter.service';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -38,6 +39,7 @@ export class HeaderComponent implements OnInit {
     private categoryService: CategoryService,
     private subCategoryService: SubCategoryService,
     private filterService: FilterService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -74,5 +76,9 @@ export class HeaderComponent implements OnInit {
 
   filterBySubCategory(subCatId?: number): void {
     this.filterService.updateFilter({ sub_cat: subCatId });
+    const isHomePage = this.router.url === '/';
+    if (!isHomePage) {
+      this.router.navigate(['/']);
+    }
   }
 }
