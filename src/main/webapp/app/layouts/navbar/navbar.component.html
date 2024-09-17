@@ -9,12 +9,18 @@
     <form class="d-flex justify-content-center mx-auto search-form" role="search">
       <div class="input-group">
         <div class="input-group-prepend">
-          <span class="input-group-text search-icon">
+          <span style="cursor: pointer" (click)="seachProductByName()" class="input-group-text search-icon">
             <fa-icon icon="search"></fa-icon>
             <!-- FontAwesome search icon -->
           </span>
         </div>
-        <input class="form-control search-input" type="search" placeholder="Rechercher..." aria-label="Search" />
+        <input
+          (change)="updateSearchProductName($event)"
+          class="form-control search-input"
+          type="search"
+          placeholder="Rechercher..."
+          aria-label="Search"
+        />
       </div>
     </form>
 

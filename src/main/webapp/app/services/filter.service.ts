@@ -4,12 +4,13 @@ import { ApplicationConfigService } from 'app/core/config/application-config.ser
 import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface Filter {
+  name?: string;
   sub_cat?: number;
   brand?: string[];
   min_price?: number;
   max_price?: number;
   promo?: boolean;
-  added_after?: Date;
+  added_after?: string;
 }
 
 @Injectable({
@@ -20,12 +21,13 @@ export class FilterService {
   protected applicationConfigService = inject(ApplicationConfigService);
   protected resourceUrl = this.applicationConfigService.getEndpointFor('/api/filter');
   private filterSubject = new BehaviorSubject<Filter>({
+    name: '',
     sub_cat: -1,
     min_price: 0,
     max_price: -1,
     promo: false,
     brand: [],
-    added_after: new Date(1999, 11, 31),
+    added_after: '',
   });
 
   constructor(private http: HttpClient) {
@@ -48,12 +50,13 @@ export class FilterService {
 
   resetFilter(): void {
     this.filterSubject.next({
+      name: '',
       sub_cat: -1,
       min_price: 0,
       max_price: -1,
       promo: false,
       brand: [],
-      added_after: new Date(1999, 11, 31),
+      added_after: '',
     });
   }
 }
