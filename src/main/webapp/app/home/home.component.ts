@@ -88,24 +88,11 @@ export default class HomeComponent implements OnInit {
   trackId = (_index: number, item: IProduct): number => this.productService.getProductIdentifier(item);
 
   ngOnInit(): void {
-    this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])
-      .pipe(
-        tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
-        tap(() => this.load()),
-      )
-      .subscribe();
-
     this.currentFilter = this.filterService.getFilter();
+    this.applyFilters();
+    this.getAllBrands();
     this.filterService.filter$.subscribe(() => {
       this.applyFilters();
-    });
-  }
-
-  load(): void {
-    this.queryBackend().subscribe({
-      next: (res: EntityArrayResponseType) => {
-        this.onResponseSuccess(res);
-      },
     });
   }
 
@@ -248,39 +235,5 @@ export default class HomeComponent implements OnInit {
     this.page = +(page ?? 1);
     this.sortState.set(this.sortService.parseSortParam(params.get(SORT) ?? data[DEFAULT_SORT_DATA]));
     this.filters.initializeFromParams(params);
-  }
-
-  protected onResponseSuccess(response: EntityArrayResponseType): void {
-    this.fillComponentAttributesFromResponseHeader(response.headers);
-    const dataFromBody = this.fillComponentAttributesFromResponseBody(response.body);
-    this.products = dataFromBody;
-    this.filteredProducts = dataFromBody;
-    this.loadAllProductImages();
-    this.getAllBrands();
-  }
-
-  protected fillComponentAttributesFromResponseBody(data: IProduct[] | null): IProduct[] {
-    return data ?? [];
-  }
-
-  protected fillComponentAttributesFromResponseHeader(headers: HttpHeaders): void {
-    this.totalItems = Number(headers.get(TOTAL_COUNT_RESPONSE_HEADER));
-  }
-
-  protected queryBackend(): Observable<EntityArrayResponseType> {
-    const { page, filters } = this;
-
-    this.isLoading = true;
-    const pageToLoad: number = page;
-    const queryObject: any = {
-      page: pageToLoad - 1,
-      size: this.itemsPerPage,
-      eagerload: true,
-      sort: this.sortService.buildSortParam(this.sortState()),
-    };
-    filters.filterOptions.forEach(filterOption => {
-      queryObject[filterOption.name] = filterOption.values;
-    });
-    return this.productService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
   }
 }

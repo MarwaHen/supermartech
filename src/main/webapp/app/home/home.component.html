@@ -199,12 +199,14 @@
                           <!-- Product Details -->
                           <div class="product_details">
                             <h2>{{ product.pro_name }}</h2>
-                            <img
-                              src="{{ getImageByProductId(product.id) }}"
-                              style="width: 128px; height: 128px"
-                              class="product-image"
-                              [class.out-of-stock]="product?.pro_quantity === 0"
-                            />
+                            @if (getImageByProductId(product.id)) {
+                              <img
+                                src="{{ getImageByProductId(product.id) }}"
+                                style="width: 128px; height: 128px"
+                                class="product-image"
+                                [class.out-of-stock]="product?.pro_quantity === 0"
+                              />
+                            }
 
                             <p>
                               <!-- Regular Price -->
