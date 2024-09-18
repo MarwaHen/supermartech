@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { CartItem } from '../models/cart-item.model';
-import { IProduct } from 'app/view/product/product.model';
 import { HttpClient } from '@angular/common/http';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { Payment, PaymentProduct } from 'app/models/payment.model';
