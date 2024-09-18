@@ -53,6 +53,6 @@ export class FilterService {
   }
 
   resetFilter(): void {
-    this.updateFilter({ name: '', min_price: 0, max_price: -1, promo: false, brand: [], added_after: '', page: 0, size: 5 });
+    this.updateFilter({ name: '', min_price: 0, max_price: -1, promo: false, brand: [], added_after: '', page: 0 });
   }
 }

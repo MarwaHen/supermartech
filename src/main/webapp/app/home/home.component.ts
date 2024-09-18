@@ -149,6 +149,10 @@ export default class HomeComponent implements OnInit {
     }
   }
 
+  updateBrandFilterByChanges(brands?: string[]): void {
+    this.selectedBrands = this.selectedBrands.filter(selectedBrand => brands?.includes(selectedBrand));
+  }
+
   updateMinPrice(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (!input.value) {
@@ -176,6 +180,8 @@ export default class HomeComponent implements OnInit {
     this.currentFilter = this.filterService.getFilter();
     // eslint-disable-next-line no-console
     console.log(this.currentFilter);
+    this.updateBrandFilterByChanges(this.currentFilter.brand);
+    this.promoFilter = this.currentFilter.promo ?? this.promoFilter;
   }
 
   onSearchFiltersClicked(): void {
@@ -184,7 +190,9 @@ export default class HomeComponent implements OnInit {
       max_price: this.maxPrice,
       brand: this.selectedBrands,
       promo: this.promoFilter,
+      page: 0,
     });
+    this.page = 1;
     this.applyFilters();
   }
 
@@ -198,6 +206,7 @@ export default class HomeComponent implements OnInit {
     this.maxPrice = -1;
     this.selectedBrands = [];
     this.promoFilter = false;
+    this.page = 1;
     (document.getElementById('min_price') as HTMLInputElement).value = '';
     (document.getElementById('max_price') as HTMLInputElement).value = '';
 
