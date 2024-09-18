@@ -49,14 +49,6 @@ export class FilterService {
   }
 
   resetFilter(): void {
-    this.filterSubject.next({
-      name: '',
-      sub_cat: -1,
-      min_price: 0,
-      max_price: -1,
-      promo: false,
-      brand: [],
-      added_after: '',
-    });
+    this.updateFilter({ name: '', min_price: 0, max_price: -1, promo: false, brand: [], added_after: '' });
   }
 }
