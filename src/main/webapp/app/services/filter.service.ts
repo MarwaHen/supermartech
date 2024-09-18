@@ -11,6 +11,8 @@ export interface Filter {
   max_price?: number;
   promo?: boolean;
   added_after?: string;
+  page?: number;
+  size?: number;
 }
 
 @Injectable({
@@ -28,6 +30,8 @@ export class FilterService {
     promo: false,
     brand: [],
     added_after: '',
+    page: 0,
+    size: 5,
   });
 
   constructor(private http: HttpClient) {
@@ -49,6 +53,6 @@ export class FilterService {
   }
 
   resetFilter(): void {
-    this.updateFilter({ name: '', min_price: 0, max_price: -1, promo: false, brand: [], added_after: '' });
+    this.updateFilter({ name: '', min_price: 0, max_price: -1, promo: false, brand: [], added_after: '', page: 0, size: 5 });
   }
 }

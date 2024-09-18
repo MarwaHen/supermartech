@@ -93,7 +93,6 @@ export default class HomeComponent implements OnInit {
       )
       .subscribe();
 
-    this.filters.filterChanges.subscribe(filterOptions => this.handleNavigation(1, this.sortState(), filterOptions));
     this.currentFilter = this.filterService.getFilter();
     this.filterService.filter$.subscribe(() => {
       this.applyFilters();
@@ -117,13 +116,6 @@ export default class HomeComponent implements OnInit {
   hasHalfStar(pro_mark: string | number | null | undefined): boolean {
     const mark = Number(pro_mark) || 0;
     return mark % 1 > 0;
-  }
-  navigateToWithComponentValues(event: SortState): void {
-    this.handleNavigation(this.page, event, this.filters.filterOptions);
-  }
-
-  navigateToPage(page: number): void {
-    this.handleNavigation(page, this.sortState(), this.filters.filterOptions);
   }
 
   addToCart(product: IProduct): void {
@@ -159,17 +151,27 @@ export default class HomeComponent implements OnInit {
 
   updateMinPrice(event: Event): void {
     const input = event.target as HTMLInputElement;
-    this.minPrice = Number(input.value);
+    if (!input.value) {
+      this.minPrice = 0;
+    } else {
+      this.minPrice = Number(input.value);
+    }
   }
 
   updateMaxPrice(event: Event): void {
     const input = event.target as HTMLInputElement;
-    this.maxPrice = Number(input.value);
+    if (!input.value) {
+      this.maxPrice = -1;
+    } else {
+      this.maxPrice = Number(input.value);
+    }
   }
 
   applyFilters(): void {
     this.filterService.filterProducts().subscribe(products => {
       this.filteredProducts = products?.res_list;
+      this.totalItems = products?.total;
+      this.loadAllProductImages();
     });
   }
 
@@ -206,8 +208,8 @@ export default class HomeComponent implements OnInit {
   }
 
   loadAllProductImages(): void {
-    if (this.products) {
-      this.products.forEach(product => {
+    if (this.filteredProducts.length > 0) {
+      this.filteredProducts.forEach(product => {
         this.productService.loadImages(product.id).subscribe({
           next: response => {
             if (response.length > 0) {
@@ -218,6 +220,15 @@ export default class HomeComponent implements OnInit {
         });
       });
     }
+  }
+
+  navigateToPage(newPage: number): void {
+    this.page = newPage;
+    this.filterService.updateFilter({
+      page: newPage - 1,
+      size: this.itemsPerPage,
+    });
+    this.applyFilters();
   }
 
   protected fillComponentAttributeFromRoute(params: ParamMap, data: Data): void {
@@ -259,24 +270,5 @@ export default class HomeComponent implements OnInit {
       queryObject[filterOption.name] = filterOption.values;
     });
     return this.productService.query(queryObject).pipe(tap(() => (this.isLoading = false)));
-  }
-
-  protected handleNavigation(page: number, sortState: SortState, filterOptions?: IFilterOption[]): void {
-    const queryParamsObj: any = {
-      page,
-      size: this.itemsPerPage,
-      sort: this.sortService.buildSortParam(sortState),
-    };
-
-    filterOptions?.forEach(filterOption => {
-      queryParamsObj[filterOption.nameAsQueryParam()] = filterOption.values;
-    });
-
-    this.ngZone.run(() => {
-      this.router.navigate(['./'], {
-        relativeTo: this.activatedRoute,
-        queryParams: queryParamsObj,
-      });
-    });
   }
 }

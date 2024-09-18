@@ -36,6 +36,12 @@ class Filter {
 
     @JsonProperty("added_after")
     Date added_after;
+
+    @JsonProperty("size")
+    int size;
+
+    @JsonProperty("page")
+    int page;
 }
 
 @RestController
@@ -89,13 +95,15 @@ public class FilterRessource {
         if (filter.brand != null && !filter.brand.isEmpty()) {
             jpql.append(first ? " WHERE " : " AND ");
             jpql.append("p.pro_mark IN :brands");
+            first = false;
         }
 
-        if (filter.name != null) {
+        if (!Objects.equals(filter.name, "")) {
             jpql.append(first ? " WHERE " : " AND ");
             jpql.append("pro_name ILIKE '");
             jpql.append(filter.name);
             jpql.append("%'");
+            first = false;
         }
 
         // Create the JPQL query
@@ -116,20 +124,23 @@ public class FilterRessource {
 
         for (int i = 0; i < result.size(); i++) {
             // Filter by minimum price
-            if (filter.min_price > 0 && result.get(i).get_promo_price() < filter.min_price) {
-                toDelete.add(i);
-            }
-
-            // Filter by maximum price
-            if (filter.max_price != -1 && result.get(i).get_promo_price() > filter.max_price) {
+            if (
+                (filter.min_price > 0 && result.get(i).get_promo_price() < filter.min_price) ||
+                (filter.max_price != -1 && result.get(i).get_promo_price() > filter.max_price)
+            ) {
                 toDelete.add(i);
             }
         }
 
         for (int i = toDelete.size() - 1; i >= 0; i--) result.remove(result.get(toDelete.get(i)));
 
+        int start = filter.page * filter.size;
+        int total = result.size();
+        if (start + filter.size > result.size()) result = result.subList(start, result.size());
+        else result = result.subList(start, start + filter.size);
         // Execute the query and return the results
         res.put("res_list", result);
+        res.put("total", total);
         return res;
     }
 }
