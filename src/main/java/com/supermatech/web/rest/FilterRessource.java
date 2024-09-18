@@ -100,12 +100,13 @@ public class FilterRessource {
 
         if (!Objects.equals(filter.name, "")) {
             jpql.append(first ? " WHERE " : " AND ");
-            jpql.append("pro_name ILIKE '");
+            jpql.append("p.pro_name ILIKE '");
             jpql.append(filter.name);
             jpql.append("%'");
             first = false;
         }
 
+        jpql.append(" ORDER BY p.pro_date DESC");
         // Create the JPQL query
         TypedQuery<Product> query = em.createQuery(jpql.toString(), Product.class);
 
