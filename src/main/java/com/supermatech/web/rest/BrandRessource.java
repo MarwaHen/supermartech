@@ -23,7 +23,7 @@ public class BrandRessource {
     @GetMapping
     public Map<String, Object> getAllBrand() {
         HashMap<String, Object> res = new HashMap<>();
-        Query query = em.createNativeQuery("SELECT DISTINCT pro_mark FROM product");
+        Query query = em.createNativeQuery("SELECT DISTINCT pro_mark FROM product ORDER BY pro_mark ASC");
         res.put("brand", query.getResultList());
         return res;
     }

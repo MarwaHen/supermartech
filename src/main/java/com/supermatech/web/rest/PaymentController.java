@@ -34,6 +34,7 @@ class CartProduct {
     Product product;
 }
 
+// Format Json recu
 class Cart {
 
     @JsonProperty("address")
