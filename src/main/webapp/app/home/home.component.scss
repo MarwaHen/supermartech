@@ -84,3 +84,58 @@ a.disabled {
     border-radius: 20px;
   }
 }
+
+.custom-pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  gap: 15px;
+
+  jhi-item-count {
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+  }
+}
+
+::ng-deep ngb-pagination {
+  .page-item {
+    border-radius: 50%;
+    margin: 0 5px;
+
+    &.active {
+      .page-link {
+        background-color: #333 !important;
+        color: #fff !important;
+        border: none !important;
+      }
+    }
+    .page-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border: none;
+      background-color: #f2f2f2;
+      color: #333;
+      font-size: 14px;
+      line-height: 40px;
+
+      &:hover {
+        background-color: #e0e0e0;
+      }
+    }
+  }
+
+  .page-item.disabled .page-link {
+    background-color: #ddd;
+    color: #888;
+    cursor: not-allowed;
+  }
+  .pagination {
+    padding: 0;
+    margin: 0;
+  }
+}
