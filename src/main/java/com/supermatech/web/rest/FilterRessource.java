@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 class Filter {
 
+    @JsonProperty("name")
+    String name;
+
     @JsonProperty("sub_cat")
     int sub_cat;
 
@@ -64,24 +67,6 @@ public class FilterRessource {
             jpql.append("p.catt_id = ").append(filter.sub_cat);
         }
 
-        // Filter by minimum price
-        if (filter.min_price > 0) {
-            jpql.append(first ? " WHERE " : " AND ");
-            first = false;
-            jpql
-                .append("(CAST(p.pro_price AS NUMERIC(100,2))-(CAST(p.pro_price AS NUMERIC(100,2))*pro_promotion/100)) >= ")
-                .append((double) filter.min_price);
-        }
-
-        // Filter by maximum price
-        if (filter.max_price != -1) {
-            jpql.append(first ? " WHERE " : " AND ");
-            first = false;
-            jpql
-                .append("(CAST(p.pro_price AS NUMERIC(100,2))-(CAST(p.pro_price AS NUMERIC(100,2))*pro_promotion/100)) <= ")
-                .append((double) filter.max_price);
-        }
-
         // Filter by promotion
         if (filter.promo) {
             jpql.append(first ? " WHERE " : " AND ");
@@ -90,6 +75,7 @@ public class FilterRessource {
         }
 
         System.out.println("JPQL Query: " + jpql.toString());
+
         // Filter by date added (after 01/01/2000)
         Calendar calendar = Calendar.getInstance();
         calendar.set(2000, Calendar.JANUARY, 1);
@@ -117,8 +103,26 @@ public class FilterRessource {
             query.setParameter("brands", filter.brand);
         }
 
+        // Check Price
+        List<Product> result = query.getResultList();
+        ArrayList<Integer> toDelete = new ArrayList<>();
+
+        for (int i = 0; i < result.size(); i++) {
+            // Filter by minimum price
+            if (filter.min_price > 0 && result.get(i).get_promo_price() < filter.min_price) {
+                toDelete.add(i);
+            }
+
+            // Filter by maximum price
+            if (filter.max_price != -1 && result.get(i).get_promo_price() > filter.min_price) {
+                toDelete.add(i);
+            }
+        }
+        System.out.println(result.size());
+        for (int i = toDelete.size() - 1; i >= 0; i--) result.remove(result.get(toDelete.get(i)));
+        System.out.println(result.size());
         // Execute the query and return the results
-        res.put("res_list", query.getResultList());
+        res.put("res_list", result);
         return res;
     }
 }
