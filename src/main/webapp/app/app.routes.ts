@@ -44,10 +44,6 @@ const routes: Routes = [
     loadChildren: () => import(`./entities/entity.routes`),
   },
   {
-    path: 'view',
-    loadChildren: () => import(`./view/product/product.routes`),
-  },
-  {
     path: 'cart',
     component: CartComponent,
   },

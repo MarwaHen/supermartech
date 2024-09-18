@@ -173,6 +173,9 @@ export default class HomeComponent implements OnInit {
       this.totalItems = products?.total;
       this.loadAllProductImages();
     });
+    this.currentFilter = this.filterService.getFilter();
+    // eslint-disable-next-line no-console
+    console.log(this.currentFilter);
   }
 
   onSearchFiltersClicked(): void {

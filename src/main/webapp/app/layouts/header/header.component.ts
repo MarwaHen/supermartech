@@ -76,6 +76,7 @@ export class HeaderComponent implements OnInit {
 
   filterBySubCategory(subCatId?: number): void {
     this.filterService.updateFilter({ sub_cat: subCatId });
+    this.filterService.resetFilter();
     const isHomePage = this.router.url === '/';
     if (!isHomePage) {
       this.router.navigate(['/']);
