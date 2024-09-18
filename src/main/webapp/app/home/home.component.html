@@ -18,6 +18,29 @@
     <!-- modernizr JS  -->
     <script src="../../../../content/hope/js/vendor/modernizr-2.8.3.min.js"></script>
     <style>
+      .product_details h2,
+      .product_details img {
+        opacity: 1;
+        transition: opacity 0.3s ease;
+        z-index: 1;
+      }
+
+      .product_button {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        color: black;
+      }
+
+      /* Show buttons on hover */
+      .single_product.home-product-info:hover .product_button {
+        opacity: 1;
+      }
+
+      /* Hover effect for the entire product card */
+      .single_product.home-product-info:hover {
+        background-color: #f1f1f1; /* Light gray background when hovering */
+      }
+
       .filter_box {
         border: 1px solid #ccc;
         padding: 20px;
@@ -53,6 +76,20 @@
         border: none;
         cursor: pointer;
         font-size: 16px;
+      }
+
+      img.product-image.out-of-stock {
+        filter: blur(5px);
+        opacity: 0.6;
+        transition:
+          filter 0.3s ease,
+          opacity 0.3s ease;
+      }
+
+      .promo-icon {
+        width: 36px !important;
+        height: 36px !important;
+        margin-left: 0px !important;
       }
     </style>
   </head>
@@ -91,10 +128,10 @@
             <div class="priceing_area">
               <div class="info_widget">
                 <div class="filter_box">
-                  <h2>PRICE</h2>
+                  <h2>PRIX</h2>
                   <div class="price_range">
-                    <input (change)="updateMinPrice($event)" type="number" id="min_price" placeholder="Min Price" />
-                    <input (change)="updateMaxPrice($event)" type="number" id="max_price" placeholder="Max Price" />
+                    <input (change)="updateMinPrice($event)" type="number" id="min_price" placeholder="Prix Min" />
+                    <input (change)="updateMaxPrice($event)" type="number" id="max_price" placeholder="Prix Max" />
                   </div>
 
                   <h2>MARQUE</h2>
@@ -118,7 +155,7 @@
                   </label>
                   <div style="display: flex; gap: 20px">
                     <button class="search_button" (click)="clearFilters()">Effacer les filtres</button>
-                    <button class="search_button" (click)="onSearchFiltersClicked()">Recherche</button>
+                    <button class="search_button" (click)="onSearchFiltersClicked()">Rechercher</button>
                   </div>
                 </div>
               </div>
@@ -134,21 +171,21 @@
             <div class="my_tabs">
               <ul class="tab_style nav-tabs nav border-0">
                 <li>
-                  <a class="active" data-bs-toggle="tab" href="/"
+                  <a data-bs-toggle="tab" href="/"
                     ><span><i class="fa fa-th"></i></span
                   ></a>
                 </li>
               </ul>
               <div class="tab-content tab_content_style">
-                <div id="tab1" class="tab-pane fade show active">
+                <div id="tab1">
                   <div>
                     <h2 id="page-heading" data-cy="ProductHeading">
-                      <span jhiTranslate="supermatechApp.product.home.title">Products</span>
+                      <span>Produits</span>
                     </h2>
 
                     @if (filteredProducts.length === 0) {
                       <div class="alert alert-warning" id="no-result">
-                        <span jhiTranslate="supermatechApp.product.home.notFound">No Products found</span>
+                        <span jhiTranslate="supermatechApp.product.home.notFound">Pas de produits disponibles</span>
                       </div>
                     }
                   </div>
@@ -162,14 +199,17 @@
                           <!-- Product Details -->
                           <div class="product_details">
                             <h2>{{ product.pro_name }}</h2>
-                            <img src="{{ getImageByProductId(product.id) }}" style="width: 128px; height: 128px" />
+                            <img
+                              src="{{ getImageByProductId(product.id) }}"
+                              style="width: 128px; height: 128px"
+                              class="product-image"
+                              [class.out-of-stock]="product?.pro_quantity === 0"
+                            />
+
                             <p>
                               <!-- Regular Price -->
                               <span class="regular_price" *ngIf="product.pro_promotion && product.pro_promotion > 0">
                                 <s>{{ product.pro_price | currency }}</s>
-                              </span>
-                              <span class="regular_price" *ngIf="!(product.pro_promotion && product.pro_promotion > 0)">
-                                {{ product.pro_price | currency }}
                               </span>
 
                               <!-- Discounted Price -->
@@ -196,20 +236,29 @@
                             <!-- Action Buttons -->
                             <div class="product_button">
                               <div class="cart_details">
-                                <a href="#" target="blank" (click)="addToCart(product)">Add to cart</a>
+                                <a
+                                  href="#"
+                                  target="blank"
+                                  (click)="product?.pro_quantity != 0 ? addToCart(product) : $event.preventDefault()"
+                                  [class.disabled]="product?.pro_quantity === 0"
+                                  style="color: #000"
+                                >
+                                  Ajouter {{ product.pro_name }} au panier
+                                </a>
                               </div>
                               <div class="cart_details">
-                                <a [routerLink]="['/product', product.id, product.pro_name]"
-                                  ><i class="fa fa-expand"></i> Détail du produit</a
-                                >
+                                <a [routerLink]="['/product', product.id, product.pro_name]" style="color: #000">
+                                  <i class="fa fa-expand"></i> Détails du produit
+                                </a>
                               </div>
                             </div>
                           </div>
 
-                          <!-- Sale Label -->
-                          <div class="sale_product" *ngIf="product.pro_promotion && product.pro_promotion > 0">
-                            <h5>Sale</h5>
-                          </div>
+                          <h2>
+                            <span *ngIf="product.pro_promotion && product.pro_promotion > 0">
+                              <img src="../../content/images/promo.png" alt="Promo" class="promo-icon" />
+                            </span>
+                          </h2>
                         </div>
                       </div>
                     </div>

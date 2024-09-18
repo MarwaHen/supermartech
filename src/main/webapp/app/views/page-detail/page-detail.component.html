@@ -98,14 +98,14 @@
                     type="button"
                     title="Add to Cart"
                     class="cart_button"
-                    [disabled]="!(product?.pro_quantity ?? 0) || (product?.pro_quantity ?? 0) <= 0"
+                    [disabled]="product?.pro_quantity === 0 || product?.pro_quantity === null"
                     (click)="addToCart()"
                   >
                     <span>Ajouter au panier</span>
                   </button>
 
                   <!-- Display out of stock message if product quantity is 0 or less -->
-                  <p *ngIf="(product?.pro_quantity ?? 0) === 0">En rupture de stock</p>
+                  <p *ngIf="product?.pro_quantity === 0 || product?.pro_quantity === null">En rupture de stock</p>
                 </div>
               </div>
             </div>

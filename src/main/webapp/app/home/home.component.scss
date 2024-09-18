@@ -8,3 +8,9 @@
 .search_button {
   padding: 9px !important;
 }
+
+a.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
