@@ -1,0 +1,118 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <body>
+    <!-- Start Product details area -->
+    <div class="blog_single_view_area">
+      <div class="container">
+        <div class="row">
+          <!-- Image section with tabs -->
+          <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+            <div class="my_tabs">
+              <div class="tab-content tab_content_style">
+                <div id="tab1" class="tab-pane fade show active">
+                  <div class="blog_tabs">
+                    <div class="product-images">
+                      <div *ngFor="let image of productImages" class="product-image">
+                        <img [src]="image" alt="{{ product?.pro_name }}" style="width: 200px; height: 200px" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product details section -->
+          <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12">
+            <div class="blog_product_details">
+              <!-- Title and ratings -->
+              <h2 class="blog_heading">
+                <a href="#">{{ product?.pro_name }}</a>
+              </h2>
+              <div class="product_rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+              </div>
+
+              <!-- Price and promotion -->
+              <div class="pricing_rate">
+                <!-- Disponibilité Section -->
+                <p class="stack">
+                  Disponibilité:
+                  <span *ngIf="(product?.pro_quantity ?? 0) > 0; else outOfStock" class="in-stock">En stock</span>
+                  <ng-template #outOfStock>
+                    <span class="out-of-stock">Rupture de stock</span>
+                  </ng-template>
+                </p>
+
+                <p class="rating_dollor rating_margin">
+                  <span class="rating_value_one dollor_size">
+                    <!-- If product, pro_price, and pro_promotion are available -->
+                    <ng-container *ngIf="product && product.pro_price !== null && product.pro_price !== undefined">
+                      <!-- If a promotion is active, show both regular and discounted prices -->
+                      <s *ngIf="product.pro_promotion !== null && product.pro_promotion !== undefined && product.pro_promotion > 0">
+                        {{ product.pro_price | currency: 'EUR' : 'symbol' : '1.2-2' }}
+                      </s>
+                      <span *ngIf="product.pro_promotion !== null && product.pro_promotion !== undefined && product.pro_promotion > 0">
+                        {{ product.pro_price - (product.pro_price * product.pro_promotion) / 100 | currency: 'EUR' : 'symbol' : '1.2-2' }}
+                      </span>
+
+                      <!-- If no promotion, just show the regular price -->
+                      <span *ngIf="product.pro_promotion === null || product.pro_promotion === undefined || product.pro_promotion === 0">
+                        {{ product.pro_price | currency: 'EUR' : 'symbol' : '1.2-2' }}
+                      </span>
+                    </ng-container>
+
+                    <!-- If no price available, show "No Promo" -->
+                    <ng-container *ngIf="!product?.pro_price">
+                      <span>No Promo</span>
+                    </ng-container>
+                  </span>
+                </p>
+              </div>
+
+              <!-- Description -->
+              <p class="blog_texts">
+                {{ product?.pro_description }}
+              </p>
+
+              <!-- Product options and Add to Cart button -->
+              <div class="product_options_area">
+                <div class="product_options_selection">
+                  <ul id="options_selection">
+                    <li><strong>Catégorie:</strong> {{ product?.subCategory?.catt_name }}</li>
+                    <li><strong>Marque:</strong> {{ product?.pro_mark }}</li>
+                    <li><strong>Promotion:</strong> {{ product?.pro_promotion }}%</li>
+                  </ul>
+                </div>
+
+                <div class="add-to-cart">
+                  <!-- Input for quantity with max set to available product quantity -->
+                  <input type="number" title="Qty" [(ngModel)]="quantity" min="1" [max]="product?.pro_quantity || 1" class="qty" />
+
+                  <!-- Add to Cart button, disabled if product quantity is 0 or less -->
+                  <button
+                    type="button"
+                    title="Add to Cart"
+                    class="cart_button"
+                    [disabled]="product?.pro_quantity === 0 || product?.pro_quantity === null"
+                    (click)="addToCart()"
+                  >
+                    <span>Ajouter au panier</span>
+                  </button>
+
+                  <!-- Display out of stock message if product quantity is 0 or less -->
+                  <p *ngIf="product?.pro_quantity === 0 || product?.pro_quantity === null">En rupture de stock</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Product details area -->
+  </body>
+</html>

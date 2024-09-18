@@ -1,0 +1,103 @@
+<div>
+  <h2 id="page-heading" data-cy="SubCategoryHeading">
+    <span jhiTranslate="supermatechApp.subCategory.home.title">Sub Categories</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="supermatechApp.subCategory.home.refreshListLabel">Refresh list</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (subCategories?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="supermatechApp.subCategory.home.notFound">No Sub Categories found</span>
+    </div>
+  }
+
+  @if (subCategories && subCategories.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="catt_name">
+              <div class="d-flex">
+                <span jhiTranslate="supermatechApp.subCategory.catt_name">Catt Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="catt_description">
+              <div class="d-flex">
+                <span jhiTranslate="supermatechApp.subCategory.catt_description">Catt Description</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="cat_id">
+              <div class="d-flex">
+                <span jhiTranslate="supermatechApp.subCategory.cat_id">Cat Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="catt_icon">
+              <div class="d-flex">
+                <span jhiTranslate="supermatechApp.subCategory.catt_icon">Catt Icon</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="category.cat_name">
+              <div class="d-flex">
+                <span jhiTranslate="supermatechApp.subCategory.category">Category</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (subCategory of subCategories; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/sub-category', subCategory.id, 'view']">{{ subCategory.id }}</a>
+              </td>
+              <td>{{ subCategory.catt_name }}</td>
+              <td>{{ subCategory.catt_description }}</td>
+              <td>{{ subCategory.cat_id }}</td>
+              <td>{{ subCategory.catt_icon }}</td>
+              <td>
+                @if (subCategory.category) {
+                  <div>
+                    <a [routerLink]="['/category', subCategory.category.id, 'view']">{{ subCategory.category.cat_name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/sub-category', subCategory.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

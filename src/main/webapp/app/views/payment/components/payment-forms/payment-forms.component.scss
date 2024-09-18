@@ -1,0 +1,33 @@
+.payment-forms-button {
+  background-color: #afafaf;
+  color: white;
+  padding: 15px 20px;
+  margin-top: 10px;
+  border: 1px solid #afafaf;
+  width: 100%;
+  text-transform: uppercase;
+  font-weight: 700;
+  transition: all 0.3s linear;
+}
+
+.payment-forms-button:hover {
+  background-color: #ff343b;
+}
+
+.payment-fields {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  column-gap: 20px;
+}
+.form-payment {
+  padding: 30px;
+  border: 1px solid #e5e5e5;
+  background-color: #fafafa;
+  border-radius: 30px;
+  margin-bottom: 150px;
+}
+.payment-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 200px;
+}

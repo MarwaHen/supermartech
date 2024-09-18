@@ -1,0 +1,26 @@
+<div class="header_botttom_area">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="main_menu">
+          <ul id="nav_menu" class="active_cl">
+            <li *ngFor="let category of categories" (mouseenter)="showSubCategories(category.id)" (mouseleave)="hideSubCategories()">
+              <a
+                ><span class="Home">{{ category?.cat_name }}</span></a
+              >
+              <div class="home_mega_menu">
+                <ul *ngIf="activeCategoryId === category.id" id="account_single_nav_1">
+                  <li *ngFor="let sub of category.subCategories">
+                    <a (click)="filterBySubCategory(sub?.id)">
+                      {{ sub?.catt_name }}
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,6 +13,7 @@ import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { EntityNavbarItems } from 'app/entities/entity-navbar-items';
 import ActiveMenuDirective from './active-menu.directive';
 import NavbarItem from './navbar-item.model';
+import { FilterService } from 'app/services/filter.service';
 
 @Component({
   standalone: true,
@@ -29,11 +30,12 @@ export default class NavbarComponent implements OnInit {
   version = '';
   account = inject(AccountService).trackCurrentAccount();
   entitiesNavbarItems: NavbarItem[] = [];
-
+  searchInput = '';
   private loginService = inject(LoginService);
   private translateService = inject(TranslateService);
   private stateStorageService = inject(StateStorageService);
   private profileService = inject(ProfileService);
+  private filterService = inject(FilterService);
   private router = inject(Router);
 
   constructor() {
@@ -71,5 +73,14 @@ export default class NavbarComponent implements OnInit {
 
   toggleNavbar(): void {
     this.isNavbarCollapsed.update(isNavbarCollapsed => !isNavbarCollapsed);
+  }
+
+  updateSearchProductName(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.searchInput = input.value;
+  }
+
+  seachProductByName(): void {
+    this.filterService.updateFilter({ name: this.searchInput });
   }
 }

@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (order(); as orderRef) {
+      <div>
+        <h2 data-cy="orderDetailsHeading"><span jhiTranslate="supermatechApp.order.detail.title">Order</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ orderRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.order.odr_adresse">Odr Adresse</span></dt>
+          <dd>
+            <span>{{ orderRef.odr_adresse }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.order.odr_phonenumber">Odr Phonenumber</span></dt>
+          <dd>
+            <span>{{ orderRef.odr_phonenumber }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.order.odr_price">Odr Price</span></dt>
+          <dd>
+            <span>{{ orderRef.odr_price }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.order.odr_date">Odr Date</span></dt>
+          <dd>
+            <span>{{ orderRef.odr_date | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.order.user">User</span></dt>
+          <dd>
+            <span>{{ orderRef.user?.login }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/order', orderRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

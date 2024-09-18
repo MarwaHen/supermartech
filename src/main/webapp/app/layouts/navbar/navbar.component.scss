@@ -1,36 +1,105 @@
-@import 'bootstrap/scss/functions';
-@import 'bootstrap/scss/variables';
-
-/* ==========================================================================
-Navbar
-========================================================================== */
-
-.navbar-version {
-  font-size: 0.65em;
-  color: $navbar-dark-color;
+/* Ensure the text and icons are dark for contrast */
+.nav-link {
+  color: #000 !important; /* Set link text color to black */
 }
 
-.profile-image {
-  height: 1.75em;
-  width: 1.75em;
+.nav-link .fa-icon {
+  color: #000 !important; /* Ensure icons are dark */
 }
 
-.navbar {
-  padding: 0.2rem 1rem;
+/* Adjust the cart icon */
+.fa-shopping-cart {
+  font-size: 1.25rem; /* Adjust size if needed */
+}
 
-  a.nav-link {
-    font-weight: 400;
-  }
+.cart-icon {
+  height: 25px; /* Adjust the height of the cart icon */
+  width: auto; /* Maintain the aspect ratio */
+  display: inline-block;
+  vertical-align: middle; /* Align it vertically with the text or other icons */
 }
 
 /* ==========================================================================
 Logo styles
 ========================================================================== */
 .logo-img {
-  height: 45px;
-  width: 45px;
+  height: 90px; /* Ensures it takes the full height of the navbar */
+  width: 370px; /* Maintain aspect ratio */
+  display: block; /* Make sure the image is treated as a block element */
+}
+
+.navbar {
+  background-color: white !important;
+  height: 90px; /* Or adjust to match your navbar's height */
+  padding-left: 0; /* Ensure there's no extra space on the left */
+}
+
+.container-fluid {
+  padding-left: 0; /* Align content completely to the left edge */
+}
+
+.navbar-brand {
+  padding: 0; /* Remove any padding around the logo */
+}
+
+/* ==========================================================================
+
+/* Search Bar Styling */
+.search-form {
+  flex-grow: 1;
+  max-width: 400px; /* Set the desired width */
+}
+
+.search-input {
+  height: 40px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  border-right: none;
+}
+
+.search-icon {
+  background-color: #fff;
+  border-radius: 0 20px 20px 0;
+  padding: 0 10px;
+  color: #000 !important; /* Set the icon color to black */
+  border: 1px solid #ccc;
+  border-left: none;
+}
+
+.input-group-text {
+  border: none;
+  background-color: transparent;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #007bff; /* Highlight border on focus */
+}
+
+/* Navbar and Logo Adjustments */
+.logo-img {
+  height: 90px;
+  width: 370px;
+  display: block;
+}
+
+.navbar {
+  background-color: white !important;
+  height: 90px;
+  padding-left: 0;
+}
+
+.container-fluid {
+  padding-left: 0;
+}
+
+.navbar-brand {
+  padding: 0;
+}
+
+.cart-icon {
+  height: 25px;
+  width: auto;
   display: inline-block;
   vertical-align: middle;
-  background: url('/content/images/logo-jhipster.png') no-repeat center center;
-  background-size: contain;
 }

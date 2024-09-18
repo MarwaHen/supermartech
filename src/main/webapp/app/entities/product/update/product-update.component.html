@@ -1,0 +1,210 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-product-heading" data-cy="ProductCreateUpdateHeading" jhiTranslate="supermatechApp.product.home.createOrEditLabel">
+        Create or edit a Product
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="supermatechApp.product.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let pro_nameRef = editForm.get('pro_name')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_pro_name" jhiTranslate="supermatechApp.product.pro_name">Pro Name</label>
+          <input type="text" class="form-control" name="pro_name" id="field_pro_name" data-cy="pro_name" formControlName="pro_name" />
+          @if (pro_nameRef.invalid && (pro_nameRef.dirty || pro_nameRef.touched)) {
+            <div>
+              @if (editForm.get('pro_name')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              @if (editForm.get('pro_name')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let pro_descriptionRef = editForm.get('pro_description')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_pro_description" jhiTranslate="supermatechApp.product.pro_description"
+            >Pro Description</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="pro_description"
+            id="field_pro_description"
+            data-cy="pro_description"
+            formControlName="pro_description"
+          />
+          @if (pro_descriptionRef.invalid && (pro_descriptionRef.dirty || pro_descriptionRef.touched)) {
+            <div>
+              @if (editForm.get('pro_description')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        @let pro_priceRef = editForm.get('pro_price')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_pro_price" jhiTranslate="supermatechApp.product.pro_price">Pro Price</label>
+          <input type="number" class="form-control" name="pro_price" id="field_pro_price" data-cy="pro_price" formControlName="pro_price" />
+          @if (pro_priceRef.invalid && (pro_priceRef.dirty || pro_priceRef.touched)) {
+            <div>
+              @if (editForm.get('pro_price')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('pro_price')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let pro_quantityRef = editForm.get('pro_quantity')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_pro_quantity" jhiTranslate="supermatechApp.product.pro_quantity">Pro Quantity</label>
+          <input
+            type="number"
+            class="form-control"
+            name="pro_quantity"
+            id="field_pro_quantity"
+            data-cy="pro_quantity"
+            formControlName="pro_quantity"
+          />
+          @if (pro_quantityRef.invalid && (pro_quantityRef.dirty || pro_quantityRef.touched)) {
+            <div>
+              @if (editForm.get('pro_quantity')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('pro_quantity')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let catt_idRef = editForm.get('catt_id')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_catt_id" jhiTranslate="supermatechApp.product.catt_id">Catt Id</label>
+          <input type="number" class="form-control" name="catt_id" id="field_catt_id" data-cy="catt_id" formControlName="catt_id" />
+          @if (catt_idRef.invalid && (catt_idRef.dirty || catt_idRef.touched)) {
+            <div>
+              @if (editForm.get('catt_id')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('catt_id')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_pro_date" jhiTranslate="supermatechApp.product.pro_date">Pro Date</label>
+          <div class="d-flex">
+            <input
+              id="field_pro_date"
+              data-cy="pro_date"
+              type="datetime-local"
+              class="form-control"
+              name="pro_date"
+              formControlName="pro_date"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_pro_promotion" jhiTranslate="supermatechApp.product.pro_promotion">Pro Promotion</label>
+          <input
+            type="number"
+            class="form-control"
+            name="pro_promotion"
+            id="field_pro_promotion"
+            data-cy="pro_promotion"
+            formControlName="pro_promotion"
+          />
+        </div>
+
+        @let pro_markRef = editForm.get('pro_mark')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_pro_mark" jhiTranslate="supermatechApp.product.pro_mark">Pro Mark</label>
+          <input type="text" class="form-control" name="pro_mark" id="field_pro_mark" data-cy="pro_mark" formControlName="pro_mark" />
+          @if (pro_markRef.invalid && (pro_markRef.dirty || pro_markRef.touched)) {
+            <div>
+              @if (editForm.get('pro_mark')?.errors?.maxlength) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.maxlength" [translateValues]="{ max: '255' }"
+                  >This field cannot be longer than 255 characters.</small
+                >
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_subCategory" jhiTranslate="supermatechApp.product.subCategory">Sub Category</label>
+          <select
+            class="form-control"
+            id="field_subCategory"
+            data-cy="subCategory"
+            name="subCategory"
+            formControlName="subCategory"
+            [compareWith]="compareSubCategory"
+          >
+            @if (!editForm.get('subCategory')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (subCategoryOption of subCategoriesSharedCollection; track $index) {
+              <option [ngValue]="subCategoryOption">{{ subCategoryOption.catt_name }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['subCategory'])!.invalid && (editForm.get(['subCategory'])!.dirty || editForm.get(['subCategory'])!.touched)) {
+          <div>
+            @if (editForm.get(['subCategory'])?.errors?.required) {
+              <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (subCategory(); as subCategoryRef) {
+      <div>
+        <h2 data-cy="subCategoryDetailsHeading"><span jhiTranslate="supermatechApp.subCategory.detail.title">Sub Category</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ subCategoryRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.subCategory.catt_name">Catt Name</span></dt>
+          <dd>
+            <span>{{ subCategoryRef.catt_name }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.subCategory.catt_description">Catt Description</span></dt>
+          <dd>
+            <span>{{ subCategoryRef.catt_description }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.subCategory.cat_id">Cat Id</span></dt>
+          <dd>
+            <span>{{ subCategoryRef.cat_id }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.subCategory.catt_icon">Catt Icon</span></dt>
+          <dd>
+            <span>{{ subCategoryRef.catt_icon }}</span>
+          </dd>
+          <dt><span jhiTranslate="supermatechApp.subCategory.category">Category</span></dt>
+          <dd>
+            @if (subCategory()!.category) {
+              <div>
+                <a [routerLink]="['/category', subCategory()!.category?.id, 'view']">{{ subCategoryRef.category?.cat_name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

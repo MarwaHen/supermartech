@@ -1,0 +1,20 @@
+{
+  "supermatechApp": {
+    "subCategory": {
+      "home": {
+        "title": "SubCategories",
+        "refreshListLabel": "Actualiser la liste",
+        "notFound": "Aucun Sub Category trouvé"
+      },
+      "detail": {
+        "title": "Sub Category"
+      },
+      "id": "ID",
+      "catt_name": "Catt Name",
+      "catt_description": "Catt Description",
+      "cat_id": "Cat Id",
+      "catt_icon": "Catt Icon",
+      "category": "Category"
+    }
+  }
+}

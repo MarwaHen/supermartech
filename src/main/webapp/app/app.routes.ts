@@ -4,6 +4,7 @@ import { Authority } from 'app/config/authority.constants';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 import { errorRoute } from './layouts/error/error.route';
+import { CartComponent } from './views/cart/cart.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,11 @@ const routes: Routes = [
     path: '',
     loadComponent: () => import('./layouts/navbar/navbar.component'),
     outlet: 'navbar',
+  },
+  {
+    path: '',
+    loadComponent: () => import('./layouts/header/header.component').then(m => m.HeaderComponent),
+    outlet: 'header',
   },
   {
     path: 'admin',
@@ -37,6 +43,20 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import(`./entities/entity.routes`),
   },
+  {
+    path: 'cart',
+    component: CartComponent,
+  },
+  {
+    path: 'product/:id/:pro_name',
+    loadComponent: () => import('./views/page-detail/page-detail.component').then(m => m.PageDetailComponent),
+  },
+
+  {
+    path: 'payment',
+    loadChildren: () => import('./views/payment/payment-routing.module').then(m => m.PaymentRoutingModule),
+  },
+
   ...errorRoute,
 ];
 
