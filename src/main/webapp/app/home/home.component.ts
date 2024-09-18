@@ -18,6 +18,7 @@ import { EntityArrayResponseType } from 'app/entities/category/service/category.
 import { CartItem } from 'app/models/cart-item.model';
 import { CartService } from 'app/services/cart.service';
 import { Filter, FilterService } from 'app/services/filter.service';
+import { BrandService } from 'app/services/brand.service';
 
 @Component({
   standalone: true,
@@ -66,7 +67,7 @@ export default class HomeComponent implements OnInit {
   itemsPerPage = ITEMS_PER_PAGE;
   totalItems = 0;
   page = 1;
-  distinctBrands: string[] = [];
+  allBrands: string[] = [];
   selectedBrands: string[] = [];
   currentFilter!: Filter;
   minPrice = 0;
@@ -79,6 +80,7 @@ export default class HomeComponent implements OnInit {
   protected activatedRoute = inject(ActivatedRoute);
   protected sortService = inject(SortService);
   protected filterService = inject(FilterService);
+  protected brandService = inject(BrandService);
   protected modalService = inject(NgbModal);
   protected ngZone = inject(NgZone);
   private cartService = inject(CartService);
@@ -134,9 +136,9 @@ export default class HomeComponent implements OnInit {
   }
 
   getAllBrands(): void {
-    this.distinctBrands = Array.from(new Set(this.products?.map(product => product.pro_mark))).filter(
-      (mark): mark is string => mark != null,
-    );
+    this.brandService.getAllBrands().subscribe(reponse => {
+      this.allBrands = reponse?.brand ?? [];
+    });
   }
 
   updateBrandFilter(event: Event, brand: string): void {
@@ -178,8 +180,6 @@ export default class HomeComponent implements OnInit {
       this.loadAllProductImages();
     });
     this.currentFilter = this.filterService.getFilter();
-    // eslint-disable-next-line no-console
-    console.log(this.currentFilter);
     this.updateBrandFilterByChanges(this.currentFilter.brand);
     this.promoFilter = this.currentFilter.promo ?? this.promoFilter;
   }

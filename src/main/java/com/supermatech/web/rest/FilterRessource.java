@@ -53,7 +53,7 @@ public class FilterRessource {
 
     @Transactional
     @PostMapping
-    public Map<String, Object> processPayment(@RequestBody String post) throws JsonProcessingException {
+    public Map<String, Object> filterProduct(@RequestBody String post) throws JsonProcessingException {
         HashMap<String, Object> res = new HashMap<>();
         ObjectMapper objectMapper = new ObjectMapper();
 

@@ -43,7 +43,7 @@ export class FilterService {
   }
 
   filterProducts(): Observable<any> {
-    return this.http.post<any>('/api/filter', this.getFilter());
+    return this.http.post<any>(this.resourceUrl, this.getFilter());
   }
 
   updateFilter(partialFilter: Partial<Filter>): void {
