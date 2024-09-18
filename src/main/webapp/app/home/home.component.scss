@@ -14,3 +14,73 @@ a.disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.filter_box {
+  border: none !important;
+  background-color: #f3f3f3 !important;
+  margin: 20px 0 !important;
+  padding: 30px !important;
+  border-radius: 12px !important;
+  .filter-price-box,
+  .filter-brand-box,
+  .filter-promo-box {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 12px;
+    border: none;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px !important;
+  }
+  .filter-price-box {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-bottom: 0;
+  }
+  .filter-promo-box {
+    display: block;
+    text-align: justify;
+  }
+}
+
+.price_range {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  .price-range-input {
+    border-radius: 8px;
+    border: none;
+    padding: 15px;
+    width: 100%;
+    background-color: #f3f3f3;
+  }
+}
+.filter-brand-checkbox-container {
+  text-align: justify;
+  background-color: #f9f9f9;
+  padding: 15px;
+  padding-top: 0;
+  border-radius: 12px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.custom-checkbox-input {
+  height: 22px !important;
+  position: absolute;
+  width: 22px !important;
+  cursor: pointer;
+  align-items: center;
+}
+
+.filter-action-container {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  font-weight: 600;
+  margin: 40px 0;
+  button {
+    border-radius: 20px;
+  }
+}

@@ -576,6 +576,9 @@ progress {
   margin-right: auto;
   margin-left: auto;
 }
+.container-fluid {
+  padding: 0 !important;
+}
 @media (min-width: 576px) {
   .container,
   .container-sm {

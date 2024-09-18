@@ -10,7 +10,7 @@ export interface Filter {
   min_price?: number;
   max_price?: number;
   promo?: boolean;
-  added_after?: string;
+  added_after?: Date;
   page?: number;
   size?: number;
 }
@@ -29,7 +29,7 @@ export class FilterService {
     max_price: -1,
     promo: false,
     brand: [],
-    added_after: '',
+    added_after: new Date('1999-12-30'),
     page: 0,
     size: 5,
   });
@@ -53,6 +53,6 @@ export class FilterService {
   }
 
   resetFilter(): void {
-    this.updateFilter({ name: '', min_price: 0, max_price: -1, promo: false, brand: [], added_after: '', page: 0 });
+    this.updateFilter({ name: '', min_price: 0, max_price: -1, promo: false, brand: [], added_after: new Date('1999-12-30'), page: 0 });
   }
 }
