@@ -62,7 +62,7 @@ public class FilterRessource {
 
         // Filter by subcategory
         if (filter.sub_cat != -1) {
-            jpql.append(first ? " WHERE " : " AND ");
+            jpql.append(" WHERE ");
             first = false;
             jpql.append("p.catt_id = ").append(filter.sub_cat);
         }
@@ -91,6 +91,13 @@ public class FilterRessource {
             jpql.append("p.pro_mark IN :brands");
         }
 
+        if (filter.name != null) {
+            jpql.append(first ? " WHERE " : " AND ");
+            jpql.append("pro_name ILIKE '");
+            jpql.append(filter.name);
+            jpql.append("%'");
+        }
+
         // Create the JPQL query
         TypedQuery<Product> query = em.createQuery(jpql.toString(), Product.class);
 
@@ -114,13 +121,13 @@ public class FilterRessource {
             }
 
             // Filter by maximum price
-            if (filter.max_price != -1 && result.get(i).get_promo_price() > filter.min_price) {
+            if (filter.max_price != -1 && result.get(i).get_promo_price() > filter.max_price) {
                 toDelete.add(i);
             }
         }
-        System.out.println(result.size());
+
         for (int i = toDelete.size() - 1; i >= 0; i--) result.remove(result.get(toDelete.get(i)));
-        System.out.println(result.size());
+
         // Execute the query and return the results
         res.put("res_list", result);
         return res;

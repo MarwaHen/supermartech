@@ -66,11 +66,11 @@ jhipster:
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   mail:
-    base-url: http://my-server-url-to-change
+    base-url: http://Supermartech.ddnsfree.com
   logging:
     use-json-format: false
     logstash:
       enabled: false
       host: localhost
-      port: 5000
+      port: 5005
       ring-buffer-size: 512

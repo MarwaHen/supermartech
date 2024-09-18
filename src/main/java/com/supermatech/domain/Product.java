@@ -113,7 +113,11 @@ public class Product implements Serializable {
     }
 
     public double get_promo_price() {
-        return this.pro_price * (1 - (double) (this.pro_promotion / 100));
+        Double soldprice = this.pro_price;
+        Double minus = ((double) this.pro_promotion / 100.0);
+        minus = soldprice * minus;
+        soldprice = soldprice - minus;
+        return soldprice;
     }
 
     public void setPro_price(Double pro_price) {
