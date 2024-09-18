@@ -111,8 +111,10 @@
                 <li>
                   <a href="#"><i class="fa fa-home"></i>Accueil</a>
                 </li>
-                <li><span>Ι</span></li>
-                <li>Produits</li>
+                <li>
+                  <span> Produits </span>
+                </li>
+                <li></li>
               </ul>
             </div>
           </div>
@@ -180,12 +182,12 @@
                 <div id="tab1">
                   <div>
                     <h2 id="page-heading" data-cy="ProductHeading">
-                      <span>Produits</span>
+                      <span>{{ subCategoryName }}</span>
                     </h2>
 
                     @if (filteredProducts.length === 0) {
                       <div class="alert alert-warning" id="no-result">
-                        <span jhiTranslate="supermatechApp.product.home.notFound">Pas de produits disponibles</span>
+                        <span>Pas de produits disponibles</span>
                       </div>
                     }
                   </div>

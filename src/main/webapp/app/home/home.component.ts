@@ -19,6 +19,7 @@ import { CartItem } from 'app/models/cart-item.model';
 import { CartService } from 'app/services/cart.service';
 import { Filter, FilterService } from 'app/services/filter.service';
 import { BrandService } from 'app/services/brand.service';
+import { SubCategoryService } from 'app/entities/sub-category/service/sub-category.service';
 
 @Component({
   standalone: true,
@@ -74,6 +75,7 @@ export default class HomeComponent implements OnInit {
   maxPrice = -1;
   promoFilter = false;
   imagesByProduct: Record<number, string> = {};
+  subCategoryName = 'Produits';
 
   public router = inject(Router);
   protected productService = inject(ProductService);
@@ -84,6 +86,7 @@ export default class HomeComponent implements OnInit {
   protected modalService = inject(NgbModal);
   protected ngZone = inject(NgZone);
   private cartService = inject(CartService);
+  private subCategoryService = inject(SubCategoryService);
 
   trackId = (_index: number, item: IProduct): number => this.productService.getProductIdentifier(item);
 
@@ -169,6 +172,15 @@ export default class HomeComponent implements OnInit {
     this.currentFilter = this.filterService.getFilter();
     this.updateBrandFilterByChanges(this.currentFilter.brand);
     this.promoFilter = this.currentFilter.promo ?? this.promoFilter;
+    this.getSubCategoryName(this.currentFilter);
+  }
+
+  getSubCategoryName(currentFilter: Filter): void {
+    if (currentFilter.sub_cat && currentFilter.sub_cat !== -1) {
+      this.subCategoryService.find(currentFilter.sub_cat).subscribe(response => {
+        this.subCategoryName = response.body?.catt_name ?? 'Produits';
+      });
+    }
   }
 
   onSearchFiltersClicked(): void {
