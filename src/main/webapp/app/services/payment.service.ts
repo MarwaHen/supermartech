@@ -16,6 +16,7 @@ export class PaymentService {
   private paymentCompleted = false;
 
   paymentProcess(payment: Payment): Observable<any> {
+    payment.cart_list.sort((a, b) => a.product_id - b.product_id);
     return this.http.post<any>(this.resourceUrl, payment);
   }
 

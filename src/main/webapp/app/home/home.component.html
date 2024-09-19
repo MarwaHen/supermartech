@@ -282,7 +282,6 @@
                               <div class="cart_details">
                                 <a
                                   href="#"
-                                  target="blank"
                                   (click)="product?.pro_quantity != 0 ? addToCart(product) : $event.preventDefault()"
                                   [class.disabled]="product?.pro_quantity === 0"
                                   style="color: #000"
