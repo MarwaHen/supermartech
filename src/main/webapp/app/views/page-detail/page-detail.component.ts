@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { ProductService } from 'app/entities/product/service/product.service';
 import { IProduct } from 'app/entities/product/product.model';
 import SharedModule from 'app/shared/shared.module';
@@ -24,6 +24,8 @@ export class PageDetailComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private productService = inject(ProductService);
   private cartService = inject(CartService);
+
+  constructor(private location: Location) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -72,5 +74,9 @@ export class PageDetailComponent implements OnInit {
         error: () => console.error(`Erro ao carregar a imagem do produto ${this.product?.id}`),
       });
     }
+  }
+
+  backToHome(): void {
+    this.location.back();
   }
 }

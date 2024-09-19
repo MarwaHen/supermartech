@@ -76,6 +76,8 @@ export default class HomeComponent implements OnInit {
   promoFilter = false;
   imagesByProduct: Record<number, string> = {};
   subCategoryName = 'Produits';
+  isBrandFilterOpen = true;
+  inputDateNewItens?: Date;
 
   public router = inject(Router);
   protected productService = inject(ProductService);
@@ -141,6 +143,15 @@ export default class HomeComponent implements OnInit {
     }
   }
 
+  updateAddedAfterFilter(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.valueAsDate) {
+      this.inputDateNewItens = input.valueAsDate;
+    } else {
+      this.inputDateNewItens = new Date('1999-12-30');
+    }
+  }
+
   updateBrandFilterByChanges(brands?: string[]): void {
     this.selectedBrands = this.selectedBrands.filter(selectedBrand => brands?.includes(selectedBrand));
   }
@@ -190,6 +201,7 @@ export default class HomeComponent implements OnInit {
       brand: this.selectedBrands,
       promo: this.promoFilter,
       page: 0,
+      added_after: this.inputDateNewItens,
     });
     this.page = 1;
     this.applyFilters();
@@ -207,6 +219,7 @@ export default class HomeComponent implements OnInit {
     this.promoFilter = false;
     this.page = 1;
     (document.getElementById('min_price') as HTMLInputElement).value = '';
+    (document.getElementById('addedAfter') as HTMLInputElement).value = '';
     (document.getElementById('max_price') as HTMLInputElement).value = '';
 
     this.filterService.resetFilter();
@@ -240,6 +253,10 @@ export default class HomeComponent implements OnInit {
       size: this.itemsPerPage,
     });
     this.applyFilters();
+  }
+
+  toggleBrandFilterDropdown(): void {
+    this.isBrandFilterOpen = !this.isBrandFilterOpen;
   }
 
   protected fillComponentAttributeFromRoute(params: ParamMap, data: Data): void {

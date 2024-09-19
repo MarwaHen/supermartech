@@ -85,7 +85,8 @@ public class FilterRessource {
         // Filter by date added (after 01/01/2000)
         Calendar calendar = Calendar.getInstance();
         calendar.set(2000, Calendar.JANUARY, 1);
-        if (filter.added_after != null && filter.added_after.after(calendar.getTime())) {
+        Date date = calendar.getTime();
+        if (filter.added_after != null && date.before(filter.added_after)) {
             jpql.append(first ? " WHERE " : " AND ");
             first = false;
             jpql.append("p.pro_date >= :added_after");
@@ -111,8 +112,8 @@ public class FilterRessource {
         TypedQuery<Product> query = em.createQuery(jpql.toString(), Product.class);
 
         // Set parameters dynamically
-        if (filter.added_after != null && filter.added_after.after(calendar.getTime())) {
-            query.setParameter("added_after", filter.added_after);
+        if (filter.added_after != null && date.before(filter.added_after)) {
+            query.setParameter("added_after", filter.added_after.toInstant());
         }
 
         if (filter.brand != null && !filter.brand.isEmpty()) {

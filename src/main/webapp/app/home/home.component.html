@@ -47,7 +47,6 @@
         text-align: center;
         border-radius: 5px;
         background-color: #f9f9f9;
-        width: 300px;
         margin-bottom: 20px;
       }
 
@@ -109,10 +108,10 @@
             <div class="breadcrumb-single">
               <ul id="breadcrumbs">
                 <li>
-                  <a href="#"><i class="fa fa-home"></i>Accueil</a>
+                  <a style="font-size: 12px" href="/"><i class="fa fa-home"></i>Accueil</a>
                 </li>
                 <li>
-                  <span> Produits </span>
+                  <span style="color: red; font-size: 10px"> Produits </span>
                 </li>
                 <li></li>
               </ul>
@@ -124,40 +123,81 @@
     <!--End breadcrumbs area -->
     <!--Start clothing product area -->
     <div class="container">
-      <div class="row row-cols-2">
-        <div class="col" style="width: 30%">
-          <div class="catagory_price_color">
-            <div class="priceing_area">
-              <div class="info_widget">
+      <div class="row row-cols-2 mb-5">
+        <div class="col" style="width: 35%">
+          <div class="">
+            <div class="">
+              <div class="">
                 <div class="filter_box">
-                  <h2>PRIX</h2>
-                  <div class="price_range">
-                    <input (change)="updateMinPrice($event)" type="number" id="min_price" placeholder="Prix Min" />
-                    <input (change)="updateMaxPrice($event)" type="number" id="max_price" placeholder="Prix Max" />
-                  </div>
+                  <div class="brand_filter mb-3">
+                    <!-- Botão para abrir/fechar a lista -->
+                    <button
+                      type="button"
+                      (click)="toggleBrandFilterDropdown()"
+                      aria-expanded="isBrandFilterOpen"
+                      class="filter-brand-box"
+                      [ngStyle]="{
+                        'border-bottom-left-radius': isBrandFilterOpen ? '0' : '12px',
+                        'border-bottom-right-radius': isBrandFilterOpen ? '0' : '12px',
+                      }"
+                    >
+                      Marque
+                      <span class="float-right">{{ isBrandFilterOpen ? '▲' : '▼' }}</span>
+                    </button>
 
-                  <h2>MARQUE</h2>
-                  <div class="brand_filter">
-                    <ul class="brand-filter-list">
-                      <li *ngFor="let brand of allBrands">
-                        <label>
-                          <input
-                            type="checkbox"
-                            [value]="brand"
-                            (change)="updateBrandFilter($event, brand)"
-                            [checked]="selectedBrands.includes(brand)"
-                          />
-                          {{ brand }}
+                    <!-- Lista de marcas (simula um dropdown/accordion) -->
+                    <div class="filter-brand-checkbox-container" *ngIf="isBrandFilterOpen">
+                      <div *ngFor="let brand of allBrands" class="form-check">
+                        <input
+                          class="form-check-input custom-checkbox-input"
+                          type="checkbox"
+                          [id]="brand"
+                          [value]="brand"
+                          (change)="updateBrandFilter($event, brand)"
+                          [checked]="selectedBrands.includes(brand)"
+                        />
+                        <label style="margin-left: 5px" class="form-check-label" [for]="brand">
+                          {{ brand | uppercase }}
                         </label>
-                      </li>
-                    </ul>
+                      </div>
+                    </div>
                   </div>
-                  <label>
-                    <input type="checkbox" (change)="updatePromoFilter($event)" [checked]="promoFilter" /> Promotion uniquement
-                  </label>
-                  <div style="display: flex; gap: 20px">
-                    <button class="search_button" (click)="clearFilters()">Effacer les filtres</button>
-                    <button class="search_button" (click)="onSearchFiltersClicked()">Rechercher</button>
+                  <div class="filter-price-box mb-3">
+                    <p>Prix</p>
+                    <div class="price_range">
+                      <input
+                        class="price-range-input"
+                        (change)="updateMinPrice($event)"
+                        type="number"
+                        id="min_price"
+                        placeholder="Prix Min (€)"
+                      />
+                      <input
+                        class="price-range-input"
+                        (change)="updateMaxPrice($event)"
+                        type="number"
+                        id="max_price"
+                        placeholder="Prix Max (€)"
+                      />
+                    </div>
+                  </div>
+                  <div class="filter-promo-box mb-3 form-check">
+                    <input class="custom-checkbox-input" type="checkbox" (change)="updatePromoFilter($event)" [checked]="promoFilter" />
+                    <label style="margin-left: 28px" class="form-check-label"> Promotion uniquement </label>
+                  </div>
+                  <div class="filter-price-box pb-4 mb-3">
+                    <label for="addedAfter">Ajouté depuis</label>
+                    <input
+                      id="addedAfter"
+                      type="date"
+                      class="form-control"
+                      (change)="updateAddedAfterFilter($event)"
+                      [ngModel]="inputDateNewItens | date: 'yyyy-MM-dd'"
+                    />
+                  </div>
+                  <div class="filter-action-container">
+                    <button style="background-color: #afafaf" class="search_button" (click)="clearFilters()">Effacer les filtres</button>
+                    <button class="search_button" (click)="onSearchFiltersClicked()">Apliquer les filtres</button>
                   </div>
                 </div>
               </div>
@@ -168,16 +208,16 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
           </div>
         </div>
-        <div class="col" style="width: 70%">
+        <div class="col" style="width: 65%; margin: 20px 0">
           <div class="catagory_banner">
             <div class="my_tabs">
-              <ul class="tab_style nav-tabs nav border-0">
+              <!-- <ul class="tab_style nav-tabs nav border-0">
                 <li>
                   <a data-bs-toggle="tab" href="/"
                     ><span><i class="fa fa-th"></i></span
                   ></a>
                 </li>
-              </ul>
+              </ul> -->
               <div class="tab-content tab_content_style">
                 <div id="tab1">
                   <div>
@@ -271,24 +311,24 @@
               </div>
             </div>
           </div>
+          <!-- Pagination and Item Count -->
+          <div class="d-flex justify-content-center custom-pagination-container">
+            <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+          </div>
+
+          <div class="d-flex justify-content-center custom-pagination">
+            <ngb-pagination
+              [collectionSize]="totalItems"
+              [page]="page"
+              [pageSize]="itemsPerPage"
+              [maxSize]="5"
+              [rotate]="true"
+              [boundaryLinks]="true"
+              (pageChange)="navigateToPage($event)"
+            ></ngb-pagination>
+          </div>
         </div>
       </div>
-    </div>
-    <!-- Pagination and Item Count -->
-    <div class="d-flex justify-content-center">
-      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
-    </div>
-
-    <div class="d-flex justify-content-center">
-      <ngb-pagination
-        [collectionSize]="totalItems"
-        [page]="page"
-        [pageSize]="itemsPerPage"
-        [maxSize]="5"
-        [rotate]="true"
-        [boundaryLinks]="true"
-        (pageChange)="navigateToPage($event)"
-      ></ngb-pagination>
     </div>
 
     <!--End clothing product area -->

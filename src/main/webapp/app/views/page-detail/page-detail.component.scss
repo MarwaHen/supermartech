@@ -17,3 +17,28 @@
 .product-image img:hover {
   transform: scale(1.2);
 }
+
+.page-detail-actions {
+  display: flex;
+  justify-content: space-between;
+  button {
+    background: #afafaf;
+    height: 56px;
+    border: 0 solid #afafaf;
+    padding: 15px 20px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 700;
+    transition: all 0.3s linear;
+    line-height: 1;
+    &:hover {
+      background: #ff343b;
+    }
+  }
+  input {
+    border-radius: 8px;
+    border: none;
+    padding: 17px;
+    background-color: #f3f3f3;
+  }
+}
