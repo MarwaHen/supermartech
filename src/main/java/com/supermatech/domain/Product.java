@@ -30,7 +30,7 @@ public class Product implements Serializable {
     @Column(name = "pro_name", length = 255, nullable = false)
     private String pro_name;
 
-    @Size(max = 255)
+    @Size(max = 1000)
     @Column(name = "pro_description", length = 255)
     private String pro_description;
 
