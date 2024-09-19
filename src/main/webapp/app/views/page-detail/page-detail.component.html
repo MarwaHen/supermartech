@@ -89,23 +89,28 @@
                   </ul>
                 </div>
 
-                <div class="add-to-cart">
-                  <!-- Input for quantity with max set to available product quantity -->
-                  <input type="number" title="Qty" [(ngModel)]="quantity" min="1" [max]="product?.pro_quantity || 1" class="qty" />
-
-                  <!-- Add to Cart button, disabled if product quantity is 0 or less -->
-                  <button
-                    type="button"
-                    title="Add to Cart"
-                    class="cart_button"
-                    [disabled]="product?.pro_quantity === 0 || product?.pro_quantity === null"
-                    (click)="addToCart()"
-                  >
-                    <span>Ajouter au panier</span>
+                <div class="page-detail-actions">
+                  <button type="button" class="cart_button" (click)="backToHome()">
+                    <span>Retour</span>
                   </button>
+                  <div class="add-to-cart">
+                    <!-- Input for quantity with max set to available product quantity -->
+                    <input type="number" title="Qty" [(ngModel)]="quantity" min="1" [max]="product?.pro_quantity || 1" class="qty" />
 
-                  <!-- Display out of stock message if product quantity is 0 or less -->
-                  <p *ngIf="product?.pro_quantity === 0 || product?.pro_quantity === null">En rupture de stock</p>
+                    <!-- Add to Cart button, disabled if product quantity is 0 or less -->
+                    <button
+                      type="button"
+                      title="Add to Cart"
+                      class="cart_button"
+                      [disabled]="product?.pro_quantity === 0 || product?.pro_quantity === null"
+                      (click)="addToCart()"
+                    >
+                      <span>Ajouter au panier</span>
+                    </button>
+
+                    <!-- Display out of stock message if product quantity is 0 or less -->
+                    <p *ngIf="product?.pro_quantity === 0 || product?.pro_quantity === null">En rupture de stock</p>
+                  </div>
                 </div>
               </div>
             </div>
