@@ -1,5 +1,9 @@
 # supermatech
 
+Pour lancer l'application, il faut initialiser les variables d'environnement comme dans le fichier .env. 
+Si les images n'apparaissent pas, rendez-vous sur le site https://img.supermartech.ddnsfree.com/.
+
+
 This application was generated using JHipster 8.7.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v8.7.0](https://www.jhipster.tech/documentation-archive/v8.7.0).
 
 ## Project Structure
