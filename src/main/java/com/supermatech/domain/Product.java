@@ -31,7 +31,7 @@ public class Product implements Serializable {
     private String pro_name;
 
     @Size(max = 1000)
-    @Column(name = "pro_description", length = 255)
+    @Column(name = "pro_description", length = 1000)
     private String pro_description;
 
     @NotNull
